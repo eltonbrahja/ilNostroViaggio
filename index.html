@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Il Nostro Viaggio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Header compatto -->
+    <header class="app-header">
+      <div class="header-left">
+        <span id="level-badge" class="pixel-badge">Livello 1</span>
+        <button id="btn-audio-toggle" class="audio-toggle-btn" title="Attiva/Disattiva Musica" aria-label="Musica">
+          <span id="audio-icon">🔇</span>
+        </button>
+      </div>
+      <h1 class="header-title">Il Nostro Viaggio</h1>
+      <button id="btn-switch-char" class="char-switch-badge" title="Cambia Personaggio">
+        <span id="header-avatar-icon">👤</span>
+        <span id="header-avatar-name">Scegli</span>
+      </button>
+    </header>
+
+    <!-- Schermata di Selezione Personaggio (Step 2) -->
+    <div id="selection-screen" class="selection-overlay">
+      <div class="selection-box">
+        <div class="selection-badge">STEP 2</div>
+        <h2 class="selection-title">Chi sta giocando?</h2>
+        <p class="selection-subtitle">Scegli chi vuoi guidare in questa avventura.</p>
+        
+        <div class="character-cards-container">
+          <!-- Card Lui -->
+          <div class="char-card" id="card-lui" data-char="lui">
+            <div class="char-preview-box">
+              <canvas id="preview-lui" width="64" height="64"></canvas>
+            </div>
+            <span class="char-name">LUI</span>
+            <span class="char-tag">Pronto a partire</span>
+          </div>
+
+          <!-- Card Lei -->
+          <div class="char-card" id="card-lei" data-char="lei">
+            <div class="char-preview-box">
+              <canvas id="preview-lei" width="64" height="64"></canvas>
+            </div>
+            <span class="char-name">LEI</span>
+            <span class="char-tag">Pronta a partire</span>
+          </div>
+        </div>
+
+        <p class="selection-partner-hint">
+          💕 L'altro personaggio ti aspetterà alla fine del percorso con una sorpresa!
+        </p>
+
+        <button id="btn-start-game" class="start-game-btn" disabled>
+          INIZIA L'AVVENTURA ➔
+        </button>
+      </div>
+    </div>
+
+    <!-- Area Schermo di Gioco Canvas -->
+    <main class="canvas-wrapper">
+      <canvas id="game-canvas" width="320" height="384"></canvas>
+    </main>
+
+    <!-- Pannello Controlli Touch in Basso (Mobile First) -->
+    <footer class="controls-panel">
+      <div class="movement-pad">
+        <button id="btn-up" class="pad-btn pad-btn-up" aria-label="Sopra">
+          <span class="btn-arrow">▲</span>
+          <span class="btn-label">SOPRA</span>
+        </button>
+        <div class="pad-horizontal-row">
+          <button id="btn-left" class="pad-btn pad-btn-left" aria-label="Indietro">
+            <span class="btn-arrow">◄</span>
+            <span class="btn-label">INDIETRO</span>
+          </button>
+          <button id="btn-right" class="pad-btn pad-btn-right" aria-label="Avanti">
+            <span class="btn-arrow">►</span>
+            <span class="btn-label">AVANTI</span>
+          </button>
+        </div>
+        <button id="btn-down" class="pad-btn pad-btn-down" aria-label="Giù">
+          <span class="btn-arrow">▼</span>
+          <span class="btn-label">GIÙ</span>
+        </button>
+      </div>
+
+      <!-- Pulsante Interazione Contestuale (compare solo quando si è vicini a qualcosa) -->
+      <div class="action-slot">
+        <button id="btn-interact" class="action-btn hidden" aria-label="Interagisci">
+          <span class="action-sparkle">✨</span>
+          <span class="action-text">INTERAGISCI</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- 1. Modale Ricordo Stile Polaroid -->
+    <div id="polaroid-modal" class="modal-overlay hidden">
+      <div class="polaroid-card">
+        <div class="polaroid-pin">📍</div>
+        <div class="polaroid-frame">
+          <div class="polaroid-photo-box" id="polaroid-photo-box">
+            <span class="photo-placeholder-icon">📸</span>
+            <span class="photo-placeholder-text">Il Nostro Primo Incontro</span>
+            <span class="photo-placeholder-sub">Novembre</span>
+          </div>
+          <div class="polaroid-caption">
+            <p id="polaroid-text" class="polaroid-handwriting">
+              "Quel giorno è iniziato tutto... tra sguardi timidi e risate che non dimenticherò mai."
+            </p>
+          </div>
+        </div>
+        <button id="btn-close-polaroid" class="modal-action-btn">Conserva nel cuore 💕</button>
+      </div>
+    </div>
+
+    <!-- 2. Modale Mini-Quiz Cancello -->
+    <div id="quiz-modal" class="modal-overlay hidden">
+      <div class="modal-card quiz-card">
+        <div class="modal-header">
+          <span class="modal-icon">🗝️</span>
+          <div>
+            <h2 id="quiz-title">Il Cancello dell'Amore</h2>
+            <p class="quiz-subtitle">Rispondi correttamente per aprire il passaggio!</p>
+          </div>
+        </div>
+        
+        <p id="quiz-question" class="quiz-question-text">
+          Dove ci siamo scambiati il nostro primo bacio?
+        </p>
+
+        <div id="quiz-options-container" class="quiz-options-list">
+          <!-- I pulsanti delle opzioni verranno iniettati dinamicamente -->
+        </div>
+
+        <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+
+        <button id="btn-close-quiz" class="modal-close-btn">Chiudi</button>
+      </div>
+    </div>
+
+    <!-- 3. Modale Livello 1 Completato -->
+    <div id="level-clear-modal" class="modal-overlay hidden">
+      <div class="modal-card level-clear-card">
+        <div class="level-clear-badge">🎉 LIVELLO 1 COMPLETATO</div>
+        <h2 id="level-clear-title" class="level-clear-title">Vi siete ritrovati!</h2>
+        <p id="level-clear-text" class="level-clear-text">
+          Hai superato il primo sentiero dei ricordi! L'amore che vi unisce ha aperto ogni cancello.
+        </p>
+        <div class="level-clear-hearts">💖 ✨ 💕 ✨ 💖</div>
+        <button id="btn-next-level" class="start-game-btn">
+          CONTINUA IL VIAGGIO ➔
+        </button>
+      </div>
+    </div>
+
+    <!-- 4. Modale Dilemma / Inside Joke (Livello 3) -->
+    <div id="dilemma-modal" class="modal-overlay hidden">
+      <div class="modal-card quiz-card">
+        <div class="modal-header">
+          <span class="modal-icon">🪧</span>
+          <div>
+            <h2 id="dilemma-title">Un Piccolo Dilemma di Coppia</h2>
+            <p class="quiz-subtitle">Rispondi con sincerità... o ne pagherai le conseguenze! 😜</p>
+          </div>
+        </div>
+        
+        <p id="dilemma-question" class="quiz-question-text">
+          DOMANDA TRABOCCHETTO: Chi ci mette SEMPRE più tempo a prepararsi? 🤔
+        </p>
+
+        <div id="dilemma-options-container" class="quiz-options-list">
+          <!-- Opzioni iniettate da JS -->
+        </div>
+
+        <div id="dilemma-feedback" class="quiz-feedback hidden"></div>
+
+        <button id="btn-close-dilemma" class="modal-close-btn hidden">Continua ➔</button>
+      </div>
+    </div>
+
+    <!-- 5. Dialogo generico / Fallback -->
+    <div id="dialog-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <span class="modal-icon">💌</span>
+          <h2 id="modal-title">Messaggio</h2>
+        </div>
+        <p id="modal-text">Messaggio del gioco.</p>
+        <button id="btn-close-modal" class="modal-close-btn">Chiudi</button>
+      </div>
+    </div>
+
+    <!-- 6. Modale Gran Finale: Lettera d'Amore & Ricordi -->
+    <div id="finale-modal" class="modal-overlay hidden">
+      <div class="modal-card finale-card">
+        <div class="finale-header">
+          <div class="finale-badge">💖 BUON ANNIVERSARIO 💖</div>
+          <h2 id="finale-title" class="finale-title">Per Te, Amore Mio</h2>
+          <span id="finale-date" class="finale-date">Novembre • Insieme</span>
+        </div>
+
+        <!-- Pergamena / Lettera d'amore con inside jokes -->
+        <div class="finale-letter-box">
+          <div class="letter-scroll" id="finale-letter-content">
+            <!-- I paragrafi della lettera romantica verranno iniettati da JS -->
+          </div>
+        </div>
+
+        <!-- I 3 Ricordi Collezionati (Galleria Mini-Polaroid cliccabili) -->
+        <div class="finale-memories-section">
+          <h3 class="memories-title">I Ricordi del Nostro Percorso:</h3>
+          <div class="memories-grid">
+            <button class="memory-card-btn" id="memory-card-1" title="Vedi 1° Ricordo">
+              <span class="memory-icon">🌸</span>
+              <span class="memory-name">1° Incontro</span>
+            </button>
+            <button class="memory-card-btn" id="memory-card-2" title="Vedi 2° Ricordo">
+              <span class="memory-icon">✈️</span>
+              <span class="memory-name">I Viaggi</span>
+            </button>
+            <button class="memory-card-btn" id="memory-card-3" title="Vedi 3° Ricordo">
+              <span class="memory-icon">🤣</span>
+              <span class="memory-name">Le Risate</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pulsanti Azione Finale -->
+        <div class="finale-actions">
+          <button id="btn-restart-game" class="finale-restart-btn">
+            <span>↺</span> RIGIOCA L'AVVENTURA
+          </button>
+          <button id="btn-close-finale" class="modal-close-btn">
+            Torna alla Radura 💕
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
