@@ -638,6 +638,10 @@ const fireflies = Array.from({ length: 24 }, () => ({
 function switchToLevel(newLevelNumber) {
   levelTransitionAlpha = 1.0;
   currentLevel = newLevelNumber;
+  invalidateObstaclesCache();
+  invalidateRenderItemsCache();
+  lastInteractionTarget = null;
+  btnInteract.classList.add('hidden');
 
   if (currentLevel === 4) {
     levelBadge.textContent = '✨ Gran Finale';
@@ -660,25 +664,37 @@ function switchToLevel(newLevelNumber) {
 // 6. SISTEMA DELLE COLLISIONI FISICHE
 // ============================================================================
 
-function getPlayerFeetBox(px, py) {
-  return {
-    x: px - 8,
-    y: py + 12,
-    width: 16,
-    height: 10
-  };
+let cachedObstacles = null;
+
+function invalidateObstaclesCache() {
+  cachedObstacles = null;
 }
 
-function rectsOverlap(r1, r2) {
-  return (
-    r1.x < r2.x + r2.width &&
-    r1.x + r1.width > r2.x &&
-    r1.y < r2.y + r2.height &&
-    r1.y + r1.height > r2.y
-  );
+const playerFeetBox = { x: 0, y: 0, width: 16, height: 10 };
+
+function canMoveTo(px, py) {
+  playerFeetBox.x = px - 8;
+  playerFeetBox.y = py + 12;
+
+  const obstacles = getMapObstacles();
+
+  for (let i = 0; i < obstacles.length; i++) {
+    const obs = obstacles[i];
+    if (
+      playerFeetBox.x < obs.x + obs.width &&
+      playerFeetBox.x + playerFeetBox.width > obs.x &&
+      playerFeetBox.y < obs.y + obs.height &&
+      playerFeetBox.y + playerFeetBox.height > obs.y
+    ) {
+      return false;
+    }
+  }
+  return true;
 }
 
 function getMapObstacles() {
+  if (cachedObstacles) return cachedObstacles;
+
   const obstacles = [];
 
   // Bordi esterni generali
@@ -702,7 +718,8 @@ function getMapObstacles() {
   }
 
   // Tronchi degli alberi
-  for (const tree of activeTrees) {
+  for (let i = 0; i < activeTrees.length; i++) {
+    const tree = activeTrees[i];
     obstacles.push({
       x: tree.x + 32,
       y: tree.y + 64,
@@ -712,7 +729,8 @@ function getMapObstacles() {
   }
 
   // Cespugli
-  for (const b of activeBushes) {
+  for (let i = 0; i < activeBushes.length; i++) {
+    const b = activeBushes[i];
     obstacles.push({
       x: b.x + 4,
       y: b.y + 8,
@@ -764,19 +782,8 @@ function getMapObstacles() {
     height: 12
   });
 
-  return obstacles;
-}
-
-function canMoveTo(px, py) {
-  const playerBox = getPlayerFeetBox(px, py);
-  const obstacles = getMapObstacles();
-
-  for (const obs of obstacles) {
-    if (rectsOverlap(playerBox, obs)) {
-      return false;
-    }
-  }
-  return true;
+  cachedObstacles = obstacles;
+  return cachedObstacles;
 }
 
 
@@ -786,9 +793,11 @@ function canMoveTo(px, py) {
 
 // Bersagli possibili: 'bench', 'gate', 'level2Item', 'level3Sign', 'partner', null
 let currentInteractionTarget = null;
+let lastInteractionTarget = null;
 
 function checkInteractionProximity() {
   const distPartner = Math.hypot(player.x - partnerNPC.x, player.y - partnerNPC.y);
+  let nextTarget = null;
 
   // --- CONTROLLO LIVELLO 1 ---
   if (currentLevel === 1) {
@@ -801,17 +810,11 @@ function checkInteractionProximity() {
     const distGate = Math.hypot(player.x - gateCenterX, player.y - gateCenterY);
 
     if (!gateItem.isOpen && distGate < 50 && player.y > gateItem.y) {
-      currentInteractionTarget = 'gate';
-      btnInteract.classList.remove('hidden');
+      nextTarget = 'gate';
     } else if (distBench < 44) {
-      currentInteractionTarget = 'bench';
-      btnInteract.classList.remove('hidden');
+      nextTarget = 'bench';
     } else if (distPartner < 48 && (gateItem.isOpen || player.y < gateItem.y)) {
-      currentInteractionTarget = 'partner';
-      btnInteract.classList.remove('hidden');
-    } else {
-      currentInteractionTarget = null;
-      btnInteract.classList.add('hidden');
+      nextTarget = 'partner';
     }
   } 
   // --- CONTROLLO LIVELLO 2 ---
@@ -821,14 +824,9 @@ function checkInteractionProximity() {
     const distItem = Math.hypot(player.x - itemCenterX, player.y - itemCenterY);
 
     if (!level2Item.isCollected && distItem < 42) {
-      currentInteractionTarget = 'level2Item';
-      btnInteract.classList.remove('hidden');
+      nextTarget = 'level2Item';
     } else if (distPartner < 48) {
-      currentInteractionTarget = 'partner';
-      btnInteract.classList.remove('hidden');
-    } else {
-      currentInteractionTarget = null;
-      btnInteract.classList.add('hidden');
+      nextTarget = 'partner';
     }
   }
   // --- CONTROLLO LIVELLO 3 ---
@@ -842,26 +840,26 @@ function checkInteractionProximity() {
     const distBench = Math.hypot(player.x - benchCenterX, player.y - benchCenterY);
 
     if (distSign < 44) {
-      currentInteractionTarget = 'level3Sign';
-      btnInteract.classList.remove('hidden');
+      nextTarget = 'level3Sign';
     } else if (distBench < 44) {
-      currentInteractionTarget = 'bench';
-      btnInteract.classList.remove('hidden');
+      nextTarget = 'bench';
     } else if (distPartner < 48) {
-      currentInteractionTarget = 'partner';
-      btnInteract.classList.remove('hidden');
-    } else {
-      currentInteractionTarget = null;
-      btnInteract.classList.add('hidden');
+      nextTarget = 'partner';
     }
   }
   // --- CONTROLLO LIVELLO 4 (Gran Finale) ---
   else if (currentLevel === 4) {
     if (distPartner < 52) {
-      currentInteractionTarget = 'partnerFinale';
+      nextTarget = 'partnerFinale';
+    }
+  }
+
+  currentInteractionTarget = nextTarget;
+  if (currentInteractionTarget !== lastInteractionTarget) {
+    lastInteractionTarget = currentInteractionTarget;
+    if (currentInteractionTarget) {
       btnInteract.classList.remove('hidden');
     } else {
-      currentInteractionTarget = null;
       btnInteract.classList.add('hidden');
     }
   }
@@ -885,6 +883,7 @@ function triggerInteraction() {
   else if (currentLevel === 2) {
     if (currentInteractionTarget === 'level2Item') {
       level2Item.isCollected = true;
+      invalidateRenderItemsCache();
       triggerHeartExplosion();
       openItemFoundModal();
     } else if (currentInteractionTarget === 'partner') {
@@ -996,6 +995,8 @@ function openQuizModal() {
 
         setTimeout(() => {
           gateItem.isOpen = true;
+          invalidateObstaclesCache();
+          invalidateRenderItemsCache();
           closeQuizModal();
           triggerHeartExplosion();
         }, 850);
@@ -1041,6 +1042,7 @@ function openDilemmaModal() {
 
     btn.addEventListener('click', () => {
       level3Sign.isResolved = true; // Segnato come superato!
+      invalidateRenderItemsCache();
       btn.classList.add('correct');
 
       dilemmaFeedbackEl.className = 'quiz-feedback success';
@@ -1224,24 +1226,36 @@ function bindTouchButton(buttonEl, directionKey) {
   const startAction = (e) => {
     e.preventDefault();
     if (isModalOpen || !isGameStarted) return;
+    try {
+      if (e.pointerId !== undefined && buttonEl.setPointerCapture) {
+        buttonEl.setPointerCapture(e.pointerId);
+      }
+    } catch (_) {}
     inputState[directionKey] = true;
     buttonEl.classList.add('active');
-    if (navigator.vibrate) navigator.vibrate(12);
+    if (navigator.vibrate) {
+      try { navigator.vibrate(12); } catch (_) {}
+    }
   };
 
   const endAction = (e) => {
     e.preventDefault();
+    try {
+      if (e.pointerId !== undefined && buttonEl.hasPointerCapture && buttonEl.hasPointerCapture(e.pointerId)) {
+        buttonEl.releasePointerCapture(e.pointerId);
+      }
+    } catch (_) {}
     inputState[directionKey] = false;
     buttonEl.classList.remove('active');
   };
 
-  buttonEl.addEventListener('touchstart', startAction, { passive: false });
-  buttonEl.addEventListener('touchend', endAction, { passive: false });
-  buttonEl.addEventListener('touchcancel', endAction, { passive: false });
+  // Pointer Events gestiscono uniformemente mouse, touch e penna senza interruzioni
+  buttonEl.addEventListener('pointerdown', startAction);
+  buttonEl.addEventListener('pointerup', endAction);
+  buttonEl.addEventListener('pointercancel', endAction);
 
-  buttonEl.addEventListener('mousedown', startAction);
-  buttonEl.addEventListener('mouseup', endAction);
-  buttonEl.addEventListener('mouseleave', endAction);
+  // Evita che la pressione prolungata apra il menu contestuale dello smartphone
+  buttonEl.addEventListener('contextmenu', (e) => e.preventDefault());
 }
 
 bindTouchButton(btnUp, 'up');
@@ -1250,12 +1264,24 @@ bindTouchButton(btnRight, 'right');
 bindTouchButton(btnDown, 'down');
 
 btnInteract.addEventListener('click', triggerInteraction);
-btnInteract.addEventListener('touchstart', (e) => {
+btnInteract.addEventListener('pointerdown', (e) => {
   e.preventDefault();
   triggerInteraction();
-}, { passive: false });
+});
+btnInteract.addEventListener('contextmenu', (e) => e.preventDefault());
+
+const MOVEMENT_KEYS = new Set([
+  'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+  'w', 'W', 's', 'S', 'a', 'A', 'd', 'D',
+  ' ', 'Spacebar', 'e', 'E'
+]);
 
 window.addEventListener('keydown', (e) => {
+  if (MOVEMENT_KEYS.has(e.key)) {
+    // Evita il ricalcolo continuo dello scroll del browser quando si tengono premuti i tasti
+    e.preventDefault();
+  }
+
   if (isModalOpen) {
     if (e.key === 'Escape') {
       closePolaroidModal();
@@ -1278,10 +1304,17 @@ window.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('keyup', (e) => {
+  if (MOVEMENT_KEYS.has(e.key)) {
+    e.preventDefault();
+  }
   if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') inputState.up = false;
   if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') inputState.down = false;
   if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') inputState.left = false;
   if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') inputState.right = false;
+});
+
+window.addEventListener('blur', () => {
+  pausePlayerMovement();
 });
 
 
@@ -1294,8 +1327,13 @@ let lastTime = performance.now();
 function update(deltaTime) {
   if (isModalOpen || !isGameStarted) return;
 
+  // Clamppiamo deltaTime tra 1ms e 50ms per proteggere da frame drop improvvisi
+  const clampedDelta = Math.min(Math.max(deltaTime, 1), 50);
+  // Fattore di movimento normalizzato ai 60 FPS standard (16.667ms)
+  const deltaFactor = clampedDelta / (1000 / 60);
+
   if (levelTransitionAlpha > 0) {
-    levelTransitionAlpha = Math.max(0, levelTransitionAlpha - deltaTime / 450);
+    levelTransitionAlpha = Math.max(0, levelTransitionAlpha - clampedDelta / 450);
   }
 
   let moveX = 0;
@@ -1326,8 +1364,8 @@ function update(deltaTime) {
       moveY *= 0.7071;
     }
 
-    const stepX = moveX * player.speed;
-    const stepY = moveY * player.speed;
+    const stepX = moveX * player.speed * deltaFactor;
+    const stepY = moveY * player.speed * deltaFactor;
 
     if (stepX !== 0 && canMoveTo(player.x + stepX, player.y)) {
       player.x += stepX;
@@ -1336,7 +1374,7 @@ function update(deltaTime) {
       player.y += stepY;
     }
 
-    player.animTimer += deltaTime;
+    player.animTimer += clampedDelta;
   } else {
     player.animTimer = 0;
   }
@@ -1345,13 +1383,14 @@ function update(deltaTime) {
     const p = heartParticles[i];
     p.x += p.vx;
     p.y += p.vy;
-    p.life -= deltaTime / 1000;
+    p.life -= clampedDelta / 1000;
     if (p.life <= 0) heartParticles.splice(i, 1);
   }
 
   // Aggiornamento lucciole fluttuanti nel Gran Finale
   if (currentLevel === 4) {
-    for (const fly of fireflies) {
+    for (let i = 0; i < fireflies.length; i++) {
+      const fly = fireflies[i];
       fly.x += fly.vx;
       fly.y += fly.vy;
       if (fly.y < -10) fly.y = canvas.height + 10;
@@ -1367,6 +1406,132 @@ function update(deltaTime) {
 // ============================================================================
 // 11. DISEGNO GRAFICO & PROFONDITÀ Y-SORTING (DRAW LOOP)
 // ============================================================================
+
+let cachedStaticRenderItems = null;
+
+function invalidateRenderItemsCache() {
+  cachedStaticRenderItems = null;
+}
+
+function getStaticRenderItems() {
+  if (cachedStaticRenderItems) return cachedStaticRenderItems;
+
+  const items = [];
+  let activeTrees = map1Trees;
+  let activeBushes = map1Bushes;
+  if (currentLevel === 2) {
+    activeTrees = map2Trees;
+    activeBushes = map2Bushes;
+  } else if (currentLevel === 3) {
+    activeTrees = map3Trees;
+    activeBushes = map3Bushes;
+  } else if (currentLevel === 4) {
+    activeTrees = map4Trees;
+    activeBushes = map4Bushes;
+  }
+
+  for (let i = 0; i < activeTrees.length; i++) {
+    const tree = activeTrees[i];
+    items.push({
+      type: 'tree',
+      x: tree.x,
+      y: tree.y,
+      variant: tree.variant,
+      sortY: tree.y + 76
+    });
+  }
+
+  for (let i = 0; i < activeBushes.length; i++) {
+    const b = activeBushes[i];
+    items.push({
+      type: 'bush',
+      x: b.x,
+      y: b.y,
+      sortY: b.y + 26
+    });
+  }
+
+  if (currentLevel === 1) {
+    items.push({
+      type: 'bench',
+      x: benchItem1.x,
+      y: benchItem1.y,
+      width: benchItem1.width,
+      height: benchItem1.height,
+      sortY: benchItem1.y + benchItem1.height
+    });
+
+    items.push({
+      type: 'gate',
+      x: gateItem.x,
+      y: gateItem.y,
+      width: gateItem.width,
+      height: gateItem.height,
+      get isOpen() { return gateItem.isOpen; },
+      sortY: gateItem.y + 16
+    });
+  } else if (currentLevel === 2) {
+    items.push({
+      type: 'collectibleItem',
+      x: level2Item.x,
+      y: level2Item.y,
+      sortY: level2Item.y + 20
+    });
+  } else if (currentLevel === 3) {
+    items.push({
+      type: 'sign',
+      x: level3Sign.x,
+      y: level3Sign.y,
+      width: level3Sign.width,
+      height: level3Sign.height,
+      get isResolved() { return level3Sign.isResolved; },
+      sortY: level3Sign.y + level3Sign.height
+    });
+
+    items.push({
+      type: 'bench',
+      x: benchItem3.x,
+      y: benchItem3.y,
+      width: benchItem3.width,
+      height: benchItem3.height,
+      sortY: benchItem3.y + benchItem3.height
+    });
+  }
+
+  cachedStaticRenderItems = items;
+  return cachedStaticRenderItems;
+}
+
+const renderList = [];
+const partnerRenderItem = {
+  type: 'character',
+  charKey: 'lei',
+  x: 0,
+  y: 0,
+  facing: 'down',
+  isMoving: false,
+  animTimer: 0,
+  renderSize: 48,
+  label: 'LEI',
+  labelColor: '#f472b6',
+  sortY: 0,
+  hasHeart: true
+};
+
+const playerRenderItem = {
+  type: 'character',
+  charKey: 'lui',
+  x: 0,
+  y: 0,
+  facing: 'up',
+  isMoving: false,
+  animTimer: 0,
+  renderSize: 48,
+  label: 'TU',
+  labelColor: '#ffffff',
+  sortY: 0,
+  hasHeart: false
+};
 
 function draw() {
   ctx.imageSmoothingEnabled = false;
@@ -1512,129 +1677,38 @@ function draw() {
     }
   }
 
-  // 4. LISTA DI ENTITÀ PER PROFONDITÀ (Y-SORTING)
-  const renderList = [];
-
-  let activeTrees = map1Trees;
-  let activeBushes = map1Bushes;
-  if (currentLevel === 2) {
-    activeTrees = map2Trees;
-    activeBushes = map2Bushes;
-  } else if (currentLevel === 3) {
-    activeTrees = map3Trees;
-    activeBushes = map3Bushes;
-  } else if (currentLevel === 4) {
-    activeTrees = map4Trees;
-    activeBushes = map4Bushes;
+  // 4. LISTA DI ENTITÀ PER PROFONDITÀ (Y-SORTING A ZERO ALLOCAZIONI)
+  renderList.length = 0;
+  const staticItems = getStaticRenderItems();
+  for (let i = 0; i < staticItems.length; i++) {
+    const item = staticItems[i];
+    if (item.type === 'collectibleItem' && level2Item.isCollected) continue;
+    renderList.push(item);
   }
 
-  for (const tree of activeTrees) {
-    renderList.push({
-      type: 'tree',
-      x: tree.x,
-      y: tree.y,
-      variant: tree.variant,
-      sortY: tree.y + 76
-    });
-  }
-
-  for (const b of activeBushes) {
-    renderList.push({
-      type: 'bush',
-      x: b.x,
-      y: b.y,
-      sortY: b.y + 26
-    });
-  }
-
-  // Elementi specifici del Livello 1
-  if (currentLevel === 1) {
-    renderList.push({
-      type: 'bench',
-      x: benchItem1.x,
-      y: benchItem1.y,
-      width: benchItem1.width,
-      height: benchItem1.height,
-      sortY: benchItem1.y + benchItem1.height
-    });
-
-    renderList.push({
-      type: 'gate',
-      x: gateItem.x,
-      y: gateItem.y,
-      width: gateItem.width,
-      height: gateItem.height,
-      isOpen: gateItem.isOpen,
-      sortY: gateItem.y + 16
-    });
-  }
-
-  // Elementi specifici del Livello 2
-  if (currentLevel === 2 && !level2Item.isCollected) {
-    renderList.push({
-      type: 'collectibleItem',
-      x: level2Item.x,
-      y: level2Item.y,
-      sortY: level2Item.y + 20
-    });
-  }
-
-  // Elementi specifici del Livello 3
-  if (currentLevel === 3) {
-    // Cartello del Dilemma
-    renderList.push({
-      type: 'sign',
-      x: level3Sign.x,
-      y: level3Sign.y,
-      width: level3Sign.width,
-      height: level3Sign.height,
-      isResolved: level3Sign.isResolved,
-      sortY: level3Sign.y + level3Sign.height
-    });
-
-    // Panchina delle risate
-    renderList.push({
-      type: 'bench',
-      x: benchItem3.x,
-      y: benchItem3.y,
-      width: benchItem3.width,
-      height: benchItem3.height,
-      sortY: benchItem3.y + benchItem3.height
-    });
-  }
-
-  // Partner (NPC)
+  // Partner (NPC) - aggiorniamo l'oggetto persistente riutilizzato
   const partnerKey = activePlayerKey === 'lui' ? 'lei' : 'lui';
-  renderList.push({
-    type: 'character',
-    charKey: partnerKey,
-    x: partnerNPC.x,
-    y: partnerNPC.y,
-    facing: partnerNPC.facing,
-    isMoving: false,
-    animTimer: 0,
-    renderSize: partnerNPC.renderSize,
-    label: partnerKey === 'lei' ? 'LEI' : 'LUI',
-    labelColor: partnerKey === 'lei' ? '#f472b6' : '#60a5fa',
-    sortY: partnerNPC.y + 16,
-    hasHeart: true
-  });
+  partnerRenderItem.charKey = partnerKey;
+  partnerRenderItem.x = partnerNPC.x;
+  partnerRenderItem.y = partnerNPC.y;
+  partnerRenderItem.facing = partnerNPC.facing;
+  partnerRenderItem.renderSize = partnerNPC.renderSize;
+  partnerRenderItem.label = partnerKey === 'lei' ? 'LEI' : 'LUI';
+  partnerRenderItem.labelColor = partnerKey === 'lei' ? '#f472b6' : '#60a5fa';
+  partnerRenderItem.sortY = partnerNPC.y + 16;
 
-  // Giocatore
-  renderList.push({
-    type: 'character',
-    charKey: activePlayerKey,
-    x: player.x,
-    y: player.y,
-    facing: player.facing,
-    isMoving: player.isMoving,
-    animTimer: player.animTimer,
-    renderSize: player.renderSize,
-    label: 'TU',
-    labelColor: '#ffffff',
-    sortY: player.y + 16,
-    hasHeart: false
-  });
+  // Giocatore - aggiorniamo l'oggetto persistente riutilizzato
+  playerRenderItem.charKey = activePlayerKey;
+  playerRenderItem.x = player.x;
+  playerRenderItem.y = player.y;
+  playerRenderItem.facing = player.facing;
+  playerRenderItem.isMoving = player.isMoving;
+  playerRenderItem.animTimer = player.animTimer;
+  playerRenderItem.renderSize = player.renderSize;
+  playerRenderItem.sortY = player.y + 16;
+
+  renderList.push(partnerRenderItem);
+  renderList.push(playerRenderItem);
 
   renderList.sort((a, b) => a.sortY - b.sortY);
 
@@ -1906,7 +1980,7 @@ function drawLpcSprite(charKey, x, y, facing, isMoving, animTimer, scale) {
     ctx.drawImage(
       spriteObj.img,
       sx, sy, FRAME_SIZE, FRAME_SIZE,
-      x - half, y - half, scale, scale
+      Math.round(x - half), Math.round(y - half), scale, scale
     );
   }
 }
@@ -1917,7 +1991,9 @@ function drawLpcSprite(charKey, x, y, facing, isMoving, animTimer, scale) {
 // ============================================================================
 
 function gameLoop(currentTime) {
-  const deltaTime = currentTime - lastTime;
+  const rawDelta = currentTime - lastTime;
+  // Se la pagina è stata in background o al primo caricamento, protegge da deltaTime giganteschi
+  const deltaTime = (rawDelta > 0 && rawDelta < 200) ? rawDelta : (1000 / 60);
   lastTime = currentTime;
 
   update(deltaTime);
