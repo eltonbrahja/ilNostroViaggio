@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Il Nostro Viaggio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Silkscreen:wght@400;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
 </head>
+
 <body>
   <div id="app">
     <!-- Header compatto -->
@@ -29,18 +34,18 @@
     <!-- Schermata di Selezione Personaggio (Step 2) -->
     <div id="selection-screen" class="selection-overlay">
       <div class="selection-box">
-        <div class="selection-badge">STEP 2</div>
+        <div class="selection-badge">STEP 1</div>
         <h2 class="selection-title">Chi sta giocando?</h2>
         <p class="selection-subtitle">Scegli chi vuoi guidare in questa avventura.</p>
-        
+
         <div class="character-cards-container">
           <!-- Card Lui -->
           <div class="char-card" id="card-lui" data-char="lui">
             <div class="char-preview-box">
               <canvas id="preview-lui" width="64" height="64"></canvas>
             </div>
-            <span class="char-name">LUI</span>
-            <span class="char-tag">Pronto a partire</span>
+            <span class="char-name">Elton</span>
+            <span class="char-tag">Let's go dumbass</span>
           </div>
 
           <!-- Card Lei -->
@@ -48,13 +53,13 @@
             <div class="char-preview-box">
               <canvas id="preview-lei" width="64" height="64"></canvas>
             </div>
-            <span class="char-name">LEI</span>
-            <span class="char-tag">Pronta a partire</span>
+            <span class="char-name">Rebecca</span>
+            <span class="char-tag">Vamosss</span>
           </div>
         </div>
 
         <p class="selection-partner-hint">
-          💕 L'altro personaggio ti aspetterà alla fine del percorso con una sorpresa!
+          Raggiungi la tua metà problematica dall'altra parte
         </p>
 
         <button id="btn-start-game" class="start-game-btn" disabled>
@@ -120,6 +125,31 @@
       </div>
     </div>
 
+    <!-- 1b. Modale Mini-Quiz Panchina della Monster (Livello 1) -->
+    <div id="monster-quiz-modal" class="modal-overlay hidden">
+      <div class="modal-card monster-quiz-card">
+        <div class="modal-header monster-header">
+          <img src="/contenuti/foto/monster-pixel-art.png" alt="Monster Energy" class="monster-can-icon" />
+          <div>
+            <h2 id="monster-quiz-title">Panchina della Monster</h2>
+            <p class="quiz-subtitle">Vediamo se conosci i miei gusti</p>
+          </div>
+        </div>
+
+        <p id="monster-quiz-question" class="quiz-question-text">
+          Qual è la mia monster preferita?
+        </p>
+
+        <div id="monster-quiz-options-container" class="quiz-options-list">
+          <!-- I pulsanti delle opzioni verranno iniettati dinamicamente -->
+        </div>
+
+        <div id="monster-quiz-feedback" class="quiz-feedback hidden"></div>
+
+        <button id="btn-close-monster-quiz" class="modal-close-btn">Chiudi</button>
+      </div>
+    </div>
+
     <!-- 2. Modale Mini-Quiz Cancello -->
     <div id="quiz-modal" class="modal-overlay hidden">
       <div class="modal-card quiz-card">
@@ -130,9 +160,9 @@
             <p class="quiz-subtitle">Rispondi correttamente per aprire il passaggio!</p>
           </div>
         </div>
-        
+
         <p id="quiz-question" class="quiz-question-text">
-          Dove ci siamo scambiati il nostro primo bacio?
+          Chi è stato il primo a dire ti amo all'altro? 🩷
         </p>
 
         <div id="quiz-options-container" class="quiz-options-list">
@@ -153,7 +183,7 @@
         <p id="level-clear-text" class="level-clear-text">
           Hai superato il primo sentiero dei ricordi! L'amore che vi unisce ha aperto ogni cancello.
         </p>
-        <div class="level-clear-hearts">💖 ✨ 💕 ✨ 💖</div>
+        <div class="level-clear-hearts">🩷</div>
         <button id="btn-next-level" class="start-game-btn">
           CONTINUA IL VIAGGIO ➔
         </button>
@@ -170,7 +200,7 @@
             <p class="quiz-subtitle">Rispondi con sincerità... o ne pagherai le conseguenze! 😜</p>
           </div>
         </div>
-        
+
         <p id="dilemma-question" class="quiz-question-text">
           DOMANDA TRABOCCHETTO: Chi ci mette SEMPRE più tempo a prepararsi? 🤔
         </p>
@@ -247,4 +277,5 @@
 
   <script type="module" src="./main.js"></script>
 </body>
+
 </html>

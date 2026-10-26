@@ -31,33 +31,45 @@
 // --- CONTENUTI LIVELLO 1: "Il Primo Incontro" ---
 const level1Data = {
   title: 'LIVELLO 1: IL SENTIERO DEI RICORDI',
-  
-  // Panchina del primo incontro
-  benchTitle: 'Panchina del Primo Incontro',
+
+  // Panchina della Monster
+  benchTitle: 'Panchina della Monster',
+  benchQuiz: {
+    question: 'Qual è la mia monster preferita?',
+    // Se sono Lui: risposta Monster Ultra White
+    correctForLui: 'Monster Ultra White',
+    // Se sono Lei: risposta Monster Ultra Black Cherry
+    correctForLei: 'Monster Ultra Black Cherry',
+    // Le altre opzioni disponibili
+    otherOptions: ['Monster Mango Loco', 'Monster Monarch'],
+    feedbackSuccessLui: 'Esatto! La mia monster preferita è la Bianca!',
+    feedbackSuccessLei: 'Esatto! La mia monster preferita è quella alla ciliegia!',
+    feedbackWrong: 'Che errore tragico, muoviti e indovina'
+  },
   benchNoteLui: '"Novembre - Mi ricordo ancora quando ti sei seduta accanto a me... il cuore mi batteva forte e non riuscivo a smettere di guardarti sorridere." 🌸',
   benchNoteLei: '"Novembre - Quel pomeriggio insieme è volato in un secondo. Quando mi hai fatto ridere per la prima volta, ho capito che eri speciale." 🌸',
 
   // Mini-Quiz del cancello
   quiz: {
-    question: 'Dove ci siamo scambiati il nostro primo bacio? 💋',
-    options: [
-      { text: 'In macchina con i vetri un po\' appannati 🚗', isCorrect: true },
-      { text: 'Sotto la pioggia battente come in un film romantico ☔', isCorrect: false },
-      { text: 'Sul divano mentre cercavamo cosa guardare in tv 🍿', isCorrect: false }
-    ],
+    question: 'Chi è stato il primo a dire ti amo all\'altro? 🩷',
+    option1: 'Io',
+    option2: 'Tu',
+    option3Choices: ['Gerry Scotti', 'Joe Bastianich', 'Thomas Turbato', 'Pippi'],
+    // Risposta corretta se sono Lui: Io
+    // Risposta corretta se sono Lei: Tu
     successFeedback: 'Bravissima/o! Il lucchetto dorato scatta e il cancello si spalanca... vai dal tuo amore! 💖',
     wrongFeedback: 'Ops! Quasi... ma non è andata esattamente così! Riprova, pensaci bene! 😂'
   },
 
   // Dialogo finale con il partner al traguardo del Livello 1
-  partnerGreetingLui: 'Ti abbraccia forte: "Amore mio! Sei arrivata fino a me superando ogni ostacolo. Questo anniversario è un sogno che si avvera!" 💕',
-  partnerGreetingLei: 'Ti stringe felice: "Sei arrivato, amore! Non vedevo l\'ora di abbracciarti. Il nostro viaggio è appena iniziato!" 💕'
+  partnerGreetingLui: 'Bravo Cucciolino, sei riuscito a superare il primo livello, ma ora su vai che devi continuare',
+  partnerGreetingLei: 'Brava Patata, sei riuscita a superare il primo livello, ma ora muovi il culone che devi continuare'
 };
 
 // --- CONTENUTI LIVELLO 2: "I Nostri Momenti" (Caccia all'Oggetto) ---
 const level2Data = {
   title: 'LIVELLO 2: LA RADURA DEI VIAGGI',
-  
+
   item: {
     name: 'I Biglietti del Nostro Viaggio',
     icon: '✈️', // Puoi cambiarlo con 🍕, 🧸, 🎟️, ecc.
@@ -114,7 +126,7 @@ const levelFinaleData = {
   title: 'GRAN FINALE: IL NOSTRO TRAGUARDO',
   anniversaryBadge: '💖 BUON ANNIVERSARIO 💖',
   anniversaryDate: 'Novembre • La Nostra Storia d\'Amore',
-  
+
   // Lettera d'amore a tutto schermo (con dolci battute / inside jokes e dedica)
   letterTitle: 'Per Te, Amore Mio...',
   paragraphs: [
@@ -163,6 +175,14 @@ const audioIcon = document.getElementById('audio-icon');
 const polaroidModal = document.getElementById('polaroid-modal');
 const btnClosePolaroid = document.getElementById('btn-close-polaroid');
 const polaroidTextEl = document.getElementById('polaroid-text');
+
+// Modale 1b: Mini-Quiz Panchina della Monster (Livello 1)
+const monsterQuizModal = document.getElementById('monster-quiz-modal');
+const monsterQuizTitle = document.getElementById('monster-quiz-title');
+const monsterQuizQuestion = document.getElementById('monster-quiz-question');
+const monsterQuizOptionsContainer = document.getElementById('monster-quiz-options-container');
+const monsterQuizFeedback = document.getElementById('monster-quiz-feedback');
+const btnCloseMonsterQuiz = document.getElementById('btn-close-monster-quiz');
 
 // Modale 2: Mini-Quiz Cancello (Livello 1)
 const quizModal = document.getElementById('quiz-modal');
@@ -364,6 +384,14 @@ env.bush.img.onload = () => { env.bush.loaded = true; };
 env.grass.img.src = '/contenuti/ambienti/prato/grass.png';
 env.grass.img.onload = () => { env.grass.loaded = true; };
 
+// Oggetto Monster (Icona & Mini-Quiz Livello 1)
+const monsterItem = {
+  img: new Image(),
+  loaded: false
+};
+monsterItem.img.src = '/contenuti/foto/monster-pixel-art.png';
+monsterItem.img.onload = () => { monsterItem.loaded = true; };
+
 
 // ============================================================================
 // 4. STATO DEL GIOCO & SELEZIONE PERSONAGGIO
@@ -475,11 +503,11 @@ const benchItem1 = {
 
 const map1Trees = [
   { x: -16, y: -10, variant: 0 },
-  { x: -12, y: 75,  variant: 1 },
+  { x: -12, y: 75, variant: 1 },
   { x: -16, y: 165, variant: 0 },
   { x: -10, y: 255, variant: 1 },
   { x: 236, y: -10, variant: 1 },
-  { x: 240, y: 75,  variant: 0 },
+  { x: 240, y: 75, variant: 0 },
   { x: 236, y: 165, variant: 1 },
   { x: 242, y: 255, variant: 0 }
 ];
@@ -514,13 +542,13 @@ const level2Item = {
 
 const map2Trees = [
   { x: -14, y: -12, variant: 1 },
-  { x: -18, y: 80,  variant: 0 },
+  { x: -18, y: 80, variant: 0 },
   { x: -14, y: 190, variant: 1 },
   { x: -18, y: 280, variant: 0 },
   { x: 238, y: -12, variant: 0 },
-  { x: 234, y: 90,  variant: 1 },
+  { x: 234, y: 90, variant: 1 },
   { x: 238, y: 270, variant: 0 },
-  { x: 50,  y: -20, variant: 0 },
+  { x: 50, y: -20, variant: 0 },
   { x: 200, y: -20, variant: 1 }
 ];
 
@@ -563,7 +591,7 @@ const benchItem3 = {
 
 const map3Trees = [
   { x: -16, y: -10, variant: 1 },
-  { x: -12, y: 90,  variant: 0 },
+  { x: -12, y: 90, variant: 0 },
   { x: -16, y: 210, variant: 1 },
   { x: -10, y: 290, variant: 0 },
   { x: 236, y: -10, variant: 0 },
@@ -594,7 +622,7 @@ const map3GrassTufts = [
 // --- ELEMENTI DEL LIVELLO FINALE: La Radura Incantata & Lucciole ---
 const map4Trees = [
   { x: -16, y: -10, variant: 0 },
-  { x: 45,  y: -25, variant: 1 },
+  { x: 45, y: -25, variant: 1 },
   { x: 175, y: -25, variant: 0 },
   { x: 238, y: -10, variant: 1 },
   { x: -18, y: 105, variant: 1 },
@@ -816,7 +844,7 @@ function checkInteractionProximity() {
     } else if (distPartner < 48 && (gateItem.isOpen || player.y < gateItem.y)) {
       nextTarget = 'partner';
     }
-  } 
+  }
   // --- CONTROLLO LIVELLO 2 ---
   else if (currentLevel === 2) {
     const itemCenterX = level2Item.x + level2Item.width / 2;
@@ -872,13 +900,13 @@ function triggerInteraction() {
   // --- AZIONI LIVELLO 1 ---
   if (currentLevel === 1) {
     if (currentInteractionTarget === 'bench') {
-      openPolaroidModal();
+      openMonsterQuizModal();
     } else if (currentInteractionTarget === 'gate') {
       openQuizModal();
     } else if (currentInteractionTarget === 'partner') {
       openLevelClearModal();
     }
-  } 
+  }
   // --- AZIONI LIVELLO 2 ---
   else if (currentLevel === 2) {
     if (currentInteractionTarget === 'level2Item') {
@@ -950,6 +978,84 @@ polaroidModal.addEventListener('click', (e) => {
   if (e.target === polaroidModal) closePolaroidModal();
 });
 
+// 1b. Mini-Quiz Panchina della Monster (Livello 1)
+let isMonsterQuizSolved = false;
+
+function openMonsterQuizModal() {
+  isModalOpen = true;
+  pausePlayerMovement();
+
+  monsterQuizTitle.textContent = level1Data.benchTitle || 'Panchina della Monster';
+  monsterQuizQuestion.textContent = level1Data.benchQuiz.question;
+  monsterQuizFeedback.className = 'quiz-feedback hidden';
+  monsterQuizFeedback.textContent = '';
+  monsterQuizOptionsContainer.innerHTML = '';
+  btnCloseMonsterQuiz.textContent = 'Chiudi';
+
+  const isLui = activePlayerKey === 'lui';
+  const correctAnswer = isLui ? level1Data.benchQuiz.correctForLui : level1Data.benchQuiz.correctForLei;
+
+  const optionsList = [
+    { text: correctAnswer, isCorrect: true },
+    { text: 'Monster Mango Loco', isCorrect: false },
+    { text: 'Monster Monarch', isCorrect: false }
+  ];
+
+  // Mescola opzioni per rendere il quiz interattivo e divertente
+  for (let i = optionsList.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [optionsList[i], optionsList[j]] = [optionsList[j], optionsList[i]];
+  }
+
+  optionsList.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt-btn monster-opt-btn';
+    btn.innerHTML = `<span class="opt-num">${idx + 1}.</span> <span class="opt-text">${opt.text}</span>`;
+
+    btn.addEventListener('click', () => {
+      if (opt.isCorrect) {
+        isMonsterQuizSolved = true;
+        btn.classList.add('correct');
+        monsterQuizFeedback.className = 'quiz-feedback success';
+        const feedbackMsg = isLui
+          ? level1Data.benchQuiz.feedbackSuccessLui
+          : level1Data.benchQuiz.feedbackSuccessLei;
+        monsterQuizFeedback.textContent = feedbackMsg;
+
+        if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+        triggerHeartExplosion();
+
+        const allBtns = monsterQuizOptionsContainer.querySelectorAll('.quiz-opt-btn');
+        allBtns.forEach(b => (b.style.pointerEvents = 'none'));
+
+        btnCloseMonsterQuiz.textContent = 'Conserva nel cuore 💕';
+      } else {
+        btn.classList.add('wrong');
+        monsterQuizFeedback.className = 'quiz-feedback error';
+        monsterQuizFeedback.textContent = level1Data.benchQuiz.feedbackWrong;
+        if (navigator.vibrate) navigator.vibrate(100);
+        setTimeout(() => {
+          btn.classList.remove('wrong');
+        }, 800);
+      }
+    });
+
+    monsterQuizOptionsContainer.appendChild(btn);
+  });
+
+  monsterQuizModal.classList.remove('hidden');
+}
+
+function closeMonsterQuizModal() {
+  isModalOpen = false;
+  monsterQuizModal.classList.add('hidden');
+}
+
+btnCloseMonsterQuiz.addEventListener('click', closeMonsterQuizModal);
+monsterQuizModal.addEventListener('click', (e) => {
+  if (e.target === monsterQuizModal) closeMonsterQuizModal();
+});
+
 // 2. Polaroid Oggetto Trovato Livello 2
 function openItemFoundModal() {
   isModalOpen = true;
@@ -969,6 +1075,8 @@ function openLevel3BenchModal() {
 }
 
 // 4. Mini-Quiz Cancello (Livello 1)
+let funnyQuizOptionIndex = 0;
+
 function openQuizModal() {
   isModalOpen = true;
   pausePlayerMovement();
@@ -978,39 +1086,76 @@ function openQuizModal() {
   quizFeedbackEl.textContent = '';
   quizOptionsContainer.innerHTML = '';
 
-  level1Data.quiz.options.forEach((opt, idx) => {
-    const btn = document.createElement('button');
-    btn.className = 'quiz-opt-btn';
-    btn.innerHTML = `<span>${idx + 1}.</span> <span>${opt.text}</span>`;
+  const isLui = activePlayerKey === 'lui';
+  const funnyChoices = (level1Data.quiz.option3Choices && level1Data.quiz.option3Choices.length > 0)
+    ? level1Data.quiz.option3Choices
+    : ['Gerry Scotti', 'Joe Bastianich', 'Thomas Turbato', 'Pippi'];
 
-    btn.addEventListener('click', () => {
-      if (opt.isCorrect) {
-        btn.classList.add('correct');
-        quizFeedbackEl.className = 'quiz-feedback success';
-        quizFeedbackEl.textContent = level1Data.quiz.successFeedback;
-        if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+  function handleAnswer(btn, isCorrect) {
+    if (isCorrect) {
+      btn.classList.add('correct');
+      quizFeedbackEl.className = 'quiz-feedback success';
+      quizFeedbackEl.textContent = level1Data.quiz.successFeedback;
+      if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
 
-        const allBtns = quizOptionsContainer.querySelectorAll('.quiz-opt-btn');
-        allBtns.forEach(b => b.style.pointerEvents = 'none');
+      const allBtns = quizOptionsContainer.querySelectorAll('.quiz-opt-btn');
+      allBtns.forEach(b => (b.style.pointerEvents = 'none'));
 
-        setTimeout(() => {
-          gateItem.isOpen = true;
-          invalidateObstaclesCache();
-          invalidateRenderItemsCache();
-          closeQuizModal();
-          triggerHeartExplosion();
-        }, 850);
-      } else {
-        btn.classList.add('wrong');
-        quizFeedbackEl.className = 'quiz-feedback error';
-        quizFeedbackEl.textContent = level1Data.quiz.wrongFeedback;
-        if (navigator.vibrate) navigator.vibrate(100);
-        setTimeout(() => { btn.classList.remove('wrong'); }, 800);
-      }
-    });
+      setTimeout(() => {
+        gateItem.isOpen = true;
+        invalidateObstaclesCache();
+        invalidateRenderItemsCache();
+        closeQuizModal();
+        triggerHeartExplosion();
+      }, 850);
+    } else {
+      btn.classList.remove('wrong');
+      void btn.offsetWidth; // forza il reflow per riavviare l'animazione di shake
+      btn.classList.add('wrong');
+      quizFeedbackEl.className = 'quiz-feedback error';
+      quizFeedbackEl.textContent = level1Data.quiz.wrongFeedback;
+      if (navigator.vibrate) navigator.vibrate(100);
+      setTimeout(() => {
+        btn.classList.remove('wrong');
+      }, 800);
+    }
+  }
 
-    quizOptionsContainer.appendChild(btn);
+  // 1. Opzione 1: "Io" (Corretta se il giocatore è Lui)
+  const btn1 = document.createElement('button');
+  btn1.className = 'quiz-opt-btn';
+  btn1.innerHTML = `<span>1.</span> <span>${level1Data.quiz.option1 || 'Io'}</span>`;
+  btn1.addEventListener('click', () => {
+    handleAnswer(btn1, isLui);
   });
+  quizOptionsContainer.appendChild(btn1);
+
+  // 2. Opzione 2: "Tu" (Corretta se la giocatrice è Lei)
+  const btn2 = document.createElement('button');
+  btn2.className = 'quiz-opt-btn';
+  btn2.innerHTML = `<span>2.</span> <span>${level1Data.quiz.option2 || 'Tu'}</span>`;
+  btn2.addEventListener('click', () => {
+    handleAnswer(btn2, !isLui);
+  });
+  quizOptionsContainer.appendChild(btn2);
+
+  // 3. Opzione 3: Array dinamico buffo che cambia a ogni click (Sempre errata)
+  const btn3 = document.createElement('button');
+  btn3.className = 'quiz-opt-btn';
+  const spanNum3 = document.createElement('span');
+  spanNum3.textContent = '3.';
+  const spanText3 = document.createElement('span');
+  spanText3.textContent = funnyChoices[funnyQuizOptionIndex % funnyChoices.length];
+  btn3.appendChild(spanNum3);
+  btn3.appendChild(spanText3);
+
+  btn3.addEventListener('click', () => {
+    // A ogni click cambia opzione scorrendo l'array
+    funnyQuizOptionIndex = (funnyQuizOptionIndex + 1) % funnyChoices.length;
+    spanText3.textContent = funnyChoices[funnyQuizOptionIndex];
+    handleAnswer(btn3, false);
+  });
+  quizOptionsContainer.appendChild(btn3);
 
   quizModal.classList.remove('hidden');
 }
@@ -1076,10 +1221,12 @@ function openLevelClearModal() {
   isModalOpen = true;
   pausePlayerMovement();
 
+  const levelClearHeartsEl = document.querySelector('.level-clear-hearts');
   if (currentLevel === 1) {
     const partnerMsg = activePlayerKey === 'lui' ? level1Data.partnerGreetingLui : level1Data.partnerGreetingLei;
-    levelClearTitleEl.textContent = 'Vi siete ritrovati! 💖';
+    levelClearTitleEl.textContent = 'Vi siete ritrovati!';
     levelClearTextEl.textContent = partnerMsg;
+    if (levelClearHeartsEl) levelClearHeartsEl.textContent = '🩷';
     btnNextLevel.textContent = 'VAI AL LIVELLO 2 ➔';
   } else if (currentLevel === 2) {
     const partnerMsg = activePlayerKey === 'lui' ? level2Data.partnerSuccessLui : level2Data.partnerSuccessLei;
@@ -1157,8 +1304,9 @@ finaleModal.addEventListener('click', (e) => {
 btnRestartGame.addEventListener('click', () => {
   finaleModal.classList.add('hidden');
   isModalOpen = false;
-  
+
   // Reset di tutti gli stati di gioco
+  isMonsterQuizSolved = false;
   gateItem.isOpen = false;
   level2Item.isCollected = false;
   level3Sign.isResolved = false;
@@ -1230,11 +1378,11 @@ function bindTouchButton(buttonEl, directionKey) {
       if (e.pointerId !== undefined && buttonEl.setPointerCapture) {
         buttonEl.setPointerCapture(e.pointerId);
       }
-    } catch (_) {}
+    } catch (_) { }
     inputState[directionKey] = true;
     buttonEl.classList.add('active');
     if (navigator.vibrate) {
-      try { navigator.vibrate(12); } catch (_) {}
+      try { navigator.vibrate(12); } catch (_) { }
     }
   };
 
@@ -1244,7 +1392,7 @@ function bindTouchButton(buttonEl, directionKey) {
       if (e.pointerId !== undefined && buttonEl.hasPointerCapture && buttonEl.hasPointerCapture(e.pointerId)) {
         buttonEl.releasePointerCapture(e.pointerId);
       }
-    } catch (_) {}
+    } catch (_) { }
     inputState[directionKey] = false;
     buttonEl.classList.remove('active');
   };
@@ -1285,6 +1433,7 @@ window.addEventListener('keydown', (e) => {
   if (isModalOpen) {
     if (e.key === 'Escape') {
       closePolaroidModal();
+      closeMonsterQuizModal();
       closeQuizModal();
       closeDilemmaModal();
       dialogModal.classList.add('hidden');
@@ -1656,7 +1805,7 @@ function draw() {
     // Lanterne e candele intorno alla radura
     const candles = [
       { x: 110, y: 134 }, { x: 210, y: 134 },
-      { x: 125, y: 92 },  { x: 195, y: 92 },
+      { x: 125, y: 92 }, { x: 195, y: 92 },
       { x: 125, y: 176 }, { x: 195, y: 176 }
     ];
     for (const c of candles) {
@@ -1745,11 +1894,33 @@ function draw() {
       ctx.fillRect(item.x + 6, item.y + 17, 3, 6);
       ctx.fillRect(item.x + item.width - 9, item.y + 17, 3, 6);
 
+      // In Livello 1, disegna una mini lattina di Monster appoggiata sulla panchina
+      if (currentLevel === 1 && monsterItem.loaded) {
+        ctx.drawImage(monsterItem.img, item.x + item.width - 12, item.y + 4, 10, 12);
+      }
+
       if (currentInteractionTarget === 'bench') {
         const pulse = Math.sin(Date.now() / 250) * 3;
-        ctx.font = '16px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('📸', item.x + item.width / 2, item.y - 12 + pulse);
+        if (currentLevel === 1) {
+          if (monsterItem.loaded) {
+            const iconSize = 22;
+            ctx.drawImage(
+              monsterItem.img,
+              Math.round(item.x + item.width / 2 - iconSize / 2),
+              Math.round(item.y - 18 + pulse),
+              iconSize,
+              iconSize
+            );
+          } else {
+            ctx.font = '16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('⚡', item.x + item.width / 2, item.y - 12 + pulse);
+          }
+        } else {
+          ctx.font = '16px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('📸', item.x + item.width / 2, item.y - 12 + pulse);
+        }
       }
     } else if (item.type === 'sign') {
       // Disegno Cartello in Legno (Livello 3)
@@ -1905,7 +2076,7 @@ function draw() {
   if (currentLevel === 4) {
     for (const fly of fireflies) {
       const pulse = Math.sin(Date.now() * fly.pulseSpeed + fly.pulseOffset) * 0.5 + 0.5;
-      
+
       // Bagliore esterno soffuso
       ctx.fillStyle = fly.color;
       ctx.globalAlpha = 0.15 * pulse;
@@ -1926,7 +2097,7 @@ function draw() {
   ctx.font = '9px Silkscreen, monospace';
   ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
   ctx.textAlign = 'left';
-  
+
   let currentTitle = level1Data.title;
   if (currentLevel === 2) currentTitle = level2Data.title;
   else if (currentLevel === 3) currentTitle = level3Data.title;

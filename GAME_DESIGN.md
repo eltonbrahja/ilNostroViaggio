@@ -57,11 +57,11 @@ Poiché l'esperienza è pensata esclusivamente per smartphone, l'interfaccia ado
 Dividere l'esperienza a livelli isolati garantisce massima fluidità nel browser mobile e crea un ritmo di progressione chiaro ed entusiasmante:
 
 ### 🌸 Livello 1: "Il Primo Incontro" (Le Origini)
-* **Obiettivo:** Raggiungere la prima panchina/cartello dei ricordi.
-* **Contenuto:** 
-  * Foto polaroid del primo incontro/inizio storia + frase dedicata.
+* **Panchina della Monster:** 
+  * Icona fluttuante personalizzata con Monster Energy in pixel art.
+  * Mini-quiz di coppia: *"Qual è la monster preferita del tuo partner?"* (Lui -> Monster Ultra White, Lei -> Monster Ultra Black Cherry, opzioni: Monster Mango Loco, Monster Monarch).
 * **Sblocco uscita:**
-  * Un cancello chiuso che si apre rispondendo a un piccolo quiz a risposta multipla su come vi siete conosciuti o sul primo appuntamento.
+  * Un cancello chiuso che si apre rispondendo al quiz a risposta multipla su chi ha detto per primo "Ti amo".
 
 ### 🍕 Livello 2: "I Nostri Momenti" (Quotidianità e Viaggi)
 * **Obiettivo:** Mini caccia al tesoro nella mappa.
