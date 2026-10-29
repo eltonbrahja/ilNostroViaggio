@@ -392,6 +392,48 @@ const monsterItem = {
 monsterItem.img.src = '/contenuti/foto/monster-pixel-art.png';
 monsterItem.img.onload = () => { monsterItem.loaded = true; };
 
+// Sfondo Panoramico Livello 2 (Nature 1 - Pixel Art)
+const level2Background = {
+  img: new Image(),
+  loaded: false
+};
+level2Background.img.src = '/contenuti/ambienti/livello2/background.png';
+level2Background.img.onload = () => { level2Background.loaded = true; };
+
+const LEVEL2_WORLD_WIDTH = 683;
+const LEVEL2_WORLD_HEIGHT = 384;
+
+// Gattini Livello 2 (Cat Sprite Sheet)
+const catSprite = {
+  img: new Image(),
+  loaded: false
+};
+catSprite.img.src = '/contenuti/ambienti/livello2/cat.png';
+catSprite.img.onload = () => { catSprite.loaded = true; };
+
+const level2Cats = [
+  {
+    id: 'cat1',
+    x: 165,
+    y: 275,
+    renderSize: 32,
+    row: 4,          // Movimento 5 (5a riga, index 4): 8 frame (stiracchiamento / passo felpato)
+    totalFrames: 8,
+    frameSpeed: 140,
+    animTimer: 0
+  },
+  {
+    id: 'cat2',
+    x: 485,
+    y: 300,
+    renderSize: 32,
+    row: 8,          // Penultimo movimento (9a riga, index 8): 7 frame (balzo / salto giocoso)
+    totalFrames: 7,
+    frameSpeed: 160,
+    animTimer: 0
+  }
+];
+
 
 // ============================================================================
 // 4. STATO DEL GIOCO & SELEZIONE PERSONAGGIO
@@ -472,9 +514,15 @@ const player = {
 };
 
 function resetPlayerPosition() {
-  player.x = canvas.width / 2;
-  player.y = canvas.height - 50;
-  player.facing = 'up';
+  if (currentLevel === 2) {
+    player.x = 48;
+    player.y = 280;
+    player.facing = 'right';
+  } else {
+    player.x = canvas.width / 2;
+    player.y = canvas.height - 50;
+    player.facing = 'up';
+  }
 }
 
 const partnerNPC = {
@@ -533,8 +581,8 @@ const map1GrassTufts = [
 
 // --- ELEMENTI DEL LIVELLO 2 ---
 const level2Item = {
-  x: 188,
-  y: 205,
+  x: 290,
+  y: 280,
   width: 26,
   height: 26,
   isCollected: false
@@ -676,6 +724,11 @@ function switchToLevel(newLevelNumber) {
     partnerNPC.x = canvas.width / 2;
     partnerNPC.y = 126; // Al centro della piazza a forma di cuore
     partnerNPC.facing = 'down';
+  } else if (currentLevel === 2) {
+    levelBadge.textContent = 'Livello 2';
+    partnerNPC.x = 610;
+    partnerNPC.y = 280;
+    partnerNPC.facing = 'left';
   } else {
     levelBadge.textContent = `Livello ${currentLevel}`;
     partnerNPC.x = canvas.width / 2;
@@ -725,46 +778,64 @@ function getMapObstacles() {
 
   const obstacles = [];
 
-  // Bordi esterni generali
-  obstacles.push({ x: -50, y: 0, width: 95, height: canvas.height });
-  obstacles.push({ x: 275, y: 0, width: 95, height: canvas.height });
-  obstacles.push({ x: 0, y: -50, width: canvas.width, height: 85 });
-  obstacles.push({ x: 0, y: canvas.height - 10, width: canvas.width, height: 50 });
-
-  let activeTrees = map1Trees;
-  let activeBushes = map1Bushes;
-
   if (currentLevel === 2) {
-    activeTrees = map2Trees;
-    activeBushes = map2Bushes;
-  } else if (currentLevel === 3) {
-    activeTrees = map3Trees;
-    activeBushes = map3Bushes;
-  } else if (currentLevel === 4) {
-    activeTrees = map4Trees;
-    activeBushes = map4Bushes;
-  }
+    // Limiti del mondo orizzontale di Livello 2 (Nature 1)
+    obstacles.push({ x: -50, y: 0, width: 85, height: LEVEL2_WORLD_HEIGHT }); // Limite sinistro
+    obstacles.push({ x: 645, y: 0, width: 85, height: LEVEL2_WORLD_HEIGHT }); // Limite destro
+    obstacles.push({ x: 0, y: -50, width: LEVEL2_WORLD_WIDTH, height: 280 }); // Limite superiore (cielo, nuvole, montagne non calpestabili)
+    obstacles.push({ x: 0, y: 345, width: LEVEL2_WORLD_WIDTH, height: 60 });  // Limite inferiore
+    // Tronco del grande albero al centro di Nature 1
+    obstacles.push({ x: 380, y: 220, width: 50, height: 35 });
 
-  // Tronchi degli alberi
-  for (let i = 0; i < activeTrees.length; i++) {
-    const tree = activeTrees[i];
-    obstacles.push({
-      x: tree.x + 32,
-      y: tree.y + 64,
-      width: 32,
-      height: 22
-    });
-  }
+    // Ostacoli fisici per i due gattini
+    for (let i = 0; i < level2Cats.length; i++) {
+      const cat = level2Cats[i];
+      obstacles.push({
+        x: cat.x - 10,
+        y: cat.y + 2,
+        width: 20,
+        height: 10
+      });
+    }
+  } else {
+    // Bordi esterni generali per livelli verticali (Livello 1, 3 e 4)
+    obstacles.push({ x: -50, y: 0, width: 95, height: canvas.height });
+    obstacles.push({ x: 275, y: 0, width: 95, height: canvas.height });
+    obstacles.push({ x: 0, y: -50, width: canvas.width, height: 85 });
+    obstacles.push({ x: 0, y: canvas.height - 10, width: canvas.width, height: 50 });
 
-  // Cespugli
-  for (let i = 0; i < activeBushes.length; i++) {
-    const b = activeBushes[i];
-    obstacles.push({
-      x: b.x + 4,
-      y: b.y + 8,
-      width: 24,
-      height: 20
-    });
+    let activeTrees = map1Trees;
+    let activeBushes = map1Bushes;
+
+    if (currentLevel === 3) {
+      activeTrees = map3Trees;
+      activeBushes = map3Bushes;
+    } else if (currentLevel === 4) {
+      activeTrees = map4Trees;
+      activeBushes = map4Bushes;
+    }
+
+    // Tronchi degli alberi
+    for (let i = 0; i < activeTrees.length; i++) {
+      const tree = activeTrees[i];
+      obstacles.push({
+        x: tree.x + 32,
+        y: tree.y + 64,
+        width: 32,
+        height: 22
+      });
+    }
+
+    // Cespugli
+    for (let i = 0; i < activeBushes.length; i++) {
+      const b = activeBushes[i];
+      obstacles.push({
+        x: b.x + 4,
+        y: b.y + 8,
+        width: 24,
+        height: 20
+      });
+    }
   }
 
   // Ostacoli specifici per ciascun livello
@@ -1536,6 +1607,13 @@ function update(deltaTime) {
     if (p.life <= 0) heartParticles.splice(i, 1);
   }
 
+  // Aggiornamento animazione gattini nel Livello 2
+  if (currentLevel === 2) {
+    for (let i = 0; i < level2Cats.length; i++) {
+      level2Cats[i].animTimer += clampedDelta;
+    }
+  }
+
   // Aggiornamento lucciole fluttuanti nel Gran Finale
   if (currentLevel === 4) {
     for (let i = 0; i < fireflies.length; i++) {
@@ -1568,10 +1646,7 @@ function getStaticRenderItems() {
   const items = [];
   let activeTrees = map1Trees;
   let activeBushes = map1Bushes;
-  if (currentLevel === 2) {
-    activeTrees = map2Trees;
-    activeBushes = map2Bushes;
-  } else if (currentLevel === 3) {
+  if (currentLevel === 3) {
     activeTrees = map3Trees;
     activeBushes = map3Bushes;
   } else if (currentLevel === 4) {
@@ -1579,25 +1654,27 @@ function getStaticRenderItems() {
     activeBushes = map4Bushes;
   }
 
-  for (let i = 0; i < activeTrees.length; i++) {
-    const tree = activeTrees[i];
-    items.push({
-      type: 'tree',
-      x: tree.x,
-      y: tree.y,
-      variant: tree.variant,
-      sortY: tree.y + 76
-    });
-  }
+  if (currentLevel !== 2) {
+    for (let i = 0; i < activeTrees.length; i++) {
+      const tree = activeTrees[i];
+      items.push({
+        type: 'tree',
+        x: tree.x,
+        y: tree.y,
+        variant: tree.variant,
+        sortY: tree.y + 76
+      });
+    }
 
-  for (let i = 0; i < activeBushes.length; i++) {
-    const b = activeBushes[i];
-    items.push({
-      type: 'bush',
-      x: b.x,
-      y: b.y,
-      sortY: b.y + 26
-    });
+    for (let i = 0; i < activeBushes.length; i++) {
+      const b = activeBushes[i];
+      items.push({
+        type: 'bush',
+        x: b.x,
+        y: b.y,
+        sortY: b.y + 26
+      });
+    }
   }
 
   if (currentLevel === 1) {
@@ -1685,8 +1762,28 @@ const playerRenderItem = {
 function draw() {
   ctx.imageSmoothingEnabled = false;
 
-  // 1. Sfondo del prato
-  if (currentLevel === 4) {
+  // Calcolo scorrimento telecamera (per Livello 2 orizzontale)
+  let cameraX = 0;
+  if (currentLevel === 2) {
+    const maxCamX = LEVEL2_WORLD_WIDTH - canvas.width;
+    cameraX = Math.round(Math.max(0, Math.min(maxCamX, player.x - canvas.width / 2)));
+  }
+
+  ctx.save();
+  if (cameraX !== 0) {
+    ctx.translate(-cameraX, 0);
+  }
+
+  // 1. Sfondo del livello
+  if (currentLevel === 2) {
+    // Sfondo panoramico pixel art Nature 1 (Livello 2)
+    if (level2Background.loaded) {
+      ctx.drawImage(level2Background.img, 0, 0, 576, 324, 0, 0, LEVEL2_WORLD_WIDTH, LEVEL2_WORLD_HEIGHT);
+    } else {
+      ctx.fillStyle = '#458532';
+      ctx.fillRect(0, 0, LEVEL2_WORLD_WIDTH, LEVEL2_WORLD_HEIGHT);
+    }
+  } else if (currentLevel === 4) {
     // Atmosfera notturna / crepuscolare romantica per il Gran Finale
     ctx.fillStyle = '#1b3225';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1700,7 +1797,7 @@ function draw() {
       }
     }
   } else {
-    // Prato soleggiato diurno per i Livelli 1, 2 e 3
+    // Prato soleggiato diurno per i Livelli 1 e 3
     ctx.fillStyle = '#458532';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -1714,7 +1811,7 @@ function draw() {
     }
   }
 
-  // 2. Sentiero Centrale e Piazzola d'incontro
+  // 2. Sentiero Centrale e Piazzola d'incontro (per Livello 1, 3 e 4)
   if (currentLevel === 1) {
     ctx.fillStyle = '#945b3e';
     ctx.fillRect(92, 44, 136, canvas.height - 44);
@@ -1732,28 +1829,6 @@ function draw() {
     ctx.fillRect(145, 240, 3, 2);
     ctx.fillRect(160, 290, 2, 2);
     ctx.fillRect(120, 335, 3, 2);
-  } else if (currentLevel === 2) {
-    ctx.fillStyle = '#945b3e';
-    ctx.fillRect(84, 44, 152, canvas.height - 44);
-    ctx.fillStyle = '#b17251';
-    ctx.fillRect(90, 48, 140, canvas.height - 48);
-
-    // Deviazione sentiero verso l'oggetto segreto sulla destra
-    ctx.fillStyle = '#945b3e';
-    ctx.fillRect(160, 192, 60, 52);
-    ctx.fillStyle = '#b17251';
-    ctx.fillRect(164, 196, 52, 44);
-
-    ctx.fillStyle = '#945b3e';
-    ctx.fillRect(70, 34, 180, 60);
-    ctx.fillStyle = '#b17251';
-    ctx.fillRect(74, 38, 172, 52);
-
-    ctx.fillStyle = '#caa38f';
-    ctx.fillRect(115, 120, 3, 2);
-    ctx.fillRect(135, 220, 3, 2);
-    ctx.fillRect(195, 215, 2, 2);
-    ctx.fillRect(110, 310, 3, 2);
   } else if (currentLevel === 3) {
     // Sentiero sinuoso del Livello 3 (curva morbida con slargo centrale)
     ctx.fillStyle = '#945b3e';
@@ -1815,14 +1890,15 @@ function draw() {
   }
 
   // 3. Ciuffi d'erba fioriti
-  let activeGrass = map1GrassTufts;
-  if (currentLevel === 2) activeGrass = map2GrassTufts;
-  else if (currentLevel === 3) activeGrass = map3GrassTufts;
-  else if (currentLevel === 4) activeGrass = map4GrassTufts;
+  if (currentLevel !== 2) {
+    let activeGrass = map1GrassTufts;
+    if (currentLevel === 3) activeGrass = map3GrassTufts;
+    else if (currentLevel === 4) activeGrass = map4GrassTufts;
 
-  if (env.grass.loaded) {
-    for (const g of activeGrass) {
-      ctx.drawImage(env.grass.img, g.x, g.y, 32, 32);
+    if (env.grass.loaded) {
+      for (const g of activeGrass) {
+        ctx.drawImage(env.grass.img, g.x, g.y, 32, 32);
+      }
     }
   }
 
@@ -1858,6 +1934,18 @@ function draw() {
 
   renderList.push(partnerRenderItem);
   renderList.push(playerRenderItem);
+
+  // Inserimento gattini nel Livello 2 ordinati per profondità
+  if (currentLevel === 2 && catSprite.loaded) {
+    for (let i = 0; i < level2Cats.length; i++) {
+      const cat = level2Cats[i];
+      renderList.push({
+        type: 'cat',
+        cat: cat,
+        sortY: cat.y + 12
+      });
+    }
+  }
 
   renderList.sort((a, b) => a.sortY - b.sortY);
 
@@ -2059,6 +2147,34 @@ function draw() {
           ctx.setLineDash([]);
         }
       }
+    } else if (item.type === 'cat') {
+      const cat = item.cat;
+
+      // Ombra soffusa a terra
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+      ctx.beginPath();
+      ctx.ellipse(cat.x, cat.y + 10, 10, 3.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Disegno del frame dello sprite
+      const frameIndex = Math.floor(cat.animTimer / cat.frameSpeed) % cat.totalFrames;
+      const sx = frameIndex * 32;
+      const sy = cat.row * 32;
+      ctx.drawImage(
+        catSprite.img,
+        sx, sy, 32, 32,
+        Math.round(cat.x - 16), Math.round(cat.y - 16),
+        32, 32
+      );
+
+      // Zampina affettuosa se il giocatore si avvicina
+      const distToPlayer = Math.hypot(player.x - cat.x, player.y - cat.y);
+      if (distToPlayer < 40) {
+        const pulse = Math.sin(Date.now() / 200) * 2;
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('🐾', cat.x, cat.y - 18 + pulse);
+      }
     }
   }
 
@@ -2092,6 +2208,9 @@ function draw() {
     }
     ctx.globalAlpha = 1.0;
   }
+
+  // Ripristiniamo la matrice di trasformazione per disegnare l'HUD fisso a schermo
+  ctx.restore();
 
   // 7. HUD di Livello in alto
   ctx.font = '9px Silkscreen, monospace';
