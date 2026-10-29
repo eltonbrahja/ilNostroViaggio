@@ -415,8 +415,8 @@ const level2Cats = [
   {
     id: 'cat1',
     x: 165,
-    y: 275,
-    renderSize: 32,
+    y: 318,          // Posizione abbassata per poggiare perfettamente a terra sul prato
+    renderSize: 38,  // Dimensione aumentata del 20% (da 32px a 38px)
     row: 4,          // Movimento 5 (5a riga, index 4): 8 frame (stiracchiamento / passo felpato)
     totalFrames: 8,
     frameSpeed: 140,
@@ -425,8 +425,8 @@ const level2Cats = [
   {
     id: 'cat2',
     x: 485,
-    y: 300,
-    renderSize: 32,
+    y: 322,          // Posizione abbassata a terra
+    renderSize: 38,  // Dimensione aumentata del 20% (da 32px a 38px)
     row: 8,          // Penultimo movimento (9a riga, index 8): 7 frame (balzo / salto giocoso)
     totalFrames: 7,
     frameSpeed: 160,
@@ -1942,7 +1942,7 @@ function draw() {
       renderList.push({
         type: 'cat',
         cat: cat,
-        sortY: cat.y + 12
+        sortY: cat.y + 16
       });
     }
   }
@@ -2149,31 +2149,33 @@ function draw() {
       }
     } else if (item.type === 'cat') {
       const cat = item.cat;
+      const size = cat.renderSize || 38;
+      const half = Math.round(size / 2);
 
-      // Ombra soffusa a terra
+      // Ombra soffusa a terra posizionata sotto le zampe
       ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
       ctx.beginPath();
-      ctx.ellipse(cat.x, cat.y + 10, 10, 3.5, 0, 0, Math.PI * 2);
+      ctx.ellipse(cat.x, cat.y + half - 3, size * 0.32, 4, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Disegno del frame dello sprite
+      // Disegno del frame dello sprite scalato al 120%
       const frameIndex = Math.floor(cat.animTimer / cat.frameSpeed) % cat.totalFrames;
       const sx = frameIndex * 32;
       const sy = cat.row * 32;
       ctx.drawImage(
         catSprite.img,
         sx, sy, 32, 32,
-        Math.round(cat.x - 16), Math.round(cat.y - 16),
-        32, 32
+        Math.round(cat.x - half), Math.round(cat.y - half),
+        size, size
       );
 
       // Zampina affettuosa se il giocatore si avvicina
       const distToPlayer = Math.hypot(player.x - cat.x, player.y - cat.y);
-      if (distToPlayer < 40) {
+      if (distToPlayer < 44) {
         const pulse = Math.sin(Date.now() / 200) * 2;
-        ctx.font = '12px sans-serif';
+        ctx.font = '13px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('🐾', cat.x, cat.y - 18 + pulse);
+        ctx.fillText('🐾', cat.x, cat.y - half - 4 + pulse);
       }
     }
   }
