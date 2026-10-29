@@ -1867,9 +1867,14 @@ function bindTouchButton(buttonEl, directionKey) {
   buttonEl.addEventListener('pointerup', endAction);
   buttonEl.addEventListener('pointercancel', endAction);
 
-  // Evita che la pressione prolungata apra il menu contestuale dello smartphone
+  // Evita che la pressione prolungata apra il menu contestuale o selezioni testo su mobile
   buttonEl.addEventListener('contextmenu', (e) => e.preventDefault());
+  buttonEl.addEventListener('selectstart', (e) => e.preventDefault());
 }
+
+// Disattiva selezione testo accidentale a livello globale durante la pressione prolungata
+document.addEventListener('selectstart', (e) => e.preventDefault());
+document.addEventListener('contextmenu', (e) => e.preventDefault());
 
 bindTouchButton(btnUp, 'up');
 bindTouchButton(btnLeft, 'left');
