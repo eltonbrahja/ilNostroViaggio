@@ -72,13 +72,15 @@ const level1Data = {
 const level2Data = {
   title: 'LIVELLO 2: LA RADURA DEI VIAGGI',
 
+  // Dialogo finale con il partner al traguardo del Livello 2 (passaggio al Livello 3)
+  partnerSuccessLui: 'Bravo amore!',
+  partnerSuccessLei: 'Brava amore!',
+
   // Partita a scacchi (Scacco Matto in 1)
   chess: {
     title: 'La Partita Incompiuta ♟️',
     subtitle: 'Il Bianco muove e dà scacco matto in 1!',
     partnerNeedMsg: 'Ti fa cenno con la mano sorridendo: "Amore! C\'è una scacchiera sotto il grande albero con una partita in sospeso... trova lo scacco matto e raggiungimi!" ♟️💖',
-    partnerSuccessLui: 'Ti abbraccia fiero: "Mossa da vero Maestro! Che scacco matto pazzesco amore mio, sei imbattibile!" 🏆💖',
-    partnerSuccessLei: 'Ti salta al collo estasiata: "Scacco matto al primo colpo! Sapevo che avevi la mossa vincente in testa!" 🏆💖',
     wrongMsg: 'riprova',
     wrongGifHtml: `<div style="width:100%;height:0;padding-bottom:77%;position:relative;"><iframe src="https://giphy.com/embed/eMu0803X2zkWY" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/the-simpsons-eMu0803X2zkWY" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`,
     successMsg: 'DAMN! SCACCO MATTO! 🏆✨',
