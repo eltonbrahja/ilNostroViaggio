@@ -26,8 +26,8 @@
       </div>
       <h1 class="header-title">Il Nostro Viaggio</h1>
       <button id="btn-switch-char" class="char-switch-badge" title="Cambia Personaggio">
-        <span id="header-avatar-icon">👤</span>
-        <span id="header-avatar-name">Scegli</span>
+        <span id="header-avatar-icon" style="display: none;"></span>
+        <span id="header-avatar-name">Rebecca</span>
       </button>
     </header>
 
@@ -146,6 +146,8 @@
 
         <div id="monster-quiz-feedback" class="quiz-feedback hidden"></div>
 
+        <div id="monster-quiz-media" class="cat-media-container hidden"></div>
+
         <button id="btn-close-monster-quiz" class="modal-close-btn">Chiudi</button>
       </div>
     </div>
@@ -224,6 +226,65 @@
         </div>
         <p id="modal-text">Messaggio del gioco.</p>
         <button id="btn-close-modal" class="modal-close-btn">Chiudi</button>
+      </div>
+    </div>
+
+    <!-- 5b. Modale Interazione Gattini (Livello 2) -->
+    <div id="cat-modal" class="modal-overlay hidden">
+      <div class="modal-card cat-modal-card">
+        <div class="modal-header">
+          <span class="modal-icon">🐾</span>
+          <div>
+            <h2 id="cat-modal-title">Hai accarezzato il gattino!</h2>
+            <p id="cat-modal-subtitle" class="quiz-subtitle">Purrrr... che fusa dolci! 💕</p>
+          </div>
+        </div>
+
+        <div id="cat-modal-media" class="cat-media-container">
+          <!-- Qui viene inserito il contenuto multimediale (es. GIF Giphy) -->
+        </div>
+
+        <p id="cat-modal-text" class="cat-dialog-text">
+          Il gattino fa le fusa felicissimo tra le tue mani! ✨
+        </p>
+
+        <button id="btn-close-cat-modal" class="modal-action-btn">Che carino! 🥰</button>
+      </div>
+    </div>
+
+    <!-- 5c. Modale Scacchiera Interattiva (Livello 2) -->
+    <div id="chess-modal" class="modal-overlay hidden">
+      <div class="modal-card chess-modal-card">
+        <div class="modal-header">
+          <span class="modal-icon">♟️</span>
+          <div>
+            <h2 id="chess-modal-title">Scacco Matto in 1</h2>
+            <p id="chess-modal-subtitle" class="quiz-subtitle">Tocca la Donna bianca e dai matto!</p>
+          </div>
+        </div>
+
+        <!-- Vista Scacchiera -->
+        <div id="chess-board-view" class="chess-view-section">
+          <div class="chess-board-wrapper">
+            <div id="chess-board" class="chess-board-grid">
+              <!-- Caselle generate da JS -->
+            </div>
+          </div>
+          <p id="chess-status-text" class="chess-status-hint">Il Bianco muove. Tocca un pezzo bianco per selezionarlo!</p>
+          <button id="btn-close-chess" class="modal-close-btn">Chiudi</button>
+        </div>
+
+        <!-- Vista Esito (GIF vittoria o errore) -->
+        <div id="chess-result-view" class="chess-view-section hidden">
+          <h3 id="chess-result-title" class="chess-result-heading">Riprova</h3>
+          <div id="chess-result-media" class="cat-media-container">
+            <!-- Iframe GIF iniettato dinamicamente -->
+          </div>
+          <p id="chess-result-msg" class="cat-dialog-text"></p>
+          <div class="chess-result-actions">
+            <button id="btn-chess-action" class="modal-action-btn">Riprova la mossa ♟️</button>
+          </div>
+        </div>
       </div>
     </div>
 

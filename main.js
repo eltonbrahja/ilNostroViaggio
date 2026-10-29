@@ -44,7 +44,9 @@ const level1Data = {
     otherOptions: ['Monster Mango Loco', 'Monster Monarch'],
     feedbackSuccessLui: 'Esatto! La mia monster preferita è la Bianca!',
     feedbackSuccessLei: 'Esatto! La mia monster preferita è quella alla ciliegia!',
-    feedbackWrong: 'Che errore tragico, muoviti e indovina'
+    feedbackWrong: 'Che errore tragico, muoviti e indovina',
+    successGifLui: `<div style="width:100%;height:0;padding-bottom:114%;position:relative;"><iframe src="https://giphy.com/embed/J8sdqUPZS5myxuUGtW" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/monster-montyland-whitemonster-J8sdqUPZS5myxuUGtW" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`,
+    successGifLei: `<div style="width:100%;height:0;padding-bottom:178%;position:relative;"><iframe src="https://giphy.com/embed/fSfMZ4h6ERCQQx5BnW" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/montyland-montythecat-montydance-fSfMZ4h6ERCQQx5BnW" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`
   },
   benchNoteLui: '"Novembre - Mi ricordo ancora quando ti sei seduta accanto a me... il cuore mi batteva forte e non riuscivo a smettere di guardarti sorridere." 🌸',
   benchNoteLei: '"Novembre - Quel pomeriggio insieme è volato in un secondo. Quando mi hai fatto ridere per la prima volta, ho capito che eri speciale." 🌸',
@@ -57,8 +59,8 @@ const level1Data = {
     option3Choices: ['Gerry Scotti', 'Joe Bastianich', 'Thomas Turbato', 'Pippi'],
     // Risposta corretta se sono Lui: Io
     // Risposta corretta se sono Lei: Tu
-    successFeedback: 'Bravissima/o! Il lucchetto dorato scatta e il cancello si spalanca... vai dal tuo amore! 💖',
-    wrongFeedback: 'Ops! Quasi... ma non è andata esattamente così! Riprova, pensaci bene! 😂'
+    successFeedback: 'Bravissima/o! Non era cosi difficile, ora muovi le chiappe e passa al prossimo livello',
+    wrongFeedback: 'Ops! Quasi... ma non è andata esattamente così! Riprova!'
   },
 
   // Dialogo finale con il partner al traguardo del Livello 1
@@ -70,18 +72,34 @@ const level1Data = {
 const level2Data = {
   title: 'LIVELLO 2: LA RADURA DEI VIAGGI',
 
-  item: {
-    name: 'I Biglietti del Nostro Viaggio',
-    icon: '✈️', // Puoi cambiarlo con 🍕, 🧸, 🎟️, ecc.
-    hintTitle: 'Oggetto Smarrito Trovato!',
-    polaroidTextLui: '"La nostra prima vacanza insieme! Ricordi quante risate quando ci siamo persi per strada? Viaggiare con te rende magico ogni posto." ✈️🌍',
-    polaroidTextLei: '"Quel viaggio indimenticabile... ridere insieme fino alle lacrime è il ricordo più bello che potessi desiderare." ✈️🌍'
+  // Partita a scacchi (Scacco Matto in 1)
+  chess: {
+    title: 'La Partita Incompiuta ♟️',
+    subtitle: 'Il Bianco muove e dà scacco matto in 1!',
+    partnerNeedMsg: 'Ti fa cenno con la mano sorridendo: "Amore! C\'è una scacchiera sotto il grande albero con una partita in sospeso... trova lo scacco matto e raggiungimi!" ♟️💖',
+    partnerSuccessLui: 'Ti abbraccia fiero: "Mossa da vero Maestro! Che scacco matto pazzesco amore mio, sei imbattibile!" 🏆💖',
+    partnerSuccessLei: 'Ti salta al collo estasiata: "Scacco matto al primo colpo! Sapevo che avevi la mossa vincente in testa!" 🏆💖',
+    wrongMsg: 'riprova',
+    wrongGifHtml: `<div style="width:100%;height:0;padding-bottom:77%;position:relative;"><iframe src="https://giphy.com/embed/eMu0803X2zkWY" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/the-simpsons-eMu0803X2zkWY" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`,
+    successMsg: 'DAMN! SCACCO MATTO! 🏆✨',
+    successGifHtml: `<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/twxoPjMpsijwPFBVqs" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/HBOMax-friday-hbomax-fridayonhbomax-twxoPjMpsijwPFBVqs" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`
   },
 
-  partnerNeedItemMsg: 'Ti fa segno da lontano con un sorriso: "Amore! Hai dimenticato una cosa speciale per noi nascosta nella radura... cercala bene tra i cespugli!" 🔍',
-
-  partnerSuccessLui: 'Prende i biglietti emozionato: "Che bello, li hai trovati! Sei incredibile amore. Ogni giorno insieme a te è il viaggio più bello della mia vita." 💖',
-  partnerSuccessLei: 'Sorride radiosa: "Li hai trovati! Quante cose stupende abbiamo fatto insieme... e quante ne faremo ancora!" 💖'
+  // Finestre di dialogo e interazione per i gattini
+  cats: {
+    cat1: {
+      title: 'Hai accarezzato il primo gattino! 🐾',
+      subtitle: '',
+      text: 'MIAOOOOOOOOO',
+      htmlContent: `<div style="width:100%;height:0;padding-bottom:98%;position:relative;"><iframe src="https://giphy.com/embed/GTywSIhrVUo0p5gDJE" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/cat-meowstars-sc-GTywSIhrVUo0p5gDJE" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`
+    },
+    cat2: {
+      title: 'Hai accarezzato il secondo gattino! 🐾',
+      subtitle: '',
+      text: 'MIAOOOOOOOOO',
+      htmlContent: `<div style="width:100%;height:0;padding-bottom:126%;position:relative;"><iframe src="https://giphy.com/embed/kKeJ4JuNkaEZbkPOOL" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/yeulu-cute-animals-cats-kKeJ4JuNkaEZbkPOOL" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`
+    }
+  }
 };
 
 // --- CONTENUTI LIVELLO 3: "Inside Jokes & Complicità" (Dilemmi Buffi di Coppia) ---
@@ -182,6 +200,7 @@ const monsterQuizTitle = document.getElementById('monster-quiz-title');
 const monsterQuizQuestion = document.getElementById('monster-quiz-question');
 const monsterQuizOptionsContainer = document.getElementById('monster-quiz-options-container');
 const monsterQuizFeedback = document.getElementById('monster-quiz-feedback');
+const monsterQuizMedia = document.getElementById('monster-quiz-media');
 const btnCloseMonsterQuiz = document.getElementById('btn-close-monster-quiz');
 
 // Modale 2: Mini-Quiz Cancello (Livello 1)
@@ -209,6 +228,28 @@ const dialogModal = document.getElementById('dialog-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalText = document.getElementById('modal-text');
 const btnCloseModal = document.getElementById('btn-close-modal');
+
+// Modale 5b: Interazione Gattini (Livello 2)
+const catModal = document.getElementById('cat-modal');
+const catModalTitle = document.getElementById('cat-modal-title');
+const catModalSubtitle = document.getElementById('cat-modal-subtitle');
+const catModalMedia = document.getElementById('cat-modal-media');
+const catModalText = document.getElementById('cat-modal-text');
+const btnCloseCatModal = document.getElementById('btn-close-cat-modal');
+
+// Modale 5c: Scacchiera Interattiva (Livello 2)
+const chessModal = document.getElementById('chess-modal');
+const chessModalTitle = document.getElementById('chess-modal-title');
+const chessModalSubtitle = document.getElementById('chess-modal-subtitle');
+const chessBoardView = document.getElementById('chess-board-view');
+const chessResultView = document.getElementById('chess-result-view');
+const chessBoardGrid = document.getElementById('chess-board');
+const chessStatusText = document.getElementById('chess-status-text');
+const btnCloseChess = document.getElementById('btn-close-chess');
+const chessResultTitle = document.getElementById('chess-result-title');
+const chessResultMedia = document.getElementById('chess-result-media');
+const chessResultMsg = document.getElementById('chess-result-msg');
+const btnChessAction = document.getElementById('btn-chess-action');
 
 // Modale 6: Gran Finale Romantico
 const finaleModal = document.getElementById('finale-modal');
@@ -482,8 +523,11 @@ btnStartGame.addEventListener('click', () => {
   isGameStarted = true;
   selectionScreen.classList.add('hidden');
 
-  headerAvatarName.textContent = activePlayerKey === 'lui' ? 'Lui' : 'Lei';
-  headerAvatarIcon.textContent = activePlayerKey === 'lui' ? '👦' : '👧';
+  headerAvatarName.textContent = activePlayerKey === 'lui' ? 'Elton' : 'Rebecca';
+  if (headerAvatarIcon) {
+    headerAvatarIcon.textContent = '';
+    headerAvatarIcon.style.display = 'none';
+  }
 
   resetPlayerPosition();
   if (navigator.vibrate) navigator.vibrate([20, 50, 20]);
@@ -579,13 +623,20 @@ const map1GrassTufts = [
   { x: 140, y: 260 }
 ];
 
-// --- ELEMENTI DEL LIVELLO 2 ---
-const level2Item = {
-  x: 290,
+// --- ELEMENTI DEL LIVELLO 2 (Tavolo Scacchi & Gattini) ---
+const chessTable = {
+  x: 310,
   y: 280,
-  width: 26,
+  width: 38,
   height: 26,
-  isCollected: false
+  isSolved: false
+};
+
+const level2Item = {
+  get x() { return chessTable.x; },
+  get y() { return chessTable.y; },
+  get isCollected() { return chessTable.isSolved; },
+  set isCollected(val) { chessTable.isSolved = val; }
 };
 
 const map2Trees = [
@@ -787,6 +838,14 @@ function getMapObstacles() {
     // Tronco del grande albero al centro di Nature 1
     obstacles.push({ x: 380, y: 220, width: 50, height: 35 });
 
+    // Ostacolo tavolo da scacchi
+    obstacles.push({
+      x: chessTable.x,
+      y: chessTable.y + 6,
+      width: chessTable.width,
+      height: chessTable.height - 6
+    });
+
     // Ostacoli fisici per i due gattini
     for (let i = 0; i < level2Cats.length; i++) {
       const cat = level2Cats[i];
@@ -918,12 +977,19 @@ function checkInteractionProximity() {
   }
   // --- CONTROLLO LIVELLO 2 ---
   else if (currentLevel === 2) {
-    const itemCenterX = level2Item.x + level2Item.width / 2;
-    const itemCenterY = level2Item.y + level2Item.height / 2;
-    const distItem = Math.hypot(player.x - itemCenterX, player.y - itemCenterY);
+    const distCat1 = Math.hypot(player.x - level2Cats[0].x, player.y - level2Cats[0].y);
+    const distCat2 = Math.hypot(player.x - level2Cats[1].x, player.y - level2Cats[1].y);
 
-    if (!level2Item.isCollected && distItem < 42) {
-      nextTarget = 'level2Item';
+    const tableCenterX = chessTable.x + chessTable.width / 2;
+    const tableCenterY = chessTable.y + chessTable.height / 2;
+    const distTable = Math.hypot(player.x - tableCenterX, player.y - tableCenterY);
+
+    if (distCat1 < 46) {
+      nextTarget = 'cat1';
+    } else if (distCat2 < 46) {
+      nextTarget = 'cat2';
+    } else if (distTable < 44) {
+      nextTarget = 'chess';
     } else if (distPartner < 48) {
       nextTarget = 'partner';
     }
@@ -957,6 +1023,20 @@ function checkInteractionProximity() {
   if (currentInteractionTarget !== lastInteractionTarget) {
     lastInteractionTarget = currentInteractionTarget;
     if (currentInteractionTarget) {
+      const sparkleEl = btnInteract.querySelector('.action-sparkle');
+      const textEl = btnInteract.querySelector('.action-text');
+
+      if (currentInteractionTarget === 'cat1' || currentInteractionTarget === 'cat2') {
+        if (sparkleEl) sparkleEl.textContent = '🐾';
+        if (textEl) textEl.textContent = 'ACCAREZZA';
+      } else if (currentInteractionTarget === 'chess') {
+        if (sparkleEl) sparkleEl.textContent = '♟️';
+        if (textEl) textEl.textContent = chessTable.isSolved ? 'VEDI SCACCHIERA' : 'GIOCA A SCACCHI';
+      } else {
+        if (sparkleEl) sparkleEl.textContent = '✨';
+        if (textEl) textEl.textContent = 'INTERAGISCI';
+      }
+
       btnInteract.classList.remove('hidden');
     } else {
       btnInteract.classList.add('hidden');
@@ -980,14 +1060,15 @@ function triggerInteraction() {
   }
   // --- AZIONI LIVELLO 2 ---
   else if (currentLevel === 2) {
-    if (currentInteractionTarget === 'level2Item') {
-      level2Item.isCollected = true;
-      invalidateRenderItemsCache();
-      triggerHeartExplosion();
-      openItemFoundModal();
+    if (currentInteractionTarget === 'cat1') {
+      openCatModal('cat1');
+    } else if (currentInteractionTarget === 'cat2') {
+      openCatModal('cat2');
+    } else if (currentInteractionTarget === 'chess') {
+      openChessModal();
     } else if (currentInteractionTarget === 'partner') {
-      if (!level2Item.isCollected) {
-        openGenericDialog('Cerca l\'oggetto! 🔍', level2Data.partnerNeedItemMsg);
+      if (!chessTable.isSolved) {
+        openGenericDialog('Risolvi la partita! ♟️', level2Data.chess.partnerNeedMsg);
       } else {
         openLevelClearModal();
       }
@@ -1060,6 +1141,10 @@ function openMonsterQuizModal() {
   monsterQuizQuestion.textContent = level1Data.benchQuiz.question;
   monsterQuizFeedback.className = 'quiz-feedback hidden';
   monsterQuizFeedback.textContent = '';
+  if (monsterQuizMedia) {
+    monsterQuizMedia.innerHTML = '';
+    monsterQuizMedia.classList.add('hidden');
+  }
   monsterQuizOptionsContainer.innerHTML = '';
   btnCloseMonsterQuiz.textContent = 'Chiudi';
 
@@ -1093,17 +1178,30 @@ function openMonsterQuizModal() {
           : level1Data.benchQuiz.feedbackSuccessLei;
         monsterQuizFeedback.textContent = feedbackMsg;
 
+        const successGif = isLui
+          ? level1Data.benchQuiz.successGifLui
+          : level1Data.benchQuiz.successGifLei;
+
+        if (successGif && monsterQuizMedia) {
+          monsterQuizMedia.innerHTML = successGif;
+          monsterQuizMedia.classList.remove('hidden');
+        }
+
         if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
         triggerHeartExplosion();
 
         const allBtns = monsterQuizOptionsContainer.querySelectorAll('.quiz-opt-btn');
         allBtns.forEach(b => (b.style.pointerEvents = 'none'));
 
-        btnCloseMonsterQuiz.textContent = 'Conserva nel cuore 💕';
+        btnCloseMonsterQuiz.textContent = ' Vai avanti 💕';
       } else {
         btn.classList.add('wrong');
         monsterQuizFeedback.className = 'quiz-feedback error';
         monsterQuizFeedback.textContent = level1Data.benchQuiz.feedbackWrong;
+        if (monsterQuizMedia) {
+          monsterQuizMedia.innerHTML = '';
+          monsterQuizMedia.classList.add('hidden');
+        }
         if (navigator.vibrate) navigator.vibrate(100);
         setTimeout(() => {
           btn.classList.remove('wrong');
@@ -1120,6 +1218,10 @@ function openMonsterQuizModal() {
 function closeMonsterQuizModal() {
   isModalOpen = false;
   monsterQuizModal.classList.add('hidden');
+  if (monsterQuizMedia) {
+    monsterQuizMedia.innerHTML = '';
+    monsterQuizMedia.classList.add('hidden');
+  }
 }
 
 btnCloseMonsterQuiz.addEventListener('click', closeMonsterQuizModal);
@@ -1379,7 +1481,7 @@ btnRestartGame.addEventListener('click', () => {
   // Reset di tutti gli stati di gioco
   isMonsterQuizSolved = false;
   gateItem.isOpen = false;
-  level2Item.isCollected = false;
+  chessTable.isSolved = false;
   level3Sign.isResolved = false;
 
   switchToLevel(1);
@@ -1405,6 +1507,288 @@ dialogModal.addEventListener('click', (e) => {
   }
 });
 
+// 8b. Modale Interazione Gattini (Livello 2)
+function openCatModal(catKey) {
+  isModalOpen = true;
+  pausePlayerMovement();
+
+  const data = level2Data.cats && level2Data.cats[catKey];
+  if (!data) return;
+
+  catModalTitle.textContent = data.title;
+  if (data.subtitle) {
+    catModalSubtitle.textContent = data.subtitle;
+    catModalSubtitle.style.display = 'block';
+  } else {
+    catModalSubtitle.textContent = '';
+    catModalSubtitle.style.display = 'none';
+  }
+  catModalMedia.innerHTML = data.htmlContent;
+  catModalText.textContent = data.text;
+
+  catModal.classList.remove('hidden');
+  triggerHeartExplosion();
+  if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+}
+
+function closeCatModal() {
+  catModal.classList.add('hidden');
+  catModalMedia.innerHTML = ''; // reset per pulire l'iframe
+  isModalOpen = false;
+}
+
+btnCloseCatModal.addEventListener('click', closeCatModal);
+catModal.addEventListener('click', (e) => {
+  if (e.target === catModal) closeCatModal();
+});
+
+// 8c. Modale Scacchiera Interattiva - Scacco Matto in 1 (Livello 2)
+const INITIAL_CHESS_POSITION = {
+  // Pezzi Bianchi
+  'g1': 'wK',
+  'h3': 'wQ',
+  'e1': 'wR',
+  'f7': 'wR',
+  'b3': 'wP',
+  'g2': 'wP',
+  'h2': 'wP',
+  // Pezzi Neri
+  'g8': 'bK',
+  'c2': 'bQ',
+  'c8': 'bR',
+  'f8': 'bR',
+  'a6': 'bP',
+  'b5': 'bP',
+  'g6': 'bP',
+  'h7': 'bP'
+};
+
+const CHESS_PIECE_ICONS = {
+  'wK': '/contenuti/ambienti/livello2/chess/wK.svg',
+  'wQ': '/contenuti/ambienti/livello2/chess/wQ.svg',
+  'wR': '/contenuti/ambienti/livello2/chess/wR.svg',
+  'wP': '/contenuti/ambienti/livello2/chess/wP.svg',
+  'bK': '/contenuti/ambienti/livello2/chess/bK.svg',
+  'bQ': '/contenuti/ambienti/livello2/chess/bQ.svg',
+  'bR': '/contenuti/ambienti/livello2/chess/bR.svg',
+  'bP': '/contenuti/ambienti/livello2/chess/bP.svg'
+};
+
+const CHESS_FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+let currentChessPosition = { ...INITIAL_CHESS_POSITION };
+let selectedChessSquare = null;
+let lastChessMove = null;
+
+function renderChessBoard(highlightMateSquare = null) {
+  if (!chessBoardGrid) return;
+  chessBoardGrid.innerHTML = '';
+
+  for (let rank = 8; rank >= 1; rank--) {
+    for (let fIdx = 0; fIdx < 8; fIdx++) {
+      const file = CHESS_FILES[fIdx];
+      const sq = file + rank;
+      const isDark = (fIdx + (8 - rank)) % 2 === 1;
+
+      const sqEl = document.createElement('div');
+      sqEl.className = 'chess-square ' + (isDark ? 'dark' : 'light');
+      sqEl.dataset.square = sq;
+
+      if (selectedChessSquare === sq) {
+        sqEl.classList.add('highlight-selected');
+      }
+      if (highlightMateSquare === sq) {
+        sqEl.classList.add('highlight-mate');
+      }
+      if (lastChessMove && (lastChessMove.from === sq || lastChessMove.to === sq)) {
+        sqEl.classList.add('highlight-prev');
+      }
+
+      // Coordinate bordo
+      if (file === 'a') {
+        const rankSpan = document.createElement('span');
+        rankSpan.className = 'chess-coord-rank';
+        rankSpan.textContent = rank;
+        sqEl.appendChild(rankSpan);
+      }
+      if (rank === 1) {
+        const fileSpan = document.createElement('span');
+        fileSpan.className = 'chess-coord-file';
+        fileSpan.textContent = file;
+        sqEl.appendChild(fileSpan);
+      }
+
+      // Icona Pezzo
+      const piece = currentChessPosition[sq];
+      if (piece && CHESS_PIECE_ICONS[piece]) {
+        const img = document.createElement('img');
+        img.src = CHESS_PIECE_ICONS[piece];
+        img.className = 'chess-piece-img';
+        img.alt = piece;
+        sqEl.appendChild(img);
+      }
+
+      chessBoardGrid.appendChild(sqEl);
+    }
+  }
+}
+
+function handleChessSquareClick(sq) {
+  if (chessTable.isSolved && !selectedChessSquare) {
+    const partnerName = currentCharacter === 'lui' ? 'Rebecca' : 'Elton';
+    chessStatusText.textContent = `Hai già dato scacco matto! 🎉 Raggiungi ${partnerName}!`;
+    return;
+  }
+
+  const pieceOnSquare = currentChessPosition[sq];
+
+  // Caso 1: Nessun pezzo attualmente selezionato
+  if (!selectedChessSquare) {
+    if (pieceOnSquare && pieceOnSquare.startsWith('w')) {
+      selectedChessSquare = sq;
+      const pieceName = pieceOnSquare === 'wQ' ? 'la Regina' : (pieceOnSquare === 'wR' ? 'la Torre' : (pieceOnSquare === 'wK' ? 'il Re' : 'il Pedone'));
+      chessStatusText.textContent = `Hai selezionato ${pieceName} (${sq.toUpperCase()}). Ora tocca la casella di destinazione!`;
+      renderChessBoard();
+      if (navigator.vibrate) navigator.vibrate(20);
+    } else if (pieceOnSquare && pieceOnSquare.startsWith('b')) {
+      chessStatusText.textContent = 'È il turno del Bianco! Tocca la Regina bianca per muovere.';
+    } else {
+      chessStatusText.textContent = 'Tocca un pezzo bianco (la Regina in H3) per preparare lo scacco matto!';
+    }
+    return;
+  }
+
+  // Caso 2: Un pezzo bianco è già selezionato
+  const selectedPiece = currentChessPosition[selectedChessSquare];
+
+  // Clic sulla stessa casella -> Deseleziona
+  if (sq === selectedChessSquare) {
+    selectedChessSquare = null;
+    chessStatusText.textContent = 'Pezzo deselezionato. Tocca la Regina in H3!';
+    renderChessBoard();
+    return;
+  }
+
+  // Clic su un altro pezzo bianco -> Cambia selezione
+  if (pieceOnSquare && pieceOnSquare.startsWith('w')) {
+    selectedChessSquare = sq;
+    const pieceName = pieceOnSquare === 'wQ' ? 'la Regina' : (pieceOnSquare === 'wR' ? 'la Torre' : (pieceOnSquare === 'wK' ? 'il Re' : 'il Pedone'));
+    chessStatusText.textContent = `Hai selezionato ${pieceName} (${sq.toUpperCase()}). Ora tocca la destinazione!`;
+    renderChessBoard();
+    if (navigator.vibrate) navigator.vibrate(20);
+    return;
+  }
+
+  // Clic su una casella di destinazione (vuota o pezzo nero)
+  const from = selectedChessSquare;
+  const to = sq;
+
+  // VERIFICA SE È LA MOSSA VINCENTE: Regina in H3 muove in H7 (Qxh7#)
+  if (from === 'h3' && to === 'h7') {
+    // Esecuzione mossa vincente!
+    delete currentChessPosition['h3'];
+    currentChessPosition['h7'] = 'wQ';
+    lastChessMove = { from: 'h3', to: 'h7' };
+    selectedChessSquare = null;
+    renderChessBoard('h7');
+
+    chessStatusText.textContent = '👑 SCACCO MATTO IN 1! Mossa da Maestro!';
+    chessTable.isSolved = true;
+    triggerHeartExplosion();
+    if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+
+    setTimeout(() => {
+      showChessResult(true);
+    }, 450);
+  } else {
+    // MOSSA SBAGLIATA! Mostra subito esito con Homer Simpson e titolo "riprova"
+    selectedChessSquare = null;
+    renderChessBoard();
+    if (navigator.vibrate) navigator.vibrate(60);
+    showChessResult(false);
+  }
+}
+
+function showChessResult(isSuccess) {
+  chessBoardView.classList.add('hidden');
+  chessResultView.classList.remove('hidden');
+
+  if (isSuccess) {
+    chessResultTitle.textContent = level2Data.chess.successMsg || 'DAMN! SCACCO MATTO! 🏆✨';
+    chessResultTitle.style.color = 'var(--accent-gold)';
+    chessResultMedia.innerHTML = level2Data.chess.successGifHtml;
+    chessResultMsg.textContent = 'Scacco matto da gran maestro! La via per raggiungere la tua metà è aperta! 🏆💖';
+    btnChessAction.textContent = 'Continua l\'avventura 💖';
+    btnChessAction.onclick = () => {
+      closeChessModal();
+    };
+  } else {
+    chessResultTitle.textContent = level2Data.chess.wrongMsg || 'riprova';
+    chessResultTitle.style.color = 'var(--accent-rose)';
+    chessResultMedia.innerHTML = level2Data.chess.wrongGifHtml;
+    chessResultMsg.textContent = 'Non è la mossa vincente... ripensaci bene, c\'è uno scacco matto imparabile in una sola mossa!';
+    btnChessAction.textContent = 'Riprova la mossa ♟️';
+    btnChessAction.onclick = () => {
+      resetChessGame();
+    };
+  }
+}
+
+function resetChessGame() {
+  currentChessPosition = { ...INITIAL_CHESS_POSITION };
+  selectedChessSquare = null;
+  lastChessMove = null;
+  chessResultMedia.innerHTML = '';
+  chessResultView.classList.add('hidden');
+  chessBoardView.classList.remove('hidden');
+  chessStatusText.textContent = 'Il Bianco muove e dà matto in 1! Tocca la Regina bianca per iniziare.';
+  renderChessBoard();
+}
+
+function openChessModal() {
+  isModalOpen = true;
+  pausePlayerMovement();
+
+  if (chessTable.isSolved) {
+    currentChessPosition = { ...INITIAL_CHESS_POSITION };
+    delete currentChessPosition['h3'];
+    currentChessPosition['h7'] = 'wQ';
+    lastChessMove = { from: 'h3', to: 'h7' };
+    showChessResult(true);
+  } else {
+    resetChessGame();
+  }
+
+  chessModal.classList.remove('hidden');
+}
+
+function closeChessModal() {
+  chessModal.classList.add('hidden');
+  chessResultMedia.innerHTML = '';
+  isModalOpen = false;
+  if (chessTable.isSolved) {
+    triggerHeartExplosion();
+  }
+}
+
+if (chessBoardGrid) {
+  chessBoardGrid.addEventListener('click', (e) => {
+    const sqEl = e.target.closest('.chess-square');
+    if (!sqEl) return;
+    const sq = sqEl.dataset.square;
+    if (sq) handleChessSquareClick(sq);
+  });
+}
+
+if (btnCloseChess) {
+  btnCloseChess.addEventListener('click', closeChessModal);
+}
+if (chessModal) {
+  chessModal.addEventListener('click', (e) => {
+    if (e.target === chessModal) closeChessModal();
+  });
+}
+
 let heartParticles = [];
 function triggerHeartExplosion() {
   let spawnX = canvas.width / 2;
@@ -1414,8 +1798,16 @@ function triggerHeartExplosion() {
     spawnX = gateItem.x + gateItem.width / 2;
     spawnY = gateItem.y;
   } else if (currentLevel === 2) {
-    spawnX = level2Item.x + 13;
-    spawnY = level2Item.y;
+    if (currentInteractionTarget === 'cat1') {
+      spawnX = level2Cats[0].x;
+      spawnY = level2Cats[0].y;
+    } else if (currentInteractionTarget === 'cat2') {
+      spawnX = level2Cats[1].x;
+      spawnY = level2Cats[1].y;
+    } else {
+      spawnX = chessTable.x + chessTable.width / 2;
+      spawnY = chessTable.y + 4;
+    }
   } else if (currentLevel === 3) {
     spawnX = level3Sign.x + 14;
     spawnY = level3Sign.y;
@@ -1698,10 +2090,12 @@ function getStaticRenderItems() {
     });
   } else if (currentLevel === 2) {
     items.push({
-      type: 'collectibleItem',
-      x: level2Item.x,
-      y: level2Item.y,
-      sortY: level2Item.y + 20
+      type: 'chessTable',
+      x: chessTable.x,
+      y: chessTable.y,
+      width: chessTable.width,
+      height: chessTable.height,
+      sortY: chessTable.y + chessTable.height
     });
   } else if (currentLevel === 3) {
     items.push({
@@ -2093,28 +2487,66 @@ function draw() {
         ctx.fillText('🌸', item.x + 4, item.y - 8);
         ctx.fillText('🌸', item.x + item.width - 4, item.y - 8);
       }
-    } else if (item.type === 'collectibleItem') {
-      const bob = Math.sin(Date.now() / 220) * 4;
-      const glowPulse = (Math.sin(Date.now() / 300) + 1) / 2;
-
-      ctx.fillStyle = `rgba(251, 191, 36, ${0.25 + glowPulse * 0.3})`;
+    } else if (item.type === 'chessTable') {
+      // Ombra soffusa a terra
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
       ctx.beginPath();
-      ctx.arc(item.x + 12, item.y + 12 + bob, 18, 0, Math.PI * 2);
+      ctx.ellipse(item.x + item.width / 2, item.y + item.height - 2, item.width * 0.45, 5, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.font = '22px sans-serif';
+      // Gambe/supporto del tavolo in legno
+      ctx.fillStyle = '#4a2e18';
+      ctx.fillRect(item.x + 4, item.y + 14, 4, 10);
+      ctx.fillRect(item.x + item.width - 8, item.y + 14, 4, 10);
+      ctx.fillRect(item.x + Math.round(item.width / 2) - 2, item.y + 14, 4, 10);
+
+      // Piano del tavolo in legno
+      ctx.fillStyle = '#654321';
+      ctx.fillRect(item.x, item.y + 6, item.width, 10);
+      ctx.fillStyle = '#8b5a2b';
+      ctx.fillRect(item.x + 2, item.y + 4, item.width - 4, 8);
+
+      // Scacchiera in miniatura sul piano
+      const boardX = item.x + Math.round((item.width - 18) / 2);
+      const boardY = item.y + 2;
+      ctx.fillStyle = '#3e2714';
+      ctx.fillRect(boardX - 1, boardY - 1, 20, 10);
+      ctx.fillStyle = '#ecd9b9';
+      ctx.fillRect(boardX, boardY, 18, 8);
+      // Quadretti alternati della scacchiera
+      ctx.fillStyle = '#b58863';
+      for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 4; c++) {
+          if ((r + c) % 2 === 1) {
+            ctx.fillRect(boardX + c * 4.5, boardY + r * 2, 4.5, 2);
+          }
+        }
+      }
+
+      // Sgabelli ai lati
+      ctx.fillStyle = '#4a2e18';
+      ctx.fillRect(item.x - 7, item.y + 12, 6, 8);
+      ctx.fillRect(item.x + item.width + 1, item.y + 12, 6, 8);
+      ctx.fillStyle = '#8b5a2b';
+      ctx.fillRect(item.x - 8, item.y + 10, 8, 4);
+      ctx.fillRect(item.x + item.width, item.y + 10, 8, 4);
+
+      // Icona sopra al tavolo
+      const pulse = Math.sin(Date.now() / 250) * 3;
+      ctx.font = '16px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(level2Data.item.icon, item.x + 12, item.y + 18 + bob);
+      if (chessTable.isSolved) {
+        ctx.fillText('🏆', item.x + item.width / 2, item.y - 12 + pulse);
+      } else {
+        ctx.fillText('♟️', item.x + item.width / 2, item.y - 12 + pulse);
+      }
 
-      ctx.font = '12px sans-serif';
-      ctx.fillText('✨', item.x + 22, item.y - 2 + bob);
-
-      if (currentInteractionTarget === 'level2Item') {
+      if (currentInteractionTarget === 'chess') {
         ctx.strokeStyle = 'rgba(251, 191, 36, 0.7)';
         ctx.lineWidth = 2;
         ctx.setLineDash([3, 3]);
         ctx.beginPath();
-        ctx.arc(item.x + 12, item.y + 12, 28, 0, Math.PI * 2);
+        ctx.arc(item.x + item.width / 2, item.y + item.height / 2, 28, 0, Math.PI * 2);
         ctx.stroke();
         ctx.setLineDash([]);
       }
@@ -2228,12 +2660,12 @@ function draw() {
   // HUD Missione a destra
   ctx.textAlign = 'right';
   if (currentLevel === 2) {
-    if (level2Item.isCollected) {
+    if (chessTable.isSolved) {
       ctx.fillStyle = '#86efac';
-      ctx.fillText(`${level2Data.item.icon} TROVATO! ✅`, canvas.width - 10, 18);
+      ctx.fillText('♟️ SCACCO MATTO! ✅', canvas.width - 10, 18);
     } else {
       ctx.fillStyle = '#fde047';
-      ctx.fillText(`${level2Data.item.icon} DA TROVARE 🔍`, canvas.width - 10, 18);
+      ctx.fillText('♟️ SCACCO IN 1 🔍', canvas.width - 10, 18);
     }
   } else if (currentLevel === 3) {
     if (level3Sign.isResolved) {
