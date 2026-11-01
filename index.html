@@ -192,28 +192,149 @@
       </div>
     </div>
 
-    <!-- 4. Modale Dilemma / Inside Joke (Livello 3) -->
-    <div id="dilemma-modal" class="modal-overlay hidden">
-      <div class="modal-card quiz-card">
+    <!-- 4a. Modale Quiz 5 Domande (Livello 3) -->
+    <div id="level3-quiz-modal" class="modal-overlay hidden">
+      <div class="modal-card quiz-card level3-quiz-card">
+        <!-- Vista Domanda -->
+        <div id="level3-quiz-question-view">
+          <div class="modal-header">
+            <span class="modal-icon">🔥</span>
+            <div>
+              <div class="quiz-step-tag" id="level3-quiz-step">DOMANDA 1 DI 5</div>
+              <h2 id="level3-quiz-title">Il Sigillo delle Fiamme</h2>
+            </div>
+          </div>
+
+          <div class="level3-quiz-progress-bar">
+            <div id="level3-quiz-progress-fill" class="level3-quiz-progress-fill" style="width: 20%;"></div>
+          </div>
+
+          <p id="level3-quiz-question" class="quiz-question-text">
+            Testo della domanda...
+          </p>
+
+          <div id="level3-quiz-options-container" class="quiz-options-list">
+            <!-- Opzioni iniettate da JS -->
+          </div>
+          <button id="btn-close-level3-quiz" class="modal-close-btn" style="margin-top: 8px;">Arrenditi per ora</button>
+        </div>
+
+        <!-- Vista Errore con GIF personalizzata -->
+        <div id="level3-quiz-error-view" class="hidden">
+          <div class="modal-header" style="justify-content: center; text-align: center;">
+            <h2 style="color: var(--accent-rose);">OPS! RISPOSTA SBAGLIATA! 💥</h2>
+          </div>
+          <div id="level3-quiz-error-media" class="cat-media-container">
+            <!-- Iframe GIF iniettato dinamicamente -->
+          </div>
+          <p id="level3-quiz-error-msg" class="cat-dialog-text" style="color: #fda4af;">
+            Hai sbagliato! Il sigillo di fuoco si richiude... devi ricominciare il quiz da capo!
+          </p>
+          <button id="btn-retry-level3-quiz" class="modal-action-btn">Riprova il Quiz dall'inizio 🔄</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4b. Modale Altare Scacchi Matto in 2 (Livello 3) -->
+    <div id="level3-chess-modal" class="modal-overlay hidden">
+      <div class="modal-card chess-modal-card">
         <div class="modal-header">
-          <span class="modal-icon">🪧</span>
+          <span class="modal-icon">♟️</span>
           <div>
-            <h2 id="dilemma-title">Un Piccolo Dilemma di Coppia</h2>
-            <p class="quiz-subtitle">Rispondi con sincerità... o ne pagherai le conseguenze! 😜</p>
+            <div class="quiz-step-tag" id="level3-chess-step">PUZZLE 1 DI 3 • MATTO IN 2</div>
+            <h2 id="level3-chess-title">L'Altare Tattico</h2>
           </div>
         </div>
 
-        <p id="dilemma-question" class="quiz-question-text">
-          DOMANDA TRABOCCHETTO: Chi ci mette SEMPRE più tempo a prepararsi? 🤔
-        </p>
-
-        <div id="dilemma-options-container" class="quiz-options-list">
-          <!-- Opzioni iniettate da JS -->
+        <!-- Vista Scacchiera -->
+        <div id="level3-chess-board-view" class="chess-view-section">
+          <div class="chess-board-wrapper">
+            <div id="level3-chess-board" class="chess-board-grid">
+              <!-- Caselle generate da JS -->
+            </div>
+          </div>
+          <p id="level3-chess-status-text" class="chess-status-hint">Il Bianco muove e dà matto in 2!</p>
+          <button id="btn-close-level3-chess" class="modal-close-btn">Chiudi</button>
         </div>
 
-        <div id="dilemma-feedback" class="quiz-feedback hidden"></div>
+        <!-- Vista Esito (GIF errore o vittoria puzzle) -->
+        <div id="level3-chess-result-view" class="chess-view-section hidden">
+          <h3 id="level3-chess-result-title" class="chess-result-heading">Riprova</h3>
+          <div id="level3-chess-result-media" class="cat-media-container">
+            <!-- Iframe GIF iniettato dinamicamente -->
+          </div>
+          <p id="level3-chess-result-msg" class="cat-dialog-text"></p>
+          <div class="chess-result-actions">
+            <button id="btn-level3-chess-action" class="modal-action-btn">Riprova la mossa ♟️</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <button id="btn-close-dilemma" class="modal-close-btn hidden">Continua ➔</button>
+    <!-- 4c. Modale Boss Fight con il Mostro (Livello 3) -->
+    <div id="level3-boss-modal" class="modal-overlay hidden">
+      <div class="modal-card boss-fight-card">
+        <div class="boss-arena-header">
+          <div class="boss-identity">
+            <span class="boss-avatar">👹</span>
+            <div>
+              <h2 id="boss-name" class="boss-title">Il Demone delle Ceneri</h2>
+              <span class="boss-subtitle">Guardiano della Prigione di Fuoco</span>
+            </div>
+          </div>
+
+          <!-- Barra della Salute Boss (HP) -->
+          <div class="boss-hp-container">
+            <div class="boss-hp-label">
+              <span>SALUTE MOSTRO</span>
+              <span id="boss-hp-text">100 / 100</span>
+            </div>
+            <div class="boss-hp-bar">
+              <div id="boss-hp-fill" class="boss-hp-fill" style="width: 100%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Area di Combattimento & Minigioco Tempismo Colpo Critico -->
+        <div class="boss-battle-zone">
+          <div id="boss-visual" class="boss-visual-box">
+            <div class="boss-monster-sprite">👹</div>
+            <div id="boss-slash-effect" class="slash-fx hidden">⚔️💥</div>
+            <div id="boss-hit-bubble" class="hit-bubble hidden">-35 HP!</div>
+          </div>
+
+          <div class="timing-meter-section">
+            <div class="timing-meter-label">Tempismo del Fendente:</div>
+            <div class="timing-bar-track" id="timing-track">
+              <div class="timing-target-zone"></div>
+              <div class="timing-pointer" id="timing-pointer"></div>
+            </div>
+          </div>
+
+          <p id="boss-battle-status" class="boss-battle-status">
+            Premi ATTACCA quando la spada è nella zona critica!
+          </p>
+
+          <div class="boss-actions-row">
+            <button id="btn-boss-attack" class="boss-attack-btn">
+              <span>⚔️</span> SFERRA IL COLPO!
+            </button>
+          </div>
+        </div>
+
+        <!-- Vista Vittoria Boss -->
+        <div id="boss-victory-view" class="boss-victory-view hidden">
+          <div class="boss-victory-badge">🏆 MOSTRO SCONFITTO!</div>
+          <h2 class="boss-victory-title">La Gabbia si è Aperta!</h2>
+          <p id="boss-victory-text" class="boss-victory-desc">
+            Hai abbattuto il demone con la tua spada! Il tuo amore è finalmente libero e corre ad abbracciarti! 💖✨
+          </p>
+          <button id="btn-boss-victory-continue" class="start-game-btn">
+            ABBRACCIA IL TUO AMORE 💕➔
+          </button>
+        </div>
+
+        <button id="btn-close-boss-modal" class="modal-close-btn" style="margin-top: 4px;">Ritirati momentaneamente</button>
       </div>
     </div>
 
