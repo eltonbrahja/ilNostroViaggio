@@ -53,7 +53,7 @@ const level1Data = {
 
   // Mini-Quiz del cancello
   quiz: {
-    question: 'Chi è stato il primo a dire ti amo all\'altro? 🩷',
+    question: 'Chi è stato il primo a dire ti amo all\'altro?',
     option1: 'Io',
     option2: 'Tu',
     option3Choices: ['Gerry Scotti', 'Joe Bastianich', 'Thomas Turbato', 'Pippi'],
@@ -118,12 +118,12 @@ const level3Data = {
 
   // 1. IL QUIZ DELLE FIAMME (5 Domande con GIF personalizzata in caso di errore)
   quiz: {
-    title: 'Il Sigillo delle Fiamme 🔥',
-    subtitle: 'Rispondi correttamente a 5 domande di fila... se ne sbagli anche solo una, dovrai ricominciare!',
+    title: 'Il Sigillo delle Fiamme',
+    subtitle: 'Rispondi correttamente a 5 domande consecutive: se ne sbagli anche solo una, dovrai ricominciare.',
     wrongGifHtml: `<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/1T96TRBBGYThC" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/fail-epic-cat-1T96TRBBGYThC" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`,
     questions: [
       {
-        question: '1/5 • Qual è la regola fondamentale quando si ordina la pizza o il sushi insieme? 🍕🍣',
+        question: '1/5 • Qual è la regola fondamentale quando si ordina la pizza o il sushi insieme?',
         options: [
           'Ognuno mangia solo ed esclusivamente dal proprio piatto',
           '"Io non ho fame, prendo poco"... e poi sparisce metà del cibo dell\'altro!',
@@ -133,7 +133,7 @@ const level3Data = {
         correctIndex: 1
       },
       {
-        question: '2/5 • Chi è che perde SEMPRE chiavi, occhiali o telefono nei posti più assurdi? 🔑📱',
+        question: '2/5 • Chi è che perde SEMPRE chiavi, occhiali o telefono nei posti più assurdi?',
         options: [
           'Nessuno dei due, siamo campioni mondiali di ordine',
           'Tu, senza neanche doverci riflettere un secondo!',
@@ -143,7 +143,7 @@ const level3Data = {
         correctIndex: 1
       },
       {
-        question: '3/5 • Cosa significa REALMENTE la frase: "Faccio in 5 minuti e sono pronta/o"? ⏰',
+        question: '3/5 • Cosa significa REALMENTE la frase: "Faccio in 5 minuti e sono pronta/o"?',
         options: [
           'Esattamente 300 secondi cronometrati al millisecondo',
           'Un\'unità di tempo misteriosa che può variare tra 45 e 90 minuti!',
@@ -153,7 +153,7 @@ const level3Data = {
         correctIndex: 1
       },
       {
-        question: '4/5 • Qual è il rimedio infallibile e scientificamente approvato dopo una giornata pesante? 🫂🍫',
+        question: '4/5 • Qual è il rimedio infallibile e scientificamente approvato dopo una giornata pesante?',
         options: [
           'Un abbraccio fortissimo sul divano, coccole e qualcosa di buono',
           'Rileggere il manuale di istruzioni del tostapane',
@@ -163,7 +163,7 @@ const level3Data = {
         correctIndex: 0
       },
       {
-        question: '5/5 • Chi è la persona più testarda, speciale e insostituibile di questo universo? 💖',
+        question: '5/5 • Chi è la persona più testarda, speciale e insostituibile di questo universo?',
         options: [
           'Il vicino di casa',
           'Tu, la mia persona preferita in assoluto in tutto il mondo!',
@@ -182,48 +182,48 @@ const level3Data = {
     puzzles: [
       {
         id: 1,
-        title: 'Puzzle 1/3 • Il Varco della Regina',
+        title: 'Puzzle 1/3 • Il Varco della Regina (Matto del Corridoio)',
         hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna in fondo per aprire la strada alla Torre!',
-        // Bianco: wK g1, wQ d5, wR f7, wP g2, wP h2 | Nero: bK h8, bR g8, bP h7
+        // Bianco: wK g1, wQ d6, wR f1, wP g2, wP h2 | Nero: bK h8, bR g8, bP g7, bP h7
         initialPosition: {
-          'g1': 'wK', 'd5': 'wQ', 'f7': 'wR', 'g2': 'wP', 'h2': 'wP',
-          'h8': 'bK', 'g8': 'bR', 'h7': 'bP'
+          'g1': 'wK', 'd6': 'wQ', 'f1': 'wR', 'g2': 'wP', 'h2': 'wP',
+          'h8': 'bK', 'g8': 'bR', 'g7': 'bP', 'h7': 'bP'
         },
-        playerMove1: { from: 'd5', to: 'd8', piece: 'wQ' }, // Qd8+!
-        blackResponse: { from: 'g8', to: 'd8', piece: 'bR' }, // Rxg8
-        playerMove2: { from: 'f7', to: 'f8', piece: 'wR' }, // Rf8# MATTO!
+        playerMove1: { from: 'd6', to: 'f8', piece: 'wQ' }, // Df8+!
+        blackResponse: { from: 'g8', to: 'f8', piece: 'bR' }, // Txf8
+        playerMove2: { from: 'f1', to: 'f8', piece: 'wR' }, // Txf8# MATTO!
         mateSquare: 'f8',
-        desc: '1. Dd8+! Txd8 2. Tf8#! Scacco matto inarrestabile sulla prima traversa!'
+        desc: '1. Df8+! Txf8 2. Txf8#! Il celebre sacrificio di Donna con Scacco Matto del Corridoio!'
       },
       {
         id: 2,
-        title: 'Puzzle 2/3 • Il Matto di Filidoro',
-        hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna sotto il Re per il celebre matto affogato di Cavallo!',
-        // Bianco: wK g1, wQ c4, wN f6, wP h2, wP g2 | Nero: bK h8, bR g8, bP h7, bP g7
+        title: 'Puzzle 2/3 • Il Matto di Filidoro (Matto Affogato)',
+        hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna sotto il Re per il leggendario matto affogato di Cavallo!',
+        // Bianco: wK g1, wQ c4, wN h6, wP g2, wP h2 | Nero: bK h8, bR f8, bP g7, bP h7
         initialPosition: {
-          'g1': 'wK', 'c4': 'wQ', 'f6': 'wN', 'g2': 'wP', 'h2': 'wP',
-          'h8': 'bK', 'g8': 'bR', 'g7': 'bP', 'h7': 'bP'
+          'g1': 'wK', 'c4': 'wQ', 'h6': 'wN', 'g2': 'wP', 'h2': 'wP',
+          'h8': 'bK', 'f8': 'bR', 'g7': 'bP', 'h7': 'bP'
         },
-        playerMove1: { from: 'c4', to: 'g8', piece: 'wQ' }, // Qg8+!
-        blackResponse: { from: 'g8', to: 'g8', piece: 'bR' }, // Rxg8
-        playerMove2: { from: 'f6', to: 'f7', piece: 'wN' }, // Nf7# MATTO AFFOGATO!
+        playerMove1: { from: 'c4', to: 'g8', piece: 'wQ' }, // Dg8+!
+        blackResponse: { from: 'f8', to: 'g8', piece: 'bR' }, // Txg8
+        playerMove2: { from: 'h6', to: 'f7', piece: 'wN' }, // Cf7# MATTO AFFOGATO!
         mateSquare: 'f7',
-        desc: '1. Dg8+! Txg8 2. Cf7#! Il leggendario Matto Affogato!'
+        desc: '1. Dg8+! Txg8 2. Cf7#! Il leggendario Matto Affogato: il Re nero è soffocato dai suoi stessi pezzi!'
       },
       {
         id: 3,
-        title: 'Puzzle 3/3 • Il Matto Arabo',
-        hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Torre sull\'arrocco per concludere con la seconda Torre!',
-        // Bianco: wK g1, wR c7, wN f6, wR a1, wP g2, wP h2 | Nero: bK h8, bR e8, bP g7, bP h7
+        title: 'Puzzle 3/3 • Il Matto di Anastasia',
+        hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna sulla colonna h per concludere con la Torre!',
+        // Bianco: wK g1, wN e7, wR d3, wQ h5, wP f2, wP g2 | Nero: bK h8, bR e8, bP g7
         initialPosition: {
-          'g1': 'wK', 'c7': 'wR', 'f6': 'wN', 'a1': 'wR', 'g2': 'wP', 'h2': 'wP',
-          'h8': 'bK', 'e8': 'bR', 'g7': 'bP', 'h7': 'bP'
+          'g1': 'wK', 'e7': 'wN', 'd3': 'wR', 'h5': 'wQ', 'f2': 'wP', 'g2': 'wP',
+          'h8': 'bK', 'e8': 'bR', 'g7': 'bP'
         },
-        playerMove1: { from: 'c7', to: 'h7', piece: 'wR' }, // Rxh7+!
-        blackResponse: { from: 'h8', to: 'h7', piece: 'bK' }, // Kxh7
-        playerMove2: { from: 'a1', to: 'h1', piece: 'wR' }, // Rh1# MATTO ARABO!
-        mateSquare: 'h1',
-        desc: '1. Txh7+! Rxh7 2. Th1#! Matto Arabo con Torre e Cavallo coordinati!'
+        playerMove1: { from: 'h5', to: 'h7', piece: 'wQ' }, // Dxh7+!
+        blackResponse: { from: 'h8', to: 'h7', piece: 'bK' }, // Rxh7
+        playerMove2: { from: 'd3', to: 'h3', piece: 'wR' }, // Th3# MATTO DI ANASTASIA!
+        mateSquare: 'h3',
+        desc: '1. Dxh7+! Rxh7 2. Th3#! Lo spettacolare Matto di Anastasia con Cavallo ed infilata di Torre!'
       }
     ],
     wrongGifHtml: `<div style="width:100%;height:0;padding-bottom:77%;position:relative;"><iframe src="https://giphy.com/embed/eMu0803X2zkWY" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/the-simpsons-eMu0803X2zkWY" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`,
@@ -268,6 +268,7 @@ const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 
 const levelBadge = document.getElementById('level-badge');
+const devLevelSelect = document.getElementById('dev-level-select');
 
 const btnUp = document.getElementById('btn-up');
 const btnLeft = document.getElementById('btn-left');
@@ -357,6 +358,7 @@ const btnCloseBossModal = document.getElementById('btn-close-boss-modal');
 
 // Modale 4: Livello Completato
 const levelClearModal = document.getElementById('level-clear-modal');
+const levelClearBadgeEl = document.getElementById('level-clear-badge');
 const levelClearTitleEl = document.getElementById('level-clear-title');
 const levelClearTextEl = document.getElementById('level-clear-text');
 const btnNextLevel = document.getElementById('btn-next-level');
@@ -667,6 +669,17 @@ function selectCharacter(charKey) {
 cardLui.addEventListener('click', () => selectCharacter('lui'));
 cardLei.addEventListener('click', () => selectCharacter('lei'));
 
+let selectedDevStartLevel = 1;
+const devLevelBtns = document.querySelectorAll('.dev-level-btn');
+devLevelBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    devLevelBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedDevStartLevel = parseInt(btn.dataset.level, 10);
+    if (devLevelSelect) devLevelSelect.value = String(selectedDevStartLevel);
+  });
+});
+
 btnStartGame.addEventListener('click', () => {
   activePlayerKey = selectedCharKey;
   isGameStarted = true;
@@ -678,7 +691,7 @@ btnStartGame.addEventListener('click', () => {
     headerAvatarIcon.style.display = 'none';
   }
 
-  resetPlayerPosition();
+  switchToLevel(selectedDevStartLevel || 1);
   if (navigator.vibrate) navigator.vibrate([20, 50, 20]);
 });
 
@@ -938,6 +951,42 @@ function switchToLevel(newLevelNumber) {
 
   resetPlayerPosition();
   pausePlayerMovement();
+
+  if (devLevelSelect) {
+    devLevelSelect.value = String(currentLevel);
+  }
+}
+window.switchToLevel = switchToLevel;
+
+function closeAllModals() {
+  isModalOpen = false;
+  pausePlayerMovement();
+  if (polaroidModal) polaroidModal.classList.add('hidden');
+  if (monsterQuizModal) monsterQuizModal.classList.add('hidden');
+  if (quizModal) quizModal.classList.add('hidden');
+  if (catModal) catModal.classList.add('hidden');
+  if (chessModal) chessModal.classList.add('hidden');
+  if (level3QuizModal) closeLevel3QuizModal();
+  if (level3ChessModal) closeLevel3ChessModal();
+  if (level3BossModal) closeLevel3BossModal();
+  if (levelClearModal) levelClearModal.classList.add('hidden');
+  if (dialogModal) dialogModal.classList.add('hidden');
+  if (itemFoundModal) itemFoundModal.classList.add('hidden');
+  if (finaleModal) finaleModal.classList.add('hidden');
+}
+
+if (devLevelSelect) {
+  devLevelSelect.addEventListener('change', (e) => {
+    const chosenLevel = parseInt(e.target.value, 10);
+    if (!isGameStarted) {
+      activePlayerKey = selectedCharKey;
+      isGameStarted = true;
+      selectionScreen.classList.add('hidden');
+      headerAvatarName.textContent = activePlayerKey === 'lui' ? 'Elton' : 'Rebecca';
+    }
+    closeAllModals();
+    switchToLevel(chosenLevel);
+  });
 }
 
 
@@ -1538,7 +1587,7 @@ function openLevel3QuizModal() {
   pausePlayerMovement();
 
   if (level3Barrier.isUnlocked) {
-    openGenericDialog('Sigillo Superato! 🔥', 'Hai già superato la Prova delle Fiamme! La via verso l\'altare è libera!');
+    openGenericDialog('Sigillo Superato', 'Hai già superato la Prova delle Fiamme: la via verso l\'altare è libera.');
     return;
   }
 
@@ -1590,7 +1639,7 @@ function handleLevel3QuizAnswer(btn, isCorrect) {
         invalidateRenderItemsCache();
         closeLevel3QuizModal();
         triggerHeartExplosion();
-        openGenericDialog('Sigillo Spezzato! 🔥✨', 'Straordinario! Hai risposto a tutte e 5 le domande senza sbagliare! La barriera di fiamme si dissolve: ora puoi raggiungere l\'Altare Tattico!');
+        openGenericDialog('Sigillo Spezzato', 'Hai risposto a tutte e 5 le domande senza sbagliare. La barriera di fiamme si dissolve: ora puoi raggiungere l\'Altare Tattico.');
       } else {
         renderLevel3QuizQuestion();
       }
@@ -1609,12 +1658,17 @@ function handleLevel3QuizAnswer(btn, isCorrect) {
 function showLevel3QuizError() {
   level3QuizQuestionView.classList.add('hidden');
   level3QuizErrorView.classList.remove('hidden');
+  if (level3QuizErrorMsg) {
+    level3QuizErrorMsg.textContent = "Hai sbagliato pippa, riprova dall'inizio";
+  }
   level3QuizErrorMedia.innerHTML = level3Data.quiz.wrongGifHtml;
 }
 
 function closeLevel3QuizModal() {
   isModalOpen = false;
   level3QuizModal.classList.add('hidden');
+  level3QuizErrorView.classList.add('hidden');
+  level3QuizQuestionView.classList.remove('hidden');
   level3QuizErrorMedia.innerHTML = '';
 }
 
@@ -1637,6 +1691,23 @@ if (level3QuizModal) {
   });
 }
 
+
+const CHESS_PIECE_ICONS = {
+  'wK': '/contenuti/ambienti/livello2/chess/wK.svg',
+  'wQ': '/contenuti/ambienti/livello2/chess/wQ.svg',
+  'wR': '/contenuti/ambienti/livello2/chess/wR.svg',
+  'wB': '/contenuti/ambienti/livello2/chess/wB.svg',
+  'wN': '/contenuti/ambienti/livello2/chess/wN.svg',
+  'wP': '/contenuti/ambienti/livello2/chess/wP.svg',
+  'bK': '/contenuti/ambienti/livello2/chess/bK.svg',
+  'bQ': '/contenuti/ambienti/livello2/chess/bQ.svg',
+  'bR': '/contenuti/ambienti/livello2/chess/bR.svg',
+  'bB': '/contenuti/ambienti/livello2/chess/bB.svg',
+  'bN': '/contenuti/ambienti/livello2/chess/bN.svg',
+  'bP': '/contenuti/ambienti/livello2/chess/bP.svg'
+};
+
+const CHESS_FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 // ----------------------------------------------------------------------------
 // 5b. PROVA 2: L'ALTARE TATTICO (3 Puzzle di Scacco Matto in 2)
@@ -2053,21 +2124,23 @@ function openLevelClearModal() {
   isModalOpen = true;
   pausePlayerMovement();
 
-  const levelClearHeartsEl = document.querySelector('.level-clear-hearts');
+  if (levelClearBadgeEl) {
+    levelClearBadgeEl.textContent = `LIVELLO ${currentLevel} COMPLETATO`;
+  }
+
   if (currentLevel === 1) {
     const partnerMsg = activePlayerKey === 'lui' ? level1Data.partnerGreetingLui : level1Data.partnerGreetingLei;
     levelClearTitleEl.textContent = 'Vi siete ritrovati!';
     levelClearTextEl.textContent = partnerMsg;
-    if (levelClearHeartsEl) levelClearHeartsEl.textContent = '🩷';
     btnNextLevel.textContent = 'VAI AL LIVELLO 2 ➔';
   } else if (currentLevel === 2) {
     const partnerMsg = activePlayerKey === 'lui' ? level2Data.partnerSuccessLui : level2Data.partnerSuccessLei;
-    levelClearTitleEl.textContent = 'Missione Compiuta! 🎉';
+    levelClearTitleEl.textContent = 'Missione Compiuta!';
     levelClearTextEl.textContent = partnerMsg;
     btnNextLevel.textContent = 'VAI AL LIVELLO 3 ➔';
   } else if (currentLevel === 3) {
     const partnerMsg = activePlayerKey === 'lui' ? level3Data.partnerSuccessLui : level3Data.partnerSuccessLei;
-    levelClearTitleEl.textContent = 'Complicità Perfetta! 💖';
+    levelClearTitleEl.textContent = 'Vittoria sul Demone!';
     levelClearTextEl.textContent = partnerMsg;
     btnNextLevel.textContent = 'VAI AL GRAN FINALE ➔';
   }
@@ -2118,8 +2191,15 @@ memoryCard2.addEventListener('click', () => {
   openItemFoundModal();
 });
 memoryCard3.addEventListener('click', () => {
-  openLevel3BenchModal();
+  openLevel3MemoryModal();
 });
+
+function openLevel3MemoryModal() {
+  const note = activePlayerKey === 'lui'
+    ? '"Novembre - Abbiamo affrontato insieme la caverna del fuoco, superato ogni enigma e sconfitto il mostro per riabbracciarci. Con la nostra complicità e il nostro amore, possiamo superare qualsiasi cosa!" 🌋⚔️💖'
+    : '"Novembre - Nessun mostro e nessun ostacolo al mondo potrà mai dividerci. Sei il mio eroe, oggi e in ogni nostra avventura insieme!" 🌋⚔️💖';
+  openGenericDialog('Il Nostro Coraggio 🌋⚔️', note);
+}
 
 btnCloseFinale.addEventListener('click', () => {
   finaleModal.classList.add('hidden');
@@ -2141,7 +2221,14 @@ btnRestartGame.addEventListener('click', () => {
   isMonsterQuizSolved = false;
   gateItem.isOpen = false;
   chessTable.isSolved = false;
-  level3Sign.isResolved = false;
+  level3Barrier.isUnlocked = false;
+  level3Altar.isSolved = false;
+  level3Monster.isDefeated = false;
+  level3Monster.hp = 100;
+  level3Cage.isOpen = false;
+  hasPlayerWeapon = false;
+  currentLevel3QuizIndex = 0;
+  currentLevel3PuzzleIndex = 0;
 
   switchToLevel(1);
   selectionScreen.classList.remove('hidden');
@@ -2221,23 +2308,6 @@ const INITIAL_CHESS_POSITION = {
   'g6': 'bP',
   'h7': 'bP'
 };
-
-const CHESS_PIECE_ICONS = {
-  'wK': '/contenuti/ambienti/livello2/chess/wK.svg',
-  'wQ': '/contenuti/ambienti/livello2/chess/wQ.svg',
-  'wR': '/contenuti/ambienti/livello2/chess/wR.svg',
-  'wB': '/contenuti/ambienti/livello2/chess/wB.svg',
-  'wN': '/contenuti/ambienti/livello2/chess/wN.svg',
-  'wP': '/contenuti/ambienti/livello2/chess/wP.svg',
-  'bK': '/contenuti/ambienti/livello2/chess/bK.svg',
-  'bQ': '/contenuti/ambienti/livello2/chess/bQ.svg',
-  'bR': '/contenuti/ambienti/livello2/chess/bR.svg',
-  'bB': '/contenuti/ambienti/livello2/chess/bB.svg',
-  'bN': '/contenuti/ambienti/livello2/chess/bN.svg',
-  'bP': '/contenuti/ambienti/livello2/chess/bP.svg'
-};
-
-const CHESS_FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
 let currentChessPosition = { ...INITIAL_CHESS_POSITION };
 let selectedChessSquare = null;
@@ -2472,8 +2542,19 @@ function triggerHeartExplosion() {
       spawnY = chessTable.y + 4;
     }
   } else if (currentLevel === 3) {
-    spawnX = level3Sign.x + 14;
-    spawnY = level3Sign.y;
+    if (level3Monster.isDefeated) {
+      spawnX = partnerNPC.x;
+      spawnY = partnerNPC.y;
+    } else if (hasPlayerWeapon) {
+      spawnX = level3Monster.x + level3Monster.width / 2;
+      spawnY = level3Monster.y + level3Monster.height / 2;
+    } else if (level3Barrier.isUnlocked) {
+      spawnX = level3Altar.x + level3Altar.width / 2;
+      spawnY = level3Altar.y + level3Altar.height / 2;
+    } else {
+      spawnX = level3Barrier.x + level3Barrier.width / 2;
+      spawnY = level3Barrier.y + level3Barrier.height / 2;
+    }
   } else if (currentLevel === 4) {
     spawnX = partnerNPC.x;
     spawnY = partnerNPC.y;
@@ -2966,12 +3047,9 @@ function draw() {
     }
   }
 
-  // 3. Ciuffi d'erba fioriti
-  if (currentLevel !== 2) {
-    let activeGrass = map1GrassTufts;
-    if (currentLevel === 3) activeGrass = map3GrassTufts;
-    else if (currentLevel === 4) activeGrass = map4GrassTufts;
-
+  // 3. Ciuffi d'erba fioriti (solo per i livelli con prato: 1 e 4)
+  if (currentLevel === 1 || currentLevel === 4) {
+    const activeGrass = currentLevel === 4 ? map4GrassTufts : map1GrassTufts;
     if (env.grass.loaded) {
       for (const g of activeGrass) {
         ctx.drawImage(env.grass.img, g.x, g.y, 32, 32);
@@ -3560,12 +3638,18 @@ function draw() {
       ctx.fillText('♟️ SCACCO IN 1 🔍', canvas.width - 10, 18);
     }
   } else if (currentLevel === 3) {
-    if (level3Sign.isResolved) {
+    if (level3Monster.isDefeated) {
       ctx.fillStyle = '#86efac';
-      ctx.fillText('DILEMMA: RISOLTO! ✅', canvas.width - 10, 18);
-    } else {
+      ctx.fillText('PARTNER SALVATO! 💖', canvas.width - 10, 18);
+    } else if (hasPlayerWeapon) {
+      ctx.fillStyle = '#f87171';
+      ctx.fillText('SFIDA IL DEMONE! ⚔️', canvas.width - 10, 18);
+    } else if (level3Barrier.isUnlocked) {
       ctx.fillStyle = '#fde047';
-      ctx.fillText('DILEMMA: DA RISOLVERE ❓', canvas.width - 10, 18);
+      ctx.fillText('ALTARE DEI 3 MATTI ♟️', canvas.width - 10, 18);
+    } else {
+      ctx.fillStyle = '#f97316';
+      ctx.fillText('SIGILLO DI FUOCO 🔥', canvas.width - 10, 18);
     }
   } else if (currentLevel === 4) {
     ctx.fillStyle = '#f472b6';

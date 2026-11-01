@@ -19,7 +19,13 @@
     <!-- Header compatto -->
     <header class="app-header">
       <div class="header-left">
-        <span id="level-badge" class="pixel-badge">Livello 1</span>
+        <select id="dev-level-select" class="dev-level-select" title="Seleziona Livello (Dev)">
+          <option value="1">Livello 1</option>
+          <option value="2">Livello 2</option>
+          <option value="3">Livello 3</option>
+          <option value="4">Gran Finale</option>
+        </select>
+        <span id="level-badge" class="pixel-badge" style="display: none;">Livello 1</span>
         <button id="btn-audio-toggle" class="audio-toggle-btn" title="Attiva/Disattiva Musica" aria-label="Musica">
           <span id="audio-icon">🔇</span>
         </button>
@@ -61,6 +67,13 @@
         <p class="selection-partner-hint">
           Raggiungi la tua metà problematica dall'altra parte
         </p>
+
+        <div class="selection-dev-levels" style="margin: 6px 0 10px; display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="dev-level-btn active" data-level="1">L1</button>
+          <button type="button" class="dev-level-btn" data-level="2">L2</button>
+          <button type="button" class="dev-level-btn" data-level="3">L3</button>
+          <button type="button" class="dev-level-btn" data-level="4">Finale</button>
+        </div>
 
         <button id="btn-start-game" class="start-game-btn" disabled>
           INIZIA L'AVVENTURA ➔
@@ -156,15 +169,14 @@
     <div id="quiz-modal" class="modal-overlay hidden">
       <div class="modal-card quiz-card">
         <div class="modal-header">
-          <span class="modal-icon">🗝️</span>
           <div>
-            <h2 id="quiz-title">Il Cancello dell'Amore</h2>
-            <p class="quiz-subtitle">Rispondi correttamente per aprire il passaggio!</p>
+            <h2 id="quiz-title">Il Cancello</h2>
+            <p class="quiz-subtitle">Rispondi correttamente per aprire il passaggio.</p>
           </div>
         </div>
 
         <p id="quiz-question" class="quiz-question-text">
-          Chi è stato il primo a dire ti amo all'altro? 🩷
+          Chi è stato il primo a dire ti amo all'altro?
         </p>
 
         <div id="quiz-options-container" class="quiz-options-list">
@@ -177,16 +189,15 @@
       </div>
     </div>
 
-    <!-- 3. Modale Livello 1 Completato -->
+    <!-- 3. Modale Livello Completato -->
     <div id="level-clear-modal" class="modal-overlay hidden">
       <div class="modal-card level-clear-card">
-        <div class="level-clear-badge">🎉 LIVELLO 1 COMPLETATO</div>
+        <div id="level-clear-badge" class="level-clear-badge">LIVELLO 1 COMPLETATO</div>
         <h2 id="level-clear-title" class="level-clear-title">Vi siete ritrovati!</h2>
         <p id="level-clear-text" class="level-clear-text">
           Hai superato il primo sentiero dei ricordi! L'amore che vi unisce ha aperto ogni cancello.
         </p>
-        <div class="level-clear-hearts">🩷</div>
-        <button id="btn-next-level" class="start-game-btn">
+        <button id="btn-next-level" class="start-game-btn" style="margin-top: 14px;">
           CONTINUA IL VIAGGIO ➔
         </button>
       </div>
@@ -198,7 +209,6 @@
         <!-- Vista Domanda -->
         <div id="level3-quiz-question-view">
           <div class="modal-header">
-            <span class="modal-icon">🔥</span>
             <div>
               <div class="quiz-step-tag" id="level3-quiz-step">DOMANDA 1 DI 5</div>
               <h2 id="level3-quiz-title">Il Sigillo delle Fiamme</h2>
@@ -222,15 +232,15 @@
         <!-- Vista Errore con GIF personalizzata -->
         <div id="level3-quiz-error-view" class="hidden">
           <div class="modal-header" style="justify-content: center; text-align: center;">
-            <h2 style="color: var(--accent-rose);">OPS! RISPOSTA SBAGLIATA! 💥</h2>
+            <h2 style="color: var(--accent-rose);">RISPOSTA SBAGLIATA</h2>
           </div>
           <div id="level3-quiz-error-media" class="cat-media-container">
             <!-- Iframe GIF iniettato dinamicamente -->
           </div>
           <p id="level3-quiz-error-msg" class="cat-dialog-text" style="color: #fda4af;">
-            Hai sbagliato! Il sigillo di fuoco si richiude... devi ricominciare il quiz da capo!
+            Hai sbagliato pippa, riprova dall'inizio
           </p>
-          <button id="btn-retry-level3-quiz" class="modal-action-btn">Riprova il Quiz dall'inizio 🔄</button>
+          <button id="btn-retry-level3-quiz" class="modal-action-btn">Riprova il Quiz dall'inizio</button>
         </div>
       </div>
     </div>
@@ -438,8 +448,8 @@
               <span class="memory-name">I Viaggi</span>
             </button>
             <button class="memory-card-btn" id="memory-card-3" title="Vedi 3° Ricordo">
-              <span class="memory-icon">🤣</span>
-              <span class="memory-name">Le Risate</span>
+              <span class="memory-icon">⚔️</span>
+              <span class="memory-name">La Battaglia</span>
             </button>
           </div>
         </div>

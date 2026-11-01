@@ -89,6 +89,53 @@ html, body {
   letter-spacing: 0.5px;
 }
 
+.dev-level-select {
+  font-family: 'Silkscreen', monospace;
+  font-size: 10px;
+  color: var(--accent-rose);
+  background: #181926;
+  border: 1px solid rgba(244, 114, 182, 0.45);
+  padding: 4px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 0 6px rgba(244, 114, 182, 0.15);
+  transition: all 0.2s ease;
+}
+
+.dev-level-select:focus,
+.dev-level-select:hover {
+  border-color: var(--accent-rose);
+  box-shadow: 0 0 10px rgba(244, 114, 182, 0.35);
+}
+
+.dev-level-select option {
+  background: #11111b;
+  color: #cdd6f4;
+  font-family: inherit;
+}
+
+.dev-level-btn {
+  font-family: 'Silkscreen', monospace;
+  font-size: 10px;
+  color: #a6adc8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 5px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dev-level-btn:hover,
+.dev-level-btn.active {
+  color: #ffffff;
+  border-color: var(--accent-rose);
+  background: rgba(244, 114, 182, 0.25);
+  box-shadow: 0 0 8px rgba(244, 114, 182, 0.3);
+}
+
 .audio-toggle-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -332,6 +379,15 @@ html, body {
 .modal-overlay.hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+.hidden:not(.modal-overlay):not(.selection-overlay):not(.action-btn) {
+  display: none !important;
+}
+
+#level3-quiz-question-view.hidden,
+#level3-quiz-error-view.hidden {
+  display: none !important;
 }
 
 .modal-card {
