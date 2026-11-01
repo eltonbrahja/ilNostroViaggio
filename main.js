@@ -182,7 +182,7 @@ const level3Data = {
     puzzles: [
       {
         id: 1,
-        title: 'Puzzle 1/3 • Il Varco della Regina (Matto del Corridoio)',
+        title: 'Livello 1',
         hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna in fondo per aprire la strada alla Torre!',
         // Bianco: wK g1, wQ d6, wR f1, wP g2, wP h2 | Nero: bK h8, bR g8, bP g7, bP h7
         initialPosition: {
@@ -197,7 +197,7 @@ const level3Data = {
       },
       {
         id: 2,
-        title: 'Puzzle 2/3 • Il Matto di Filidoro (Matto Affogato)',
+        title: 'Livello 2',
         hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna sotto il Re per il leggendario matto affogato di Cavallo!',
         // Bianco: wK g1, wQ c4, wN h6, wP g2, wP h2 | Nero: bK h8, bR f8, bP g7, bP h7
         initialPosition: {
@@ -212,12 +212,12 @@ const level3Data = {
       },
       {
         id: 3,
-        title: 'Puzzle 3/3 • Il Matto di Anastasia',
+        title: 'Livello 3',
         hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna sulla colonna h per concludere con la Torre!',
-        // Bianco: wK g1, wN e7, wR d3, wQ h5, wP f2, wP g2 | Nero: bK h8, bR e8, bP g7
+        // Bianco: wK g1, wN e7, wR d3, wQ h5, wP f2, wP g2 | Nero: bK h8, bR e8, bP g7, bP h7
         initialPosition: {
           'g1': 'wK', 'e7': 'wN', 'd3': 'wR', 'h5': 'wQ', 'f2': 'wP', 'g2': 'wP',
-          'h8': 'bK', 'e8': 'bR', 'g7': 'bP'
+          'h8': 'bK', 'e8': 'bR', 'g7': 'bP', 'h7': 'bP'
         },
         playerMove1: { from: 'h5', to: 'h7', piece: 'wQ' }, // Dxh7+!
         blackResponse: { from: 'h8', to: 'h7', piece: 'bK' }, // Rxh7
@@ -1709,6 +1709,118 @@ const CHESS_PIECE_ICONS = {
 
 const CHESS_FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
+// Helper per calcolare le mosse disponibili di un pezzo (stile Chess.com)
+function getPieceAvailableMoves(fromSq, board) {
+  const piece = board[fromSq];
+  if (!piece) return [];
+  const color = piece[0]; // 'w' o 'b'
+  const enemyColor = color === 'w' ? 'b' : 'w';
+  const type = piece[1]; // 'K', 'Q', 'R', 'B', 'N', 'P'
+
+  const fileChar = fromSq[0];
+  const rankNum = parseInt(fromSq[1], 10);
+  const fileIdx = CHESS_FILES.indexOf(fileChar);
+  const rankIdx = rankNum - 1;
+
+  if (fileIdx < 0 || rankIdx < 0 || rankIdx > 7) return [];
+
+  const moves = [];
+  const isInside = (f, r) => f >= 0 && f < 8 && r >= 0 && r < 8;
+  const toSquare = (f, r) => CHESS_FILES[f] + (r + 1);
+
+  const addRayMoves = (directions) => {
+    for (const [df, dr] of directions) {
+      let f = fileIdx + df;
+      let r = rankIdx + dr;
+      while (isInside(f, r)) {
+        const sq = toSquare(f, r);
+        const occ = board[sq];
+        if (!occ) {
+          moves.push(sq);
+        } else {
+          if (occ[0] === enemyColor) {
+            moves.push(sq);
+          }
+          break;
+        }
+        f += df;
+        r += dr;
+      }
+    }
+  };
+
+  if (type === 'P') {
+    const dir = color === 'w' ? 1 : -1;
+    const startRank = color === 'w' ? 1 : 6;
+
+    const f1 = fileIdx;
+    const r1 = rankIdx + dir;
+    if (isInside(f1, r1) && !board[toSquare(f1, r1)]) {
+      moves.push(toSquare(f1, r1));
+      const r2 = rankIdx + 2 * dir;
+      if (rankIdx === startRank && isInside(f1, r2) && !board[toSquare(f1, r2)]) {
+        moves.push(toSquare(f1, r2));
+      }
+    }
+
+    for (const df of [-1, 1]) {
+      const fc = fileIdx + df;
+      const rc = rankIdx + dir;
+      if (isInside(fc, rc)) {
+        const sq = toSquare(fc, rc);
+        const occ = board[sq];
+        if (occ && occ[0] === enemyColor) {
+          moves.push(sq);
+        }
+      }
+    }
+  } else if (type === 'N') {
+    const offsets = [
+      [-2, -1], [-2, 1], [-1, -2], [-1, 2],
+      [1, -2], [1, 2], [2, -1], [2, 1]
+    ];
+    for (const [df, dr] of offsets) {
+      const f = fileIdx + df;
+      const r = rankIdx + dr;
+      if (isInside(f, r)) {
+        const sq = toSquare(f, r);
+        const occ = board[sq];
+        if (!occ || occ[0] === enemyColor) {
+          moves.push(sq);
+        }
+      }
+    }
+  } else if (type === 'B') {
+    addRayMoves([[-1, -1], [-1, 1], [1, -1], [1, 1]]);
+  } else if (type === 'R') {
+    addRayMoves([[0, 1], [0, -1], [1, 0], [-1, 0]]);
+  } else if (type === 'Q') {
+    addRayMoves([
+      [0, 1], [0, -1], [1, 0], [-1, 0],
+      [-1, -1], [-1, 1], [1, -1], [1, 1]
+    ]);
+  } else if (type === 'K') {
+    const offsets = [
+      [-1, -1], [-1, 0], [-1, 1],
+      [0, -1],           [0, 1],
+      [1, -1],  [1, 0],  [1, 1]
+    ];
+    for (const [df, dr] of offsets) {
+      const f = fileIdx + df;
+      const r = rankIdx + dr;
+      if (isInside(f, r)) {
+        const sq = toSquare(f, r);
+        const occ = board[sq];
+        if (!occ || occ[0] === enemyColor) {
+          moves.push(sq);
+        }
+      }
+    }
+  }
+
+  return moves;
+}
+
 // ----------------------------------------------------------------------------
 // 5b. PROVA 2: L'ALTARE TATTICO (3 Puzzle di Scacco Matto in 2)
 // ----------------------------------------------------------------------------
@@ -1744,7 +1856,7 @@ function loadLevel3Puzzle(pIdx) {
   level3PuzzleStep = 1;
   isBlackMoving = false;
 
-  level3ChessStep.textContent = `PUZZLE ${pIdx + 1} DI ${level3Data.chess.puzzles.length} • MATTO IN 2`;
+  level3ChessStep.textContent = `LIVELLO ${pIdx + 1} DI ${level3Data.chess.puzzles.length}`;
   level3ChessTitle.textContent = pData.title;
   level3ChessStatusText.textContent = pData.hint;
 
@@ -1754,6 +1866,8 @@ function loadLevel3Puzzle(pIdx) {
 function renderLevel3ChessBoard(highlightMateSquare = null) {
   if (!level3ChessBoardGrid) return;
   level3ChessBoardGrid.innerHTML = '';
+
+  const availableMoves = selectedLevel3ChessSquare ? getPieceAvailableMoves(selectedLevel3ChessSquare, level3ChessPosition) : [];
 
   for (let rank = 8; rank >= 1; rank--) {
     for (let fIdx = 0; fIdx < 8; fIdx++) {
@@ -1797,6 +1911,13 @@ function renderLevel3ChessBoard(highlightMateSquare = null) {
         img.className = 'chess-piece-img';
         img.alt = piece;
         sqEl.appendChild(img);
+      }
+
+      // Mostra le mosse disponibili stile Chess.com
+      if (availableMoves.includes(sq)) {
+        const hintEl = document.createElement('div');
+        hintEl.className = level3ChessPosition[sq] ? 'chess-capture-ring' : 'chess-move-dot';
+        sqEl.appendChild(hintEl);
       }
 
       sqEl.addEventListener('click', () => handleLevel3ChessSquareClick(sq));
@@ -1846,6 +1967,14 @@ function handleLevel3ChessSquareClick(sq) {
   const from = selectedLevel3ChessSquare;
   const to = sq;
   const movedPiece = level3ChessPosition[from];
+
+  const availableMoves = getPieceAvailableMoves(from, level3ChessPosition);
+  if (!availableMoves.includes(to)) {
+    // Casella non raggiungibile da questo pezzo: deseleziona
+    selectedLevel3ChessSquare = null;
+    renderLevel3ChessBoard();
+    return;
+  }
 
   // FASE 1 DEL PUZZLE: 1ª mossa del Bianco
   if (level3PuzzleStep === 1) {
@@ -1920,12 +2049,12 @@ function showLevel3ChessResult(isSuccess) {
     triggerHeartExplosion();
     const isLastPuzzle = currentLevel3PuzzleIndex >= level3Data.chess.puzzles.length - 1;
 
-    level3ChessResultTitle.textContent = isLastPuzzle ? '🏆 TUTTI I PUZZLE RISOLTI!' : '✨ SCACCO MATTO PERFETTO!';
+    level3ChessResultTitle.textContent = isLastPuzzle ? '🏆 TUTTI I LIVELLI RISOLTI!' : '✨ SCACCO MATTO PERFETTO!';
     level3ChessResultTitle.style.color = 'var(--accent-gold)';
     level3ChessResultMedia.innerHTML = level3Data.chess.successGifHtml;
     level3ChessResultMsg.textContent = pData.desc + (isLastPuzzle ? `\n\nDall'altare scende un raggio di luce: hai ottenuto la ${level3Data.boss.weaponName}! ⚔️✨` : '');
 
-    btnLevel3ChessAction.textContent = isLastPuzzle ? 'Equipaggia la Spada e Combatti! ⚔️' : 'Passa al Prossimo Puzzle ➔';
+    btnLevel3ChessAction.textContent = isLastPuzzle ? 'Equipaggia la Spada e Combatti! ⚔️' : 'Passa al Prossimo Livello ➔';
     btnLevel3ChessAction.onclick = () => {
       if (isLastPuzzle) {
         level3Altar.isSolved = true;
@@ -1945,7 +2074,7 @@ function showLevel3ChessResult(isSuccess) {
     level3ChessResultTitle.style.color = 'var(--accent-rose)';
     level3ChessResultMedia.innerHTML = level3Data.chess.wrongGifHtml;
     level3ChessResultMsg.textContent = 'Non è la combinazione vincente... per dare matto in 2 serve precisione millimetrica!';
-    btnLevel3ChessAction.textContent = 'Riprova questo Puzzle ♟️';
+    btnLevel3ChessAction.textContent = 'Riprova questo Livello ♟️';
     btnLevel3ChessAction.onclick = () => {
       level3ChessResultView.classList.add('hidden');
       level3ChessBoardView.classList.remove('hidden');
@@ -2317,6 +2446,8 @@ function renderChessBoard(highlightMateSquare = null) {
   if (!chessBoardGrid) return;
   chessBoardGrid.innerHTML = '';
 
+  const availableMoves = selectedChessSquare ? getPieceAvailableMoves(selectedChessSquare, currentChessPosition) : [];
+
   for (let rank = 8; rank >= 1; rank--) {
     for (let fIdx = 0; fIdx < 8; fIdx++) {
       const file = CHESS_FILES[fIdx];
@@ -2359,6 +2490,13 @@ function renderChessBoard(highlightMateSquare = null) {
         img.className = 'chess-piece-img';
         img.alt = piece;
         sqEl.appendChild(img);
+      }
+
+      // Mostra le mosse disponibili stile Chess.com
+      if (availableMoves.includes(sq)) {
+        const hintEl = document.createElement('div');
+        hintEl.className = currentChessPosition[sq] ? 'chess-capture-ring' : 'chess-move-dot';
+        sqEl.appendChild(hintEl);
       }
 
       chessBoardGrid.appendChild(sqEl);
@@ -2415,6 +2553,14 @@ function handleChessSquareClick(sq) {
   // Clic su una casella di destinazione (vuota o pezzo nero)
   const from = selectedChessSquare;
   const to = sq;
+
+  const availableMoves = getPieceAvailableMoves(from, currentChessPosition);
+  if (!availableMoves.includes(to)) {
+    // Casella non raggiungibile: deseleziona senza dare errore
+    selectedChessSquare = null;
+    renderChessBoard();
+    return;
+  }
 
   // VERIFICA SE È LA MOSSA VINCENTE: Regina in H3 muove in H7 (Qxh7#)
   if (from === 'h3' && to === 'h7') {

@@ -1273,6 +1273,42 @@ html, body {
   object-fit: contain;
   pointer-events: none;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+  position: relative;
+  z-index: 2;
+}
+
+/* Indicatori mosse disponibili (stile Chess.com) */
+.chess-move-dot {
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.24);
+  pointer-events: none;
+  z-index: 5;
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+
+.chess-capture-ring {
+  position: absolute;
+  width: 84%;
+  height: 84%;
+  border-radius: 50%;
+  border: 4px solid rgba(0, 0, 0, 0.28);
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 5;
+  transition: transform 0.1s ease, border-color 0.1s ease;
+}
+
+.chess-square:hover .chess-move-dot {
+  transform: scale(1.15);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.chess-square:hover .chess-capture-ring {
+  transform: scale(1.04);
+  border-color: rgba(0, 0, 0, 0.42);
 }
 
 .chess-coord-file {
