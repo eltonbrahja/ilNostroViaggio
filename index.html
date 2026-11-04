@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Silkscreen:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Outfit:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Silkscreen:wght@400;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
 </head>
@@ -19,16 +19,7 @@
     <!-- Header compatto -->
     <header class="app-header">
       <div class="header-left">
-        <select id="dev-level-select" class="dev-level-select" title="Seleziona Livello (Dev)">
-          <option value="1">Livello 1</option>
-          <option value="2">Livello 2</option>
-          <option value="3">Livello 3</option>
-          <option value="4">Gran Finale</option>
-        </select>
-        <span id="level-badge" class="pixel-badge" style="display: none;">Livello 1</span>
-        <button id="btn-audio-toggle" class="audio-toggle-btn" title="Attiva/Disattiva Musica" aria-label="Musica">
-          <span id="audio-icon">🔇</span>
-        </button>
+        <span id="level-badge" class="pixel-badge">Livello 1</span>
       </div>
       <h1 class="header-title">Il Nostro Viaggio</h1>
       <button id="btn-switch-char" class="char-switch-badge" title="Cambia Personaggio">
@@ -67,13 +58,6 @@
         <p class="selection-partner-hint">
           Raggiungi la tua metà problematica dall'altra parte
         </p>
-
-        <div class="selection-dev-levels" style="margin: 6px 0 10px; display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
-          <button type="button" class="dev-level-btn active" data-level="1">L1</button>
-          <button type="button" class="dev-level-btn" data-level="2">L2</button>
-          <button type="button" class="dev-level-btn" data-level="3">L3</button>
-          <button type="button" class="dev-level-btn" data-level="4">Finale</button>
-        </div>
 
         <button id="btn-start-game" class="start-game-btn" disabled>
           INIZIA L'AVVENTURA ➔
@@ -210,13 +194,13 @@
         <div id="level3-quiz-question-view">
           <div class="modal-header">
             <div>
-              <div class="quiz-step-tag" id="level3-quiz-step">DOMANDA 1 DI 5</div>
+              <div class="quiz-step-tag" id="level3-quiz-step">DOMANDA 1 DI 3</div>
               <h2 id="level3-quiz-title">Il Sigillo delle Fiamme</h2>
             </div>
           </div>
 
           <div class="level3-quiz-progress-bar">
-            <div id="level3-quiz-progress-fill" class="level3-quiz-progress-fill" style="width: 20%;"></div>
+            <div id="level3-quiz-progress-fill" class="level3-quiz-progress-fill" style="width: 33.3%;"></div>
           </div>
 
           <p id="level3-quiz-question" class="quiz-question-text">
@@ -264,7 +248,10 @@
             </div>
           </div>
           <p id="level3-chess-status-text" class="chess-status-hint">Il Bianco muove e dà matto in 2!</p>
-          <button id="btn-close-level3-chess" class="modal-close-btn">Chiudi</button>
+          <div class="chess-board-actions">
+            <button id="btn-level3-chess-help" class="chess-help-btn">💡 Consiglio</button>
+            <button id="btn-close-level3-chess" class="modal-close-btn">Chiudi</button>
+          </div>
         </div>
 
         <!-- Vista Esito (GIF errore o vittoria puzzle) -->
@@ -276,6 +263,7 @@
           <p id="level3-chess-result-msg" class="cat-dialog-text"></p>
           <div class="chess-result-actions">
             <button id="btn-level3-chess-action" class="modal-action-btn">Riprova la mossa ♟️</button>
+            <button id="btn-level3-chess-result-help" class="modal-action-btn chess-help-btn">💡 Consiglio</button>
           </div>
         </div>
       </div>
@@ -335,9 +323,9 @@
         <!-- Vista Vittoria Boss -->
         <div id="boss-victory-view" class="boss-victory-view hidden">
           <div class="boss-victory-badge">🏆 MOSTRO SCONFITTO!</div>
-          <h2 class="boss-victory-title">La Gabbia si è Aperta!</h2>
+          <h2 class="boss-victory-title">La Gabbia si è aperta</h2>
           <p id="boss-victory-text" class="boss-victory-desc">
-            Hai abbattuto il demone con la tua spada! Il tuo amore è finalmente libero e corre ad abbracciarti! 💖✨
+            (come le tue gambe)
           </p>
           <button id="btn-boss-victory-continue" class="start-game-btn">
             ABBRACCIA IL TUO AMORE 💕➔
@@ -390,7 +378,7 @@
           <span class="modal-icon">♟️</span>
           <div>
             <h2 id="chess-modal-title">Scacco Matto in 1</h2>
-            <p id="chess-modal-subtitle" class="quiz-subtitle">Tocca la Donna bianca e dai matto!</p>
+            <p id="chess-modal-subtitle" class="quiz-subtitle">Il Bianco muove e dà scacco matto in 1!</p>
           </div>
         </div>
 
@@ -401,8 +389,11 @@
               <!-- Caselle generate da JS -->
             </div>
           </div>
-          <p id="chess-status-text" class="chess-status-hint">Il Bianco muove. Tocca un pezzo bianco per selezionarlo!</p>
-          <button id="btn-close-chess" class="modal-close-btn">Chiudi</button>
+          <p id="chess-status-text" class="chess-status-hint">Il Bianco muove e dà matto in 1!</p>
+          <div class="chess-board-actions">
+            <button id="btn-chess-help" class="chess-help-btn hidden">💡 Vuoi un aiuto?</button>
+            <button id="btn-close-chess" class="modal-close-btn">Chiudi</button>
+          </div>
         </div>
 
         <!-- Vista Esito (GIF vittoria o errore) -->
@@ -414,54 +405,30 @@
           <p id="chess-result-msg" class="cat-dialog-text"></p>
           <div class="chess-result-actions">
             <button id="btn-chess-action" class="modal-action-btn">Riprova la mossa ♟️</button>
+            <button id="btn-chess-result-help" class="modal-action-btn chess-help-btn hidden">💡 Vuoi un aiuto?</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 6. Modale Gran Finale: Lettera d'Amore & Ricordi -->
-    <div id="finale-modal" class="modal-overlay hidden">
-      <div class="modal-card finale-card">
-        <div class="finale-header">
-          <div class="finale-badge">💖 BUON ANNIVERSARIO 💖</div>
-          <h2 id="finale-title" class="finale-title">Per Te, Amore Mio</h2>
-          <span id="finale-date" class="finale-date">Novembre • Insieme</span>
+    <!-- 6. Modale Gran Finale: Lettera d'Amore a Tutto Schermo -->
+    <div id="finale-modal" class="modal-overlay hidden letter-overlay">
+      <div class="letter-sheet">
+        <!-- Sigillo in ceralacca con cuore -->
+        <div class="letter-wax-seal" title="Sigillato con Amore">
+          <span>❤️</span>
         </div>
 
-        <!-- Pergamena / Lettera d'amore con inside jokes -->
-        <div class="finale-letter-box">
-          <div class="letter-scroll" id="finale-letter-content">
+        <div class="letter-inner-border">
+          <div class="letter-header">
+            <span id="finale-date" class="letter-date">5 Novembre</span>
+            <h2 id="finale-title" class="letter-heading">Alla mia patata,</h2>
+          </div>
+
+          <!-- Contenuto della lettera -->
+          <div class="letter-body" id="finale-letter-content">
             <!-- I paragrafi della lettera romantica verranno iniettati da JS -->
           </div>
-        </div>
-
-        <!-- I 3 Ricordi Collezionati (Galleria Mini-Polaroid cliccabili) -->
-        <div class="finale-memories-section">
-          <h3 class="memories-title">I Ricordi del Nostro Percorso:</h3>
-          <div class="memories-grid">
-            <button class="memory-card-btn" id="memory-card-1" title="Vedi 1° Ricordo">
-              <span class="memory-icon">🌸</span>
-              <span class="memory-name">1° Incontro</span>
-            </button>
-            <button class="memory-card-btn" id="memory-card-2" title="Vedi 2° Ricordo">
-              <span class="memory-icon">✈️</span>
-              <span class="memory-name">I Viaggi</span>
-            </button>
-            <button class="memory-card-btn" id="memory-card-3" title="Vedi 3° Ricordo">
-              <span class="memory-icon">⚔️</span>
-              <span class="memory-name">La Battaglia</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Pulsanti Azione Finale -->
-        <div class="finale-actions">
-          <button id="btn-restart-game" class="finale-restart-btn">
-            <span>↺</span> RIGIOCA L'AVVENTURA
-          </button>
-          <button id="btn-close-finale" class="modal-close-btn">
-            Torna alla Radura 💕
-          </button>
         </div>
       </div>
     </div>

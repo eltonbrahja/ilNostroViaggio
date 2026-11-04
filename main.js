@@ -7,7 +7,6 @@
  * ----------------------------------------------------------------------------
  * 1.  CONFIGURAZIONE & TESTI MODIFICABILI (Livello 1, 2, 3 e Gran Finale)
  * 2.  RIFERIMENTI AGLI ELEMENTI HTML (Canvas, tasti touch e finestre modali)
- * 2b. SISTEMA AUDIO & MUSICA (Sottofondo romantico generato o brano MP3)
  * 3.  CARICAMENTO DELLE IMMAGINI (Sprite LPC e Tileset prato)
  * 4.  STATO DEL GIOCO & SELEZIONE PERSONAGGIO (Chi sta giocando: Lui o Lei)
  * 5.  GESTIONE DEI LIVELLI (Mappe, ostacoli, lucciole e coordinate per 4 livelli)
@@ -80,7 +79,8 @@ const level2Data = {
   chess: {
     title: 'La Partita Incompiuta ♟️',
     subtitle: 'Il Bianco muove e dà scacco matto in 1!',
-    partnerNeedMsg: 'Ti fa cenno con la mano sorridendo: "Amore! C\'è una scacchiera sotto il grande albero con una partita in sospeso... trova lo scacco matto e raggiungimi!" ♟️💖',
+    partnerNeedMsgLui: 'Eh no dove corri Cucciolino, prima devi risolvere il puzzle di scacchi!!!',
+    partnerNeedMsgLei: 'Eh no dove corri Patata, prima devi risolvere il puzzle di scacchi!!!',
     wrongMsg: 'riprova',
     wrongGifHtml: `<div style="width:100%;height:0;padding-bottom:77%;position:relative;"><iframe src="https://giphy.com/embed/eMu0803X2zkWY" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/the-simpsons-eMu0803X2zkWY" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`,
     successMsg: 'DAMN! SCACCO MATTO! 🏆✨',
@@ -113,64 +113,42 @@ const level3Data = {
   partnerCagedLei: 'Ti chiama disperata da dentro la gabbia: "Amore aiuto! Rompi il sigillo di fuoco, risolvi l\'altare di scacchi e prendi la spada per sconfiggerlo! 😭🔥"',
 
   // Dialoghi di vittoria dopo aver sconfitto il mostro e aperto la gabbia
-  partnerSuccessLui: 'Ti stringe fortissimo appena aperta la gabbia: "Mi hai salvato amore mio! Sapevo che avresti sconfitto qualsiasi mostro per me! Ora corriamo al nostro traguardo finale!" 💖✨',
-  partnerSuccessLei: 'Ti salta al collo commossa: "Sei il mio eroe! Ora niente e nessuno al mondo potrà mai più separarci! Andiamo subito alla nostra sorpresa finale!" 💖✨',
+  partnerSuccessLui: 'Ce l\'hai fatta, non ci sperava nessuno!!!',
+  partnerSuccessLei: 'Ce l\'hai fatta, non ci sperava nessuno!!!',
 
-  // 1. IL QUIZ DELLE FIAMME (5 Domande con GIF personalizzata in caso di errore)
+  // 1. IL QUIZ DELLE FIAMME (3 Domande con GIF personalizzata in caso di errore)
   quiz: {
     title: 'Il Sigillo delle Fiamme',
-    subtitle: 'Rispondi correttamente a 5 domande consecutive: se ne sbagli anche solo una, dovrai ricominciare.',
+    subtitle: 'Rispondi correttamente a 3 domande consecutive: se ne sbagli anche solo una, dovrai ricominciare.',
     wrongGifHtml: `<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/1T96TRBBGYThC" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/fail-epic-cat-1T96TRBBGYThC" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`,
     questions: [
       {
-        question: '1/5 • Qual è la regola fondamentale quando si ordina la pizza o il sushi insieme?',
+        question: 'Qual è il cibo preferito di Rebecca Cristina Melodia De Pari?',
         options: [
-          'Ognuno mangia solo ed esclusivamente dal proprio piatto',
-          '"Io non ho fame, prendo poco"... e poi sparisce metà del cibo dell\'altro!',
-          'Si mangia in silenzio religioso senza dividere nulla',
-          'Si aspetta che si raffreddi tutto per un\'ora'
+          'Sushi',
+          '🍆',
+          'Kebab'
         ],
-        correctIndex: 1
+        correctIndex: 2
       },
       {
-        question: '2/5 • Chi è che perde SEMPRE chiavi, occhiali o telefono nei posti più assurdi?',
+        question: 'Cosa irrita di più DePariñho?',
         options: [
-          'Nessuno dei due, siamo campioni mondiali di ordine',
-          'Tu, senza neanche doverci riflettere un secondo!',
-          'Io... ma solo perché gli oggetti decidono magicamente di nascondersi!',
-          'Gerry Scotti ce li nasconde per fare audience'
+          'Io che le faccio ragebait',
+          'Il mio ragebait',
+          'Quando non le faccio ragebait'
         ],
-        correctIndex: 1
+        correctIndex: 2
       },
       {
-        question: '3/5 • Cosa significa REALMENTE la frase: "Faccio in 5 minuti e sono pronta/o"?',
+        question: 'Come si consola Becca?',
         options: [
-          'Esattamente 300 secondi cronometrati al millisecondo',
-          'Un\'unità di tempo misteriosa che può variare tra 45 e 90 minuti!',
-          'Che siamo già in macchina ad aspettare',
-          'Che la partenza è rimandata a domani'
+          'Con regalini',
+          'Con bacetti',
+          'Con 🍆',
+          'Tutte le risposte sono corrette'
         ],
-        correctIndex: 1
-      },
-      {
-        question: '4/5 • Qual è il rimedio infallibile e scientificamente approvato dopo una giornata pesante?',
-        options: [
-          'Un abbraccio fortissimo sul divano, coccole e qualcosa di buono',
-          'Rileggere il manuale di istruzioni del tostapane',
-          'Mettersi a pulire la cantina con musica classica',
-          'Dormire sul pavimento freddo'
-        ],
-        correctIndex: 0
-      },
-      {
-        question: '5/5 • Chi è la persona più testarda, speciale e insostituibile di questo universo?',
-        options: [
-          'Il vicino di casa',
-          'Tu, la mia persona preferita in assoluto in tutto il mondo!',
-          'Un robot dell\'intelligenza artificiale',
-          'L\'arbitro dell\'ultima partita'
-        ],
-        correctIndex: 1
+        correctIndex: 3
       }
     ]
   },
@@ -183,7 +161,8 @@ const level3Data = {
       {
         id: 1,
         title: 'Livello 1',
-        hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna in fondo per aprire la strada alla Torre!',
+        hintStep1: '💡 Consiglio: Sacrifica la Donna bianca in F8 (Df8+) per attirare la Torre e aprire la strada!',
+        hintStep2: '💡 Consiglio: Ora muovi la Torre bianca in F8 (Txf8#) per dare scacco matto del corridoio!',
         // Bianco: wK g1, wQ d6, wR f1, wP g2, wP h2 | Nero: bK h8, bR g8, bP g7, bP h7
         initialPosition: {
           'g1': 'wK', 'd6': 'wQ', 'f1': 'wR', 'g2': 'wP', 'h2': 'wP',
@@ -192,13 +171,13 @@ const level3Data = {
         playerMove1: { from: 'd6', to: 'f8', piece: 'wQ' }, // Df8+!
         blackResponse: { from: 'g8', to: 'f8', piece: 'bR' }, // Txf8
         playerMove2: { from: 'f1', to: 'f8', piece: 'wR' }, // Txf8# MATTO!
-        mateSquare: 'f8',
-        desc: '1. Df8+! Txf8 2. Txf8#! Il celebre sacrificio di Donna con Scacco Matto del Corridoio!'
+        mateSquare: 'f8'
       },
       {
         id: 2,
         title: 'Livello 2',
-        hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna sotto il Re per il leggendario matto affogato di Cavallo!',
+        hintStep1: '💡 Consiglio: Sacrifica la Donna bianca in G8 (Dg8+) sotto il Re per preparare il matto affogato!',
+        hintStep2: '💡 Consiglio: Ora muovi il Cavallo in F7 (Cf7#) per soffocare il Re nero!',
         // Bianco: wK g1, wQ c4, wN h6, wP g2, wP h2 | Nero: bK h8, bR f8, bP g7, bP h7
         initialPosition: {
           'g1': 'wK', 'c4': 'wQ', 'h6': 'wN', 'g2': 'wP', 'h2': 'wP',
@@ -207,13 +186,13 @@ const level3Data = {
         playerMove1: { from: 'c4', to: 'g8', piece: 'wQ' }, // Dg8+!
         blackResponse: { from: 'f8', to: 'g8', piece: 'bR' }, // Txg8
         playerMove2: { from: 'h6', to: 'f7', piece: 'wN' }, // Cf7# MATTO AFFOGATO!
-        mateSquare: 'f7',
-        desc: '1. Dg8+! Txg8 2. Cf7#! Il leggendario Matto Affogato: il Re nero è soffocato dai suoi stessi pezzi!'
+        mateSquare: 'f7'
       },
       {
         id: 3,
         title: 'Livello 3',
-        hint: 'Il Bianco muove e dà matto in 2! Sacrifica la Donna sulla colonna h per concludere con la Torre!',
+        hintStep1: '💡 Consiglio: Sacrifica la Donna bianca in H7 (Dxh7+) per aprire la colonna H alla Torre!',
+        hintStep2: '💡 Consiglio: Ora muovi la Torre in H3 (Th3#) lungo la colonna aperta per dare matto!',
         // Bianco: wK g1, wN e7, wR d3, wQ h5, wP f2, wP g2 | Nero: bK h8, bR e8, bP g7, bP h7
         initialPosition: {
           'g1': 'wK', 'e7': 'wN', 'd3': 'wR', 'h5': 'wQ', 'f2': 'wP', 'g2': 'wP',
@@ -222,8 +201,7 @@ const level3Data = {
         playerMove1: { from: 'h5', to: 'h7', piece: 'wQ' }, // Dxh7+!
         blackResponse: { from: 'h8', to: 'h7', piece: 'bK' }, // Rxh7
         playerMove2: { from: 'd3', to: 'h3', piece: 'wR' }, // Th3# MATTO DI ANASTASIA!
-        mateSquare: 'h3',
-        desc: '1. Dxh7+! Rxh7 2. Th3#! Lo spettacolare Matto di Anastasia con Cavallo ed infilata di Torre!'
+        mateSquare: 'h3'
       }
     ],
     wrongGifHtml: `<div style="width:100%;height:0;padding-bottom:77%;position:relative;"><iframe src="https://giphy.com/embed/eMu0803X2zkWY" width="100%" height="100%" style="position:absolute;left:0;top:0;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p style="font-size:10px;text-align:center;margin:6px 0 2px;"><a href="https://giphy.com/gifs/the-simpsons-eMu0803X2zkWY" target="_blank" rel="noopener noreferrer" style="color:#9ca3af;text-decoration:none;">via GIPHY</a></p>`,
@@ -243,15 +221,16 @@ const level3Data = {
 const levelFinaleData = {
   title: 'GRAN FINALE: IL NOSTRO TRAGUARDO',
   anniversaryBadge: '💖 BUON ANNIVERSARIO 💖',
-  anniversaryDate: 'Novembre • La Nostra Storia d\'Amore',
+  anniversaryDate: '5 Novembre',
 
-  // Lettera d'amore a tutto schermo (con dolci battute / inside jokes e dedica)
-  letterTitle: 'Per Te, Amore Mio...',
+  // Lettera d'amore a tutto schermo in stile pergamena
+  letterTitle: 'Alla mia patata,',
   paragraphs: [
-    'Sembra ieri che ci siamo guardati negli occhi per la prima volta, eppure abbiamo già scritto così tante pagine meravigliose della nostra storia.',
-    'Tra i nostri viaggi indimenticabili, le pizze ordinate al volo ("io prendo poco..." e poi mangi metà della mia! 🍕), le risate fino alle lacrime e i momenti in cui basta un solo sguardo per capirci al volo.',
-    'Grazie per essere la mia persona preferita in tutto l\'universo, la mia certezza, la mia risata più vera e la parte più bella di ogni singola giornata.',
-    'Questo piccolo videogioco è nato per strapparti un sorriso e ricordarti quanto ti amo. Sei la mia avventura preferita, oggi e per sempre! 💖✨'
+    'che si impegna sempre, da quando mi dà il buongiorno,\nfino alla fine della sua giornata (anche se spessissimo è anticipata…)',
+    'Non so nemmeno che dire, è abbastanza assurdo per me.\nSei sbucata dal nulla e sei diventata tutto.\nUno scherzo alla volta,\nUna battuta alla volta,\nUna chiacchierata alla volta,\nUna chiamata alla volta\nsei diventata sempre più importante.',
+    'Ogni volta riesci non solo a supportarmi,\nriesci a migliorarmi la giornata.\nUna giornata senza te mi sembra durare il doppio rispetto al normale, il tempo passa così lentamente che è quasi doloroso.',
+    'Questa è solo una cavolata ma spero ti sia piaciuta,\nsoprattutto perché per quanto la puoi reputare bella,\nnon arriverà mai al tuo livello.',
+    'Ti amo,\nElton 💕'
   ],
 
   // Dialogo speciale quando ci si ricongiunge al centro del cuore
@@ -268,7 +247,6 @@ const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 
 const levelBadge = document.getElementById('level-badge');
-const devLevelSelect = document.getElementById('dev-level-select');
 
 const btnUp = document.getElementById('btn-up');
 const btnLeft = document.getElementById('btn-left');
@@ -286,9 +264,6 @@ const headerAvatarIcon = document.getElementById('header-avatar-icon');
 const previewLuiCanvas = document.getElementById('preview-lui');
 const previewLeiCanvas = document.getElementById('preview-lei');
 
-// Tasto Audio & Musica
-const btnAudioToggle = document.getElementById('btn-audio-toggle');
-const audioIcon = document.getElementById('audio-icon');
 
 // Modale 1: Ricordo Polaroid
 const polaroidModal = document.getElementById('polaroid-modal');
@@ -311,8 +286,8 @@ const quizOptionsContainer = document.getElementById('quiz-options-container');
 const quizFeedbackEl = document.getElementById('quiz-feedback');
 const btnCloseQuiz = document.getElementById('btn-close-quiz');
 
-// --- MODALI LIVELLO 3 (Quiz 5 Domande, Scacchi Matto in 2, Boss Fight) ---
-// 1. Modale Quiz 5 Domande (Livello 3)
+// --- MODALI LIVELLO 3 (Quiz 3 Domande, Scacchi Matto in 2, Boss Fight) ---
+// 1. Modale Quiz 3 Domande (Livello 3)
 const level3QuizModal = document.getElementById('level3-quiz-modal');
 const level3QuizQuestionView = document.getElementById('level3-quiz-question-view');
 const level3QuizErrorView = document.getElementById('level3-quiz-error-view');
@@ -335,10 +310,12 @@ const level3ChessResultView = document.getElementById('level3-chess-result-view'
 const level3ChessBoardGrid = document.getElementById('level3-chess-board');
 const level3ChessStatusText = document.getElementById('level3-chess-status-text');
 const btnCloseLevel3Chess = document.getElementById('btn-close-level3-chess');
+const btnLevel3ChessHelp = document.getElementById('btn-level3-chess-help');
 const level3ChessResultTitle = document.getElementById('level3-chess-result-title');
 const level3ChessResultMedia = document.getElementById('level3-chess-result-media');
 const level3ChessResultMsg = document.getElementById('level3-chess-result-msg');
 const btnLevel3ChessAction = document.getElementById('btn-level3-chess-action');
+const btnLevel3ChessResultHelp = document.getElementById('btn-level3-chess-result-help');
 
 // 3. Modale Boss Fight con il Mostro (Livello 3)
 const level3BossModal = document.getElementById('level3-boss-modal');
@@ -386,10 +363,12 @@ const chessResultView = document.getElementById('chess-result-view');
 const chessBoardGrid = document.getElementById('chess-board');
 const chessStatusText = document.getElementById('chess-status-text');
 const btnCloseChess = document.getElementById('btn-close-chess');
+const btnChessHelp = document.getElementById('btn-chess-help');
 const chessResultTitle = document.getElementById('chess-result-title');
 const chessResultMedia = document.getElementById('chess-result-media');
 const chessResultMsg = document.getElementById('chess-result-msg');
 const btnChessAction = document.getElementById('btn-chess-action');
+const btnChessResultHelp = document.getElementById('btn-chess-result-help');
 
 // Modale 6: Gran Finale Romantico
 const finaleModal = document.getElementById('finale-modal');
@@ -403,122 +382,6 @@ const btnRestartGame = document.getElementById('btn-restart-game');
 const btnCloseFinale = document.getElementById('btn-close-finale');
 
 
-// ============================================================================
-// 2b. SISTEMA AUDIO & MUSICA (Web Audio API & MP3 fallback)
-// ----------------------------------------------------------------------------
-// 👉 Suona una dolce melodia romantica a carillon generata direttamente dal browser!
-// 👉 Se in futuro metti un file "contenuti/audio/anniversario.mp3", lo userà in automatico.
-// ============================================================================
-
-let audioCtx = null;
-let isMusicPlaying = false;
-let melodyInterval = null;
-let customAudioEl = null;
-
-function checkCustomAudio() {
-  const audio = new Audio('/contenuti/audio/anniversario.mp3');
-  audio.loop = true;
-  audio.volume = 0.5;
-  return audio;
-}
-
-const ROMANTIC_NOTES = [
-  523.25, 659.25, 783.99, 987.77, 880.00, 783.99, 698.46, 659.25,
-  587.33, 659.25, 698.46, 880.00, 783.99, 659.25, 587.33, 523.25
-];
-let noteIndex = 0;
-
-function playSweetNote(freq) {
-  if (!audioCtx) return;
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-  gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.07, audioCtx.currentTime + 0.05);
-  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
-
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-
-  osc.start();
-  osc.stop(audioCtx.currentTime + 0.65);
-}
-
-function startMusic() {
-  if (isMusicPlaying) return;
-
-  if (!customAudioEl) {
-    customAudioEl = checkCustomAudio();
-  }
-
-  const playPromise = customAudioEl.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      isMusicPlaying = true;
-      updateAudioUI();
-    }).catch(() => {
-      startProceduralMusic();
-    });
-  } else {
-    startProceduralMusic();
-  }
-}
-
-function startProceduralMusic() {
-  if (!audioCtx) {
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    audioCtx = new AudioContextClass();
-  }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-
-  isMusicPlaying = true;
-  updateAudioUI();
-
-  melodyInterval = setInterval(() => {
-    const freq = ROMANTIC_NOTES[noteIndex % ROMANTIC_NOTES.length];
-    playSweetNote(freq);
-    noteIndex++;
-  }, 440);
-}
-
-function stopMusic() {
-  isMusicPlaying = false;
-  if (melodyInterval) {
-    clearInterval(melodyInterval);
-    melodyInterval = null;
-  }
-  if (customAudioEl) {
-    customAudioEl.pause();
-  }
-  updateAudioUI();
-}
-
-function toggleMusic() {
-  if (isMusicPlaying) {
-    stopMusic();
-  } else {
-    startMusic();
-  }
-}
-
-function updateAudioUI() {
-  if (isMusicPlaying) {
-    btnAudioToggle.classList.add('playing');
-    audioIcon.textContent = '🎵';
-    btnAudioToggle.title = 'Disattiva Musica';
-  } else {
-    btnAudioToggle.classList.remove('playing');
-    audioIcon.textContent = '🔇';
-    btnAudioToggle.title = 'Attiva Musica';
-  }
-}
-
-btnAudioToggle.addEventListener('click', toggleMusic);
 
 
 
@@ -669,17 +532,6 @@ function selectCharacter(charKey) {
 cardLui.addEventListener('click', () => selectCharacter('lui'));
 cardLei.addEventListener('click', () => selectCharacter('lei'));
 
-let selectedDevStartLevel = 1;
-const devLevelBtns = document.querySelectorAll('.dev-level-btn');
-devLevelBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    devLevelBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedDevStartLevel = parseInt(btn.dataset.level, 10);
-    if (devLevelSelect) devLevelSelect.value = String(selectedDevStartLevel);
-  });
-});
-
 btnStartGame.addEventListener('click', () => {
   activePlayerKey = selectedCharKey;
   isGameStarted = true;
@@ -691,7 +543,7 @@ btnStartGame.addEventListener('click', () => {
     headerAvatarIcon.style.display = 'none';
   }
 
-  switchToLevel(selectedDevStartLevel || 1);
+  switchToLevel(1);
   if (navigator.vibrate) navigator.vibrate([20, 50, 20]);
 });
 
@@ -951,10 +803,6 @@ function switchToLevel(newLevelNumber) {
 
   resetPlayerPosition();
   pausePlayerMovement();
-
-  if (devLevelSelect) {
-    devLevelSelect.value = String(currentLevel);
-  }
 }
 window.switchToLevel = switchToLevel;
 
@@ -973,20 +821,6 @@ function closeAllModals() {
   if (dialogModal) dialogModal.classList.add('hidden');
   if (itemFoundModal) itemFoundModal.classList.add('hidden');
   if (finaleModal) finaleModal.classList.add('hidden');
-}
-
-if (devLevelSelect) {
-  devLevelSelect.addEventListener('change', (e) => {
-    const chosenLevel = parseInt(e.target.value, 10);
-    if (!isGameStarted) {
-      activePlayerKey = selectedCharKey;
-      isGameStarted = true;
-      selectionScreen.classList.add('hidden');
-      headerAvatarName.textContent = activePlayerKey === 'lui' ? 'Elton' : 'Rebecca';
-    }
-    closeAllModals();
-    switchToLevel(chosenLevel);
-  });
 }
 
 
@@ -1061,7 +895,7 @@ function getMapObstacles() {
     obstacles.push({ x: 0, y: -50, width: LEVEL3_WORLD_WIDTH, height: 280 }); // Stalattiti/soffitto
     obstacles.push({ x: 0, y: 345, width: LEVEL3_WORLD_WIDTH, height: 60 });  // Lava inferiore
 
-    // Barriera delle Fiamme (solida finché non si supera il quiz a 5 domande)
+    // Barriera delle Fiamme (solida finché non si supera il quiz a 3 domande)
     if (!level3Barrier.isUnlocked) {
       obstacles.push({
         x: level3Barrier.x,
@@ -1301,7 +1135,8 @@ function triggerInteraction() {
       openChessModal();
     } else if (currentInteractionTarget === 'partner') {
       if (!chessTable.isSolved) {
-        openGenericDialog('Risolvi la partita! ♟️', level2Data.chess.partnerNeedMsg);
+        const partnerNeedMsg = activePlayerKey === 'lui' ? level2Data.chess.partnerNeedMsgLui : level2Data.chess.partnerNeedMsgLei;
+        openGenericDialog('Risolvi la partita! ♟️', partnerNeedMsg);
       } else {
         openLevelClearModal();
       }
@@ -1578,7 +1413,7 @@ quizModal.addEventListener('click', (e) => {
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// 5a. PROVA 1: IL QUIZ DELLE FIAMME (5 Domande con GIF personalizzata su errore)
+// 5a. PROVA 1: IL QUIZ DELLE FIAMME (3 Domande con GIF personalizzata su errore)
 // ----------------------------------------------------------------------------
 let currentLevel3QuizIndex = 0;
 
@@ -1633,13 +1468,13 @@ function handleLevel3QuizAnswer(btn, isCorrect) {
     setTimeout(() => {
       currentLevel3QuizIndex++;
       if (currentLevel3QuizIndex >= level3Data.quiz.questions.length) {
-        // Superate tutte e 5 le domande di fila!
+        // Superate tutte e 3 le domande di fila!
         level3Barrier.isUnlocked = true;
         invalidateObstaclesCache();
         invalidateRenderItemsCache();
         closeLevel3QuizModal();
         triggerHeartExplosion();
-        openGenericDialog('Sigillo Spezzato', 'Hai risposto a tutte e 5 le domande senza sbagliare. La barriera di fiamme si dissolve: ora puoi raggiungere l\'Altare Tattico.');
+        openGenericDialog('Sigillo Spezzato', 'Hai risposto a tutte e 3 le domande, crazyyy');
       } else {
         renderLevel3QuizQuestion();
       }
@@ -1802,8 +1637,8 @@ function getPieceAvailableMoves(fromSq, board) {
   } else if (type === 'K') {
     const offsets = [
       [-1, -1], [-1, 0], [-1, 1],
-      [0, -1],           [0, 1],
-      [1, -1],  [1, 0],  [1, 1]
+      [0, -1], [0, 1],
+      [1, -1], [1, 0], [1, 1]
     ];
     for (const [df, dr] of offsets) {
       const f = fileIdx + df;
@@ -1830,6 +1665,31 @@ let selectedLevel3ChessSquare = null;
 let lastLevel3ChessMove = null;
 let level3PuzzleStep = 1; // 1 = mossa 1 del Bianco, 2 = mossa 2 (scacco matto) del Bianco
 let isBlackMoving = false;
+let isLevel3HintActive = false;
+
+function getLevel3CurrentHint() {
+  const pData = level3Data.chess.puzzles[currentLevel3PuzzleIndex];
+  if (!pData) return 'Il Bianco muove e dà matto in 2!';
+  return level3PuzzleStep === 1 ? pData.hintStep1 : pData.hintStep2;
+}
+
+function activateLevel3ChessHint() {
+  isLevel3HintActive = true;
+  level3ChessResultView.classList.add('hidden');
+  level3ChessBoardView.classList.remove('hidden');
+  selectedLevel3ChessSquare = null;
+
+  level3ChessStatusText.classList.add('has-hint');
+  level3ChessStatusText.textContent = getLevel3CurrentHint();
+
+  if (btnLevel3ChessHelp) {
+    btnLevel3ChessHelp.classList.add('active');
+    btnLevel3ChessHelp.textContent = '💡 Consiglio attivo';
+  }
+
+  renderLevel3ChessBoard();
+  if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+}
 
 function openLevel3ChessModal() {
   isModalOpen = true;
@@ -1847,6 +1707,7 @@ function openLevel3ChessModal() {
 }
 
 function loadLevel3Puzzle(pIdx) {
+  currentLevel3PuzzleIndex = pIdx;
   const pData = level3Data.chess.puzzles[pIdx];
   if (!pData) return;
 
@@ -1855,10 +1716,17 @@ function loadLevel3Puzzle(pIdx) {
   lastLevel3ChessMove = null;
   level3PuzzleStep = 1;
   isBlackMoving = false;
+  isLevel3HintActive = false;
 
   level3ChessStep.textContent = `LIVELLO ${pIdx + 1} DI ${level3Data.chess.puzzles.length}`;
   level3ChessTitle.textContent = pData.title;
-  level3ChessStatusText.textContent = pData.hint;
+  level3ChessStatusText.classList.remove('has-hint');
+  level3ChessStatusText.textContent = 'Il Bianco muove e dà matto in 2!';
+
+  if (btnLevel3ChessHelp) {
+    btnLevel3ChessHelp.classList.remove('active');
+    btnLevel3ChessHelp.textContent = '💡 Consiglio';
+  }
 
   renderLevel3ChessBoard();
 }
@@ -1887,6 +1755,13 @@ function renderLevel3ChessBoard(highlightMateSquare = null) {
       }
       if (lastLevel3ChessMove && (lastLevel3ChessMove.from === sq || lastLevel3ChessMove.to === sq)) {
         sqEl.classList.add('highlight-prev');
+      }
+      const pData = level3Data.chess.puzzles[currentLevel3PuzzleIndex];
+      if (pData && isLevel3HintActive && selectedLevel3ChessSquare !== sq) {
+        const hintSquare = level3PuzzleStep === 1 ? pData.playerMove1.from : pData.playerMove2.from;
+        if (sq === hintSquare) {
+          sqEl.classList.add('highlight-hint');
+        }
       }
 
       // Coordinate bordo
@@ -1942,7 +1817,9 @@ function handleLevel3ChessSquareClick(sq) {
       renderLevel3ChessBoard();
       if (navigator.vibrate) navigator.vibrate(20);
     } else {
-      level3ChessStatusText.textContent = 'Tocca un pezzo bianco per preparare la mossa!';
+      level3ChessStatusText.textContent = isLevel3HintActive
+        ? getLevel3CurrentHint()
+        : 'Tocca un pezzo bianco per preparare la mossa!';
     }
     return;
   }
@@ -1950,7 +1827,9 @@ function handleLevel3ChessSquareClick(sq) {
   // Deselezione
   if (sq === selectedLevel3ChessSquare) {
     selectedLevel3ChessSquare = null;
-    level3ChessStatusText.textContent = 'Pezzo deselezionato. Tocca un pezzo bianco!';
+    level3ChessStatusText.textContent = isLevel3HintActive
+      ? getLevel3CurrentHint()
+      : 'Pezzo deselezionato. Tocca un pezzo bianco!';
     renderLevel3ChessBoard();
     return;
   }
@@ -2034,7 +1913,11 @@ function executeLevel3BlackResponse(pData) {
 
   level3PuzzleStep = 2;
   isBlackMoving = false;
-  level3ChessStatusText.textContent = 'Ora tocca a te! Sferra lo SCACCO MATTO finale!';
+  if (isLevel3HintActive) {
+    level3ChessStatusText.textContent = getLevel3CurrentHint();
+  } else {
+    level3ChessStatusText.textContent = 'Ora tocca a te! Sferra lo SCACCO MATTO finale!';
+  }
   renderLevel3ChessBoard();
   if (navigator.vibrate) navigator.vibrate(30);
 }
@@ -2052,7 +1935,7 @@ function showLevel3ChessResult(isSuccess) {
     level3ChessResultTitle.textContent = isLastPuzzle ? '🏆 TUTTI I LIVELLI RISOLTI!' : '✨ SCACCO MATTO PERFETTO!';
     level3ChessResultTitle.style.color = 'var(--accent-gold)';
     level3ChessResultMedia.innerHTML = level3Data.chess.successGifHtml;
-    level3ChessResultMsg.textContent = pData.desc + (isLastPuzzle ? `\n\nDall'altare scende un raggio di luce: hai ottenuto la ${level3Data.boss.weaponName}! ⚔️✨` : '');
+    level3ChessResultMsg.textContent = '';
 
     btnLevel3ChessAction.textContent = isLastPuzzle ? 'Equipaggia la Spada e Combatti! ⚔️' : 'Passa al Prossimo Livello ➔';
     btnLevel3ChessAction.onclick = () => {
@@ -2061,7 +1944,7 @@ function showLevel3ChessResult(isSuccess) {
         hasPlayerWeapon = true;
         invalidateRenderItemsCache();
         closeLevel3ChessModal();
-        openGenericDialog('Arma Sbloccata! ⚔️🔥', `Hai risvegliato la leggendaria ${level3Data.boss.weaponName}!\nOra avvicinati al Demone in fondo alla caverna e sconfiggilo per liberare il tuo amore!`);
+        openGenericDialog('Arma Sbloccata! ⚔️🔥', 'Meh ora muovi that fat ass');
       } else {
         currentLevel3PuzzleIndex++;
         level3ChessResultView.classList.add('hidden');
@@ -2080,6 +1963,14 @@ function showLevel3ChessResult(isSuccess) {
       level3ChessBoardView.classList.remove('hidden');
       loadLevel3Puzzle(currentLevel3PuzzleIndex);
     };
+    if (btnLevel3ChessResultHelp) {
+      btnLevel3ChessResultHelp.onclick = () => {
+        level3ChessResultView.classList.add('hidden');
+        level3ChessBoardView.classList.remove('hidden');
+        loadLevel3Puzzle(currentLevel3PuzzleIndex);
+        activateLevel3ChessHint();
+      };
+    }
   }
 }
 
@@ -2087,6 +1978,18 @@ function closeLevel3ChessModal() {
   isModalOpen = false;
   level3ChessModal.classList.add('hidden');
   level3ChessResultMedia.innerHTML = '';
+}
+
+if (btnLevel3ChessHelp) {
+  btnLevel3ChessHelp.addEventListener('click', activateLevel3ChessHint);
+}
+if (btnLevel3ChessResultHelp) {
+  btnLevel3ChessResultHelp.addEventListener('click', () => {
+    level3ChessResultView.classList.add('hidden');
+    level3ChessBoardView.classList.remove('hidden');
+    loadLevel3Puzzle(currentLevel3PuzzleIndex);
+    activateLevel3ChessHint();
+  });
 }
 
 if (btnCloseLevel3Chess) {
@@ -2312,16 +2215,22 @@ function openFinaleModal() {
   if (navigator.vibrate) navigator.vibrate([60, 120, 60, 120, 60]);
 }
 
-// Clic sulle mini-card dei ricordi all'interno della lettera finale per rivedere le foto
-memoryCard1.addEventListener('click', () => {
-  openPolaroidModal();
-});
-memoryCard2.addEventListener('click', () => {
-  openItemFoundModal();
-});
-memoryCard3.addEventListener('click', () => {
-  openLevel3MemoryModal();
-});
+// Clic sulle mini-card dei ricordi all'interno della lettera finale per rivedere le foto (se presenti)
+if (memoryCard1) {
+  memoryCard1.addEventListener('click', () => {
+    openPolaroidModal();
+  });
+}
+if (memoryCard2) {
+  memoryCard2.addEventListener('click', () => {
+    openItemFoundModal();
+  });
+}
+if (memoryCard3) {
+  memoryCard3.addEventListener('click', () => {
+    openLevel3MemoryModal();
+  });
+}
 
 function openLevel3MemoryModal() {
   const note = activePlayerKey === 'lui'
@@ -2330,10 +2239,12 @@ function openLevel3MemoryModal() {
   openGenericDialog('Il Nostro Coraggio 🌋⚔️', note);
 }
 
-btnCloseFinale.addEventListener('click', () => {
-  finaleModal.classList.add('hidden');
-  isModalOpen = false;
-});
+if (btnCloseFinale) {
+  btnCloseFinale.addEventListener('click', () => {
+    finaleModal.classList.add('hidden');
+    isModalOpen = false;
+  });
+}
 finaleModal.addEventListener('click', (e) => {
   if (e.target === finaleModal) {
     finaleModal.classList.add('hidden');
@@ -2341,8 +2252,9 @@ finaleModal.addEventListener('click', (e) => {
   }
 });
 
-// Tasto "Rigioca l'Avventura": azzera i progressi e torna alla schermata di selezione
-btnRestartGame.addEventListener('click', () => {
+// Tasto "Rigioca l'Avventura" (se presente): azzera i progressi e torna alla schermata di selezione
+if (btnRestartGame) {
+  btnRestartGame.addEventListener('click', () => {
   finaleModal.classList.add('hidden');
   isModalOpen = false;
 
@@ -2350,6 +2262,8 @@ btnRestartGame.addEventListener('click', () => {
   isMonsterQuizSolved = false;
   gateItem.isOpen = false;
   chessTable.isSolved = false;
+  chessWrongAttempts = 0;
+  isChessHintActive = false;
   level3Barrier.isUnlocked = false;
   level3Altar.isSolved = false;
   level3Monster.isDefeated = false;
@@ -2358,10 +2272,12 @@ btnRestartGame.addEventListener('click', () => {
   hasPlayerWeapon = false;
   currentLevel3QuizIndex = 0;
   currentLevel3PuzzleIndex = 0;
+  isLevel3HintActive = false;
 
   switchToLevel(1);
   selectionScreen.classList.remove('hidden');
-});
+  });
+}
 
 // 8. Modale Generico
 function openGenericDialog(title, text) {
@@ -2441,6 +2357,8 @@ const INITIAL_CHESS_POSITION = {
 let currentChessPosition = { ...INITIAL_CHESS_POSITION };
 let selectedChessSquare = null;
 let lastChessMove = null;
+let chessWrongAttempts = 0;
+let isChessHintActive = false;
 
 function renderChessBoard(highlightMateSquare = null) {
   if (!chessBoardGrid) return;
@@ -2466,6 +2384,9 @@ function renderChessBoard(highlightMateSquare = null) {
       }
       if (lastChessMove && (lastChessMove.from === sq || lastChessMove.to === sq)) {
         sqEl.classList.add('highlight-prev');
+      }
+      if (isChessHintActive && sq === 'h3' && currentChessPosition['h3'] === 'wQ' && selectedChessSquare !== 'h3') {
+        sqEl.classList.add('highlight-hint');
       }
 
       // Coordinate bordo
@@ -2506,7 +2427,7 @@ function renderChessBoard(highlightMateSquare = null) {
 
 function handleChessSquareClick(sq) {
   if (chessTable.isSolved && !selectedChessSquare) {
-    const partnerName = currentCharacter === 'lui' ? 'Rebecca' : 'Elton';
+    const partnerName = activePlayerKey === 'lui' ? 'Rebecca' : 'Elton';
     chessStatusText.textContent = `Hai già dato scacco matto! 🎉 Raggiungi ${partnerName}!`;
     return;
   }
@@ -2522,9 +2443,13 @@ function handleChessSquareClick(sq) {
       renderChessBoard();
       if (navigator.vibrate) navigator.vibrate(20);
     } else if (pieceOnSquare && pieceOnSquare.startsWith('b')) {
-      chessStatusText.textContent = 'È il turno del Bianco! Tocca la Regina bianca per muovere.';
+      chessStatusText.textContent = isChessHintActive
+        ? 'È il turno del Bianco! Usa la Regina bianca in H3!'
+        : 'È il turno del Bianco! Tocca un pezzo bianco per muovere.';
     } else {
-      chessStatusText.textContent = 'Tocca un pezzo bianco (la Regina in H3) per preparare lo scacco matto!';
+      chessStatusText.textContent = isChessHintActive
+        ? '💡 Suggerimento: Prova a usare la Regina bianca (in H3)!'
+        : 'Tocca un pezzo bianco per preparare lo scacco matto!';
     }
     return;
   }
@@ -2535,7 +2460,9 @@ function handleChessSquareClick(sq) {
   // Clic sulla stessa casella -> Deseleziona
   if (sq === selectedChessSquare) {
     selectedChessSquare = null;
-    chessStatusText.textContent = 'Pezzo deselezionato. Tocca la Regina in H3!';
+    chessStatusText.textContent = isChessHintActive
+      ? '💡 Suggerimento: Prova a usare la Regina bianca (in H3)!'
+      : 'Pezzo deselezionato. Tocca un pezzo bianco!';
     renderChessBoard();
     return;
   }
@@ -2588,20 +2515,56 @@ function handleChessSquareClick(sq) {
   }
 }
 
+function activateChessHint() {
+  isChessHintActive = true;
+  chessResultView.classList.add('hidden');
+  chessBoardView.classList.remove('hidden');
+  selectedChessSquare = null;
+  chessStatusText.classList.add('has-hint');
+  chessStatusText.textContent = '💡 Suggerimento: Prova a usare la Regina bianca (in H3)!';
+  updateChessHelpButtons();
+  renderChessBoard();
+  if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+}
+
+function updateChessHelpButtons() {
+  if (chessWrongAttempts >= 2) {
+    if (btnChessHelp) {
+      btnChessHelp.classList.remove('hidden');
+      if (isChessHintActive) {
+        btnChessHelp.classList.add('active');
+        btnChessHelp.textContent = '💡 Suggerimento attivo: Usa la Regina (H3)';
+      } else {
+        btnChessHelp.classList.remove('active');
+        btnChessHelp.textContent = '💡 Vuoi un aiuto?';
+      }
+    }
+  } else {
+    if (btnChessHelp) {
+      btnChessHelp.classList.add('hidden');
+      btnChessHelp.classList.remove('active');
+    }
+  }
+}
+
 function showChessResult(isSuccess) {
   chessBoardView.classList.add('hidden');
   chessResultView.classList.remove('hidden');
 
   if (isSuccess) {
+    chessWrongAttempts = 0;
+    isChessHintActive = false;
     chessResultTitle.textContent = level2Data.chess.successMsg || 'DAMN! SCACCO MATTO! 🏆✨';
     chessResultTitle.style.color = 'var(--accent-gold)';
     chessResultMedia.innerHTML = level2Data.chess.successGifHtml;
-    chessResultMsg.textContent = 'Scacco matto da gran maestro! La via per raggiungere la tua metà è aperta! 🏆💖';
+    chessResultMsg.textContent = '';
     btnChessAction.textContent = 'Continua l\'avventura 💖';
     btnChessAction.onclick = () => {
       closeChessModal();
     };
+    if (btnChessResultHelp) btnChessResultHelp.classList.add('hidden');
   } else {
+    chessWrongAttempts++;
     chessResultTitle.textContent = level2Data.chess.wrongMsg || 'riprova';
     chessResultTitle.style.color = 'var(--accent-rose)';
     chessResultMedia.innerHTML = level2Data.chess.wrongGifHtml;
@@ -2610,6 +2573,18 @@ function showChessResult(isSuccess) {
     btnChessAction.onclick = () => {
       resetChessGame();
     };
+
+    if (chessWrongAttempts >= 2) {
+      if (btnChessResultHelp) {
+        btnChessResultHelp.classList.remove('hidden');
+        btnChessResultHelp.textContent = '💡 Vuoi un aiuto?';
+        btnChessResultHelp.onclick = () => {
+          activateChessHint();
+        };
+      }
+    } else {
+      if (btnChessResultHelp) btnChessResultHelp.classList.add('hidden');
+    }
   }
 }
 
@@ -2620,7 +2595,16 @@ function resetChessGame() {
   chessResultMedia.innerHTML = '';
   chessResultView.classList.add('hidden');
   chessBoardView.classList.remove('hidden');
-  chessStatusText.textContent = 'Il Bianco muove e dà matto in 1! Tocca la Regina bianca per iniziare.';
+
+  if (isChessHintActive) {
+    chessStatusText.classList.add('has-hint');
+    chessStatusText.textContent = '💡 Suggerimento: Prova a usare la Regina bianca (in H3)!';
+  } else {
+    chessStatusText.classList.remove('has-hint');
+    chessStatusText.textContent = 'Il Bianco muove e dà matto in 1!';
+  }
+
+  updateChessHelpButtons();
   renderChessBoard();
 }
 
@@ -2657,6 +2641,13 @@ if (chessBoardGrid) {
     const sq = sqEl.dataset.square;
     if (sq) handleChessSquareClick(sq);
   });
+}
+
+if (btnChessHelp) {
+  btnChessHelp.addEventListener('click', activateChessHint);
+}
+if (btnChessResultHelp) {
+  btnChessResultHelp.addEventListener('click', activateChessHint);
 }
 
 if (btnCloseChess) {
@@ -2995,7 +2986,7 @@ function getStaticRenderItems() {
       sortY: chessTable.y + chessTable.height
     });
   } else if (currentLevel === 3) {
-    // 1. Sigillo delle Fiamme (Quiz 5 domande)
+    // 1. Sigillo delle Fiamme (Quiz 3 domande)
     items.push({
       type: 'level3Barrier',
       x: level3Barrier.x,

@@ -75,10 +75,10 @@ Dividere l'esperienza a livelli isolati garantisce massima fluidità nel browser
 * **Orientamento & Ambientazione:** Scorrimento orizzontale a telecamera mobile con sfondo panoramico pixel art *Underfire (The Altar)* con caverna sotterranea, stalattiti e lava ardente.
 * **Trama:** Il partner è stato rapito e rinchiuso in una gabbia di ferro sorvegliata da un temibile Demone delle Ceneri.
 * **Le 3 Prove per sconfiggerlo:**
-  1. **Il Sigillo delle Fiamme (Quiz di 5 Domande):**
-     * 5 domande di coppia a risposta multipla consecutive.
+  1. **Il Sigillo delle Fiamme (Quiz di 3 Domande):**
+     * 3 domande di coppia a risposta multipla consecutive.
      * Se si sbaglia anche solo una risposta, appare una GIF di errore personalizzata e il quiz si riavvia da capo.
-     * Superate tutte e 5, la barriera di fiamme si dissolve aprendo il passaggio.
+     * Superate tutte e 3, la barriera di fiamme si dissolve aprendo il passaggio.
   2. **L'Altare Tattico (3 Puzzle di Scacco Matto in 2):**
      * Tre posizioni scacchistiche classiche da risolvere (Matto del corridoio, Matto Affogato di Filidoro, Matto di Anastasia).
      * Il giocatore esegue la 1ª mossa, il Nero risponde con la mossa forzata, e il giocatore conclude con lo scacco matto.
@@ -121,11 +121,11 @@ Dividere l'esperienza a livelli isolati garantisce massima fluidità nel browser
    * **Livello 2 (La Radura dei Viaggi):** ✅ COMPLETATO
      * Sfondo panoramico Nature 1, gattini animati, scacchi in 1 mossa e ricongiungimento.
    * **Livello 3 (Il Covo del Mostro):** ✅ COMPLETATO
-     * Sfondo Underfire, barriera con quiz a 5 domande, altare tattico con 3 matto in 2, boss fight arcade con tempismo colpo critico e salvataggio del partner dalla gabbia.
+     * Sfondo Underfire, barriera con quiz a 3 domande, altare tattico con 3 matto in 2, boss fight arcade con tempismo colpo critico e salvataggio del partner dalla gabbia.
    * **Livello Finale (Il Traguardo Romantico):** ✅ COMPLETATO
      * Radura crepuscolare/notturna con lucciole animate, piazza romantica a forma di cuore, candele accese e ricongiungimento.
-     * Schermata Gran Finale a tutto schermo con lettera d'amore, galleria delle 3 tappe collezionate e opzione di rigiocare.
+     * Schermata Gran Finale con la lettera d'amore dedicata (senza pulsanti aggiuntivi).
 6. **Step 6 - Musica, Personalizzazione Foto & Deploy Vercel:** 🟡 IN CORSO
-   * **Sistema Audio & Musica:** ✅ IMPLEMENTATO (tasto 🎵 con carillon romantico procedurale Web Audio + supporto MP3 personalizzato).
+   * **Sistema Audio & Musica:** Rimosso su richiesta.
    * **Personalizzazione Foto Reali:** Possibilità di sostituire i placeholder con file JPEG/PNG reali in `contenuti/foto/`.
    * **Deploy Vercel:** Test di build completato con successo (pronto per la pubblicazione su Vercel).
